@@ -1,28 +1,41 @@
 "use client"
-import React from "react";
+import React, { useEffect } from "react";
 import { webRoutes } from "../utils/webRoutes";
 import { webRoutesType } from "../Types/webRoutesTypes";
 import RoutesItem from "./routes-item";
 import { motion } from "framer-motion";
 
-const HamburgerMenu = () => {
+import useHamburgerMenu from "@/store/useHamburgerMenu";
+import clsx from "clsx";
+const 
+HamburgerMenu = () => {
+  // const setHamValue=useHamburgerMenu((state)=>state.setHamburgerMenuState)
+ const toggleHamburger=useHamburgerMenu((state)=>state.toggleHamburgerMenuState)
+ const hamburgerState=useHamburgerMenu((state)=>state.hamburgerMenuState)
+ const handleToggleHamburger=()=>{
+  toggleHamburger()
+
+ }
   return (
-    <motion.div className="fixed w-full h-full bg-transparent  flex items-center justify-end ">
-      <div className="w-full h-full  bg-transparent"></div>
-      <div className="w-full h-full  bg-slate-50 flex flex-col items-center justify-center ">
-        {webRoutes.map((item:webRoutesType)=>
-        { 
+    <>
+    <div className="relative  top-8 right-9">
+    
+    <div
+        onClick={handleToggleHamburger}
 
-            return(
+    className="absolute">
+  <div className={clsx(`btn active`,hamburgerState===false?'not-active':'active')}>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
 
-            <RoutesItem emptyIcon={item.emptyIcon} filledIcon={item.filledIcon} text={item.text} isActive={item.isActive} key={item.text} route={item.route} 
-            children={item.children}  />
-            )
-        }
-      
-        )}
-      </div>
-    </motion.div>
+        
+<a className="dribbble" href="https://dribbble.com/shots/5505871-Menu-toggle-close-animation" target="_blank"><img src="https://dribbble.com/assets/logo-small-2x-9fe74d2ad7b25fba0f50168523c15fda4c35534f9ea0b1011179275383035439.png" alt=""/></a>
+</div>
+
+    </>
   );
 };
 

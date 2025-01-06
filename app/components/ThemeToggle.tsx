@@ -20,13 +20,13 @@ function ThemeToggle() {
   return (
     <Button
       onClick={handleClick}
-      className="relative  flex items-center justify-center rounded-full border-2 dark:border-white border-black w-8 h-8 max-sm:w-7 max-sm:h-7 max-sm:border "
+      className="relative hover:rotate-12 transition-all duration-500 flex items-center justify-center rounded-full border-none w-10 h-10 max-sm:w-7 max-sm:h-7 max-sm:border "
       variant="outline"
       size="icon"
     >
       {/* Sun Icon */}
       <SunIcon
-        className={`h-[1rem] w-[1rem] transition-all duration-200 transform ${
+        className={` h-[1rem] w-[1rem] transition-all duration-200 transform ${
           resolvedTheme === "dark"
             ? "rotate-90 scale-0 opacity-0"
             : "rotate-0 scale-100 opacity-100"

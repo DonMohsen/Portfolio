@@ -7,6 +7,7 @@ import HamburgerMenu from "./components/hamburger-menu";
 import { Header } from "./components/header";
 import { navItems } from "@/public/data";
 import { ThemeProvider } from "./providers/theme-provider";
+import Navbar from "./components/navbar";
 
 // const SignikaNegative = Signika_Negative({
 //   weight:["300","400","600","700"],
@@ -32,10 +33,8 @@ export default function RootLayout({
                 <ThemeProvider attribute="class" defaultTheme="light">
 
         <Header navItems={navItems}/>
-        <div className="relative hidden  items-center justify-end w-full h-screen">
 
-        <HamburgerMenu/>
-        </div>
+        <Navbar/>
         <MobileFooter/>
         {children}
         </ThemeProvider>
