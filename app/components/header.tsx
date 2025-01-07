@@ -27,8 +27,9 @@ export const Header = ({
   const [visible, setVisible] = useState(true);
   //FOR showinf the extra layer of header on top0 or top-7
   const [showTopZero, setShowTopZero] = useState(false);
-  const [changeHamburgerMenuOpen, setChangedleHamburgerMenuOpen] = useState(false)
-  
+  const [changeHamburgerMenuOpen, setChangedleHamburgerMenuOpen] =
+    useState(false);
+
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     // Check if current is not undefined and is a number
     if (typeof current === "number") {
@@ -49,7 +50,7 @@ export const Header = ({
       }
     }
   });
- 
+
   return (
     <>
       <div className=" fixed bg-[#151515] top-0 h-[30px] w-full z-10"></div>
@@ -93,34 +94,26 @@ export const Header = ({
           )}
         >
           <div className="flex items-center justify-center w-full gap-[3%]  max-md:hidden">
-
-          {navItems.map((navItem: any, idx: number) => (
-            <Link
-              key={`link=${idx}`}
-              href={navItem.link}
-              className={clsx(
-                "relative dark:text-neutral-50 items-center  flex space-x-1  dark:hover:text-neutral-300 hover:text-neutral-500"
-              )}
-            >
-              <span className=" text-xs !cursor-pointer">{navItem?.name}</span>
-            </Link>
-          ))}
-                      <ThemeToggle/>
-
-          </div>
-          {/* <div className="flex items-center justify-end bg-red-700 w-full">
-
-          <ThemeToggle />
-          </div> */}
-          <div
-          className=" z-50 text-white  w-full  md:hidden flex items-center gap-3 justify-end -translate-y-1 translate-x-5"
-          >
-            <ThemeToggle/>
-              <HamburgerMenu/>
-            
+            {navItems.map((navItem: any, idx: number) => (
+              <Link
+                key={`link=${idx}`}
+                href={navItem.link}
+                className={clsx(
+                  "relative dark:text-neutral-50 items-center  flex space-x-1  dark:hover:text-neutral-300 hover:text-neutral-500"
+                )}
+              >
+                <span className=" text-xs !cursor-pointer">
+                  {navItem?.name}
+                </span>
+              </Link>
+            ))}
+            <ThemeToggle />
           </div>
 
-          
+          <div className=" z-50 text-white  w-full  md:hidden flex items-center gap-3 justify-end -translate-y-1 translate-x-5">
+            <ThemeToggle />
+            <HamburgerMenu />
+          </div>
         </motion.div>
       </AnimatePresence>
     </>

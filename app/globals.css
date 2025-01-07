@@ -35,3 +35,38 @@
 .ham1.active .bottom {
   stroke-dashoffset: -138px;
 }
+@layer utilities {
+  /* Light mode styles */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #a1a1aa; /* Light mode thumb color */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #71717a; /* Light mode hover color */
+  }
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar {
+      width: 12px; /* Width of the scrollbar */
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background-color: #ffffff; /* Dark mode thumb color */
+      border-radius: 10px; /* Optional: Round the corners of the thumb */
+  }
+
+  ::-webkit-scrollbar-track {
+      background-color: #ffffff; /* Dark mode track color */
+  }
+}

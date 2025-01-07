@@ -6,5 +6,5 @@ export type webRoutesType={
     emptyIcon:IconType
     isActive?:boolean,
     route?:string,
-    children?:webRoutesType[]
+    routesChildren?:webRoutesType[]
 }

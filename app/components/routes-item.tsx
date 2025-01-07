@@ -58,7 +58,7 @@ const RoutesItem = ({
                 isActive={child.isActive}
                 key={child.text}
                 route={child.route}
-                children={child.children}
+                children={child.routesChildren}
               />{" "}
             </div>
           );

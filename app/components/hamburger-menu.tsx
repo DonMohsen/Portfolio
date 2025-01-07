@@ -1,38 +1,37 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { webRoutes } from "../utils/webRoutes";
-import { webRoutesType } from "../Types/webRoutesTypes";
-import RoutesItem from "./routes-item";
-import { motion } from "framer-motion";
 import "@/app/globals.css";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
 import clsx from "clsx";
 const HamburgerMenu = () => {
-  const [isHamOpen, setIsHamOpen] = useState(false)
-  // const setHamValue=useHamburgerMenu((state)=>state.setHamburgerMenuState)
   const toggleHamburger = useHamburgerMenu(
     (state) => state.toggleHamburgerMenuState
   );
   const hamburgerState = useHamburgerMenu((state) => state.hamburgerMenuState);
-   const handleToggleHamburger=()=>{
-    toggleHamburger()
-    setIsHamOpen((prev)=>!prev)
-    
-   }
+  const handleToggleHamburger = () => {
+    toggleHamburger();
+   hamburgerState===false?document.body.style.overflow = "hidden":document.body.style.overflow = "auto";
+  };
   return (
-    <svg className={clsx(`ham hamRotate ham1`,isHamOpen&&'active')} viewBox="0 0 100 100" width="80" onClick={handleToggleHamburger}>
-  <path
-        className="line top"
-        d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
-  <path
-        className="line middle"
-        d="m 30,50 h 40" />
-  <path
-        className="line bottom"
-        d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
-</svg>
+    <div className="">
 
+    
+    <svg
+      className={clsx(`ham hamRotate ham1`, hamburgerState && "active")}
+      viewBox="0 0 100 100"
+      width="80"
+      onClick={handleToggleHamburger}
+    >
+      <path
+        className="line top"
+        d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40"
+      />
+      <path className="line middle" d="m 30,50 h 40" />
+      <path
+        className="line bottom"
+        d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40"
+      />
+    </svg>
+    </div>
   );
 };
-
 export default HamburgerMenu;
