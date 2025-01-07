@@ -21,7 +21,7 @@ const Navbar = () => {
         { 
             return(
             <RoutesItem emptyIcon={item.emptyIcon} filledIcon={item.filledIcon} text={item.text} isActive={item.isActive} key={item.text} route={item.route} 
-            children={item.routesChildren}  />
+            routesChildren={item.routesChildren}  />
             )
         }
         )}

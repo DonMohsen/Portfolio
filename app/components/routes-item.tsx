@@ -8,7 +8,7 @@ const RoutesItem = ({
   emptyIcon,
   filledIcon,
   text,
-  children:childrenRoutes,
+  routesChildren,
   isActive,
   
   route,
@@ -18,7 +18,7 @@ const RoutesItem = ({
   emptyIcon: IconType;
   isActive?: boolean;
   route?: string;
-  children?: webRoutesType[];
+  routesChildren?: webRoutesType[];
 }) => {
   const [openChildren, setOpenChildren] = useState<string[]>([])
   useEffect(() => {
@@ -43,11 +43,11 @@ const RoutesItem = ({
       key={text}
       className="cursor-pointer w-full flex flex-col items-center justify-start"
     >
-      {childrenRoutes && "+"}
+      {routesChildren && "+"}
 
       {text}
-      {childrenRoutes &&
-        childrenRoutes.map((child: webRoutesType) => {
+      {routesChildren &&
+        routesChildren.map((child: webRoutesType) => {
        
           return (
             <div className={clsx('bg-slate-500 block',openChildren.includes(text&&'hidden'))} key={child.text}>
@@ -58,7 +58,7 @@ const RoutesItem = ({
                 isActive={child.isActive}
                 key={child.text}
                 route={child.route}
-                children={child.routesChildren}
+                routesChildren={child.routesChildren}
               />{" "}
             </div>
           );

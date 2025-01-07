@@ -14,7 +14,4 @@ const eslintConfig = [
  
 ];
 
-export default [ {extends:"next/core-web-vitals",
-  rules:{
-    "no-unused-vars":"off"
-  }}];
+export default eslintConfig;

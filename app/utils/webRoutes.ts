@@ -22,7 +22,7 @@ export const webRoutes:webRoutesType[]=[
         emptyIcon:PiNewspaperClipping,
         filledIcon:PiNewspaperClippingFill,
         isActive:false,
-        children:[
+        routesChildren:[
             {
                 text:"Real Projects",
                 route:"/Projects#Real-Projects",
@@ -43,7 +43,7 @@ export const webRoutes:webRoutesType[]=[
         emptyIcon:BsTelephone,
         filledIcon:BsTelephoneFill,
         isActive:false,
-        children:[
+        routesChildren:[
             {
                 text:"Social Media Apps",
                 route:"/Contact/#Social-Media-Apps",
