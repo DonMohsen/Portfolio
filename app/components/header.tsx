@@ -32,7 +32,7 @@ export const Header = ({
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     // Check if current is not undefined and is a number
     if (typeof current === "number") {
-      let direction = current! - scrollYProgress.getPrevious()!;
+      const direction = current! - scrollYProgress.getPrevious()!;
 
       if (scrollYProgress.get() < 0.05) {
         // also set true for the initial state
@@ -59,17 +59,19 @@ export const Header = ({
             top: 0,
           }}
           animate={{
-            top: showTopZero ? "0rem" : "28px",
+            top: showTopZero ? "0rem" : "60px",
           }}
           transition={{
             duration: 0.2,
           }}
           className={clsx(
-            `w-full z-50  h-[40px] max-md:h-[52px] fixed bg-[#151515] border-[#6a6868] border-b-[0.5px]`,
-            showTopZero === true ? "top-0" : "top-7"
+            `w-full z-50  h-[40px] max-md:h-[52px] fixed bg-[#151515] border-[#6a6868] border-b-[0.5px]`
           )}
         >
-          
+          <div className="w-full h-full bg-white flex items-center justify-center">
+            <h2>Hi</h2>
+            <button>Click</button>
+          </div>
         </motion.div>
       </AnimatePresence>
       <AnimatePresence mode="wait">
@@ -86,7 +88,7 @@ export const Header = ({
             duration: 0.2,
           }}
           className={clsx(
-            "bg-[#151515]  text-[#dddada]  font-signika flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3  font-extralight items-center justify-between space-x-10",
+            "bg-[#151515] h-[60px] text-[#dddada]  font-signika flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3  font-extralight items-center justify-between space-x-10",
             className
           )}
         >
@@ -110,12 +112,12 @@ export const Header = ({
 
           <ThemeToggle />
           </div> */}
-          <ThemeToggle/>
           <div
-          className=" z-50 text-white w-full  md:hidden flex items-center gap-3 justify-end"
+          className=" z-50 text-white  w-full  md:hidden flex items-center gap-3 justify-end -translate-y-1 translate-x-5"
           >
-
-            <HamburgerMenu/>
+            <ThemeToggle/>
+              <HamburgerMenu/>
+            
           </div>
 
           
