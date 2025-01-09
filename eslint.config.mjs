@@ -9,14 +9,21 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
- {
-  rules:{
-    "no-unused-vars":"off",
-    "react/jsx-key":"off"
-  }
- }
-];
+// const eslintConfig = [
+//   ...compat.extends("next/core-web-vitals", "next/typescript"),
+//  {
+//   rules:{
+//     "no-unused-vars":"off",
+//     "react/jsx-key":"off"
+//   }
+//  }
+// ];
 
-export default eslintConfig;
+export default  [
+  {
+    rules:{
+          "no-unused-vars":"off",
+          "react/jsx-key":"off"
+        }
+  }
+];;
