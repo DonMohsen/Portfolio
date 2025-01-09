@@ -63,7 +63,7 @@ export const Header = () => {
             duration: 0.2,
           }}
           className={clsx(
-            `w-full z-50  h-[40px] max-md:h-[52px] fixed bg-[#151515] border-[#6a6868] border-b-[0.5px]`
+            `w-full z-[60]  h-[40px] max-md:h-[52px] fixed bg-[#151515] border-[#6a6868] border-b-[0.5px]`
           ,resumeShow===false&&'hidden')}
         >
           <div className="relative w-full h-full bg-white flex items-center justify-center gap-[20%]">
@@ -71,7 +71,7 @@ export const Header = () => {
             <Button className="rounded-full shadow-none border-2 border-black hover:bg-slate-200 ">Download</Button>
             <X
             onClick={resumeToggle}
-            className="absolute right-0 mr-5 text-red-700 cursor-pointer"/>
+            className="absolute right-0  mr-5 text-red-700 cursor-pointer"/>
           </div>
         </motion.div>
       </AnimatePresence>
