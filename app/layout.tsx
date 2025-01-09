@@ -24,7 +24,7 @@ export default function RootLayout({
       >
                 <ThemeProvider attribute="class" defaultTheme="light">
         <Header/>
-<div className="mt-[60px] md:mt-[100px]">
+<div className="">
 
         <Navbar/>
 </div>

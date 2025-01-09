@@ -1,85 +1,19 @@
 "use client";
+import { AllTechstackType } from "@/app/Types/AllTechstackTypes";
 import NextjsIcon from "../public/icons8-nextjs-144.png"
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-export const logos = [
-    
-      {
-        src:"/icons/nextjs.svg",
-        name:"Next.js"
-    },  
 
-    {
-      src:"/icons/reactjs.svg",
-      name:"React"
-  },
-         
-  {
-    src:"/icons/prisma.svg",
-    name:"Prisma ORM"
-},    
-
-{
-  src:"/icons/tailwindcss.svg",
-  name:"Tailwind CSS"
-},
-    
-{
-    src:"/icons/typescript.svg",
-    name:"Typescript"
-},
-       
-{
-    src:"/icons/expressjs.svg",
-    name:"Express.js"
-},
-       
-{
-    src:"/icons/redux.svg",
-    name:"Redux"
-},
-    
-{
-    src:"/icons/git.svg",
-    name:"Git"
-},
-    
-{
-    src:"/icons/restapi.svg",
-    name:"Rest API"
-},
-    
-{
-    src:"/icons/mongodb.svg",
-    name:"Mongo DB"
-},
-   
-       
-{
-    src:"/icons/uiux.svg",
-    name:"UI UX Patterns"
-},
-   
-   
- 
-   
-       
-   
-   
-  ];
-  
 export const InfiniteMovingCards = ({
-//   items,
+  items,
   direction = "left",
   speed = "fast",
   pauseOnHover = false,
   className,
 }: {
-//   items: {
-//     src:string
-//   }[];
+  items: AllTechstackType[]
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
   pauseOnHover?: boolean;
@@ -151,18 +85,18 @@ export const InfiniteMovingCards = ({
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
-        {logos.map((item,idx) =>
+        {items.map((item) =>
         {
 
 
             return (
               <li
-                 className="w-[150px]  relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 flex items-center justify-center "
+                 className="w-[250px]  relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 flex items-center justify-center max-md:w-[150px] "
             style={{
               background:
-                "linear-gradient(180deg, var(--slate-800), var(--slate-900)",
+                "linear-gradient(180deg, var(--slate-600), var(--slate-900)",
             }}
-            key={idx}
+            key={item.id}
           >
             <div className="flex flex-col items-center justify-center py-5">
               

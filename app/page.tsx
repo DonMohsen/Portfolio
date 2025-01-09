@@ -19,10 +19,11 @@ export default function Home() {
     <div className="w-full absolute items-center h-[100vh] justify-center">
     <GridDemo/>
     </div>
-    <div className="">
+    <div className="w-full absolute items-center h-[100vh] justify-center">
 
     <InfiniteDemo/>
     </div>
+
    </div>
   );
 }

@@ -14,7 +14,7 @@ const Navbar = () => {
     const toggleHamburger = useHamburgerMenu((state) => state.toggleHamburgerMenuState);
   return (
     <>
-    <div className={clsx(`z-[10000] absolute w-full h-full bg-transparent  items-center justify-end  `,hamValue===true?'flex':'hidden')}>
+    <div className={clsx(`mt-[60px] md:mt-[60px]  z-[10000] absolute w-full h-full bg-transparent  items-center justify-end  `,hamValue===true?'flex':'hidden')}>
       <div
       onClick={toggleHamburger}
       className="w-full h-full  bg-transparent flex"></div>
