@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 // import { Signika_Negative } from "next/font/google";
 import "./globals.css";
-import MobileFooter from "./components/mobile-footer";
 import { Header } from "./components/header";
 import { navItems } from "@/public/data";
 import { ThemeProvider } from "./providers/theme-provider";
 import Navbar from "./components/navbar";
+import MobileFooter from "@/components/mobile-footer";
 
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ export default function RootLayout({
         <Navbar/>
 </div>
 
-        {/* <MobileFooter/> */}
+        <MobileFooter/>
         {children}
         </ThemeProvider>
 
