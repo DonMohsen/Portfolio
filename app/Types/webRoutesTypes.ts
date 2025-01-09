@@ -4,7 +4,8 @@ export type webRoutesType={
     text:string,
     filledIcon:IconType,
     emptyIcon:IconType
-    isActive?:boolean,
-    route?:string,
-    routesChildren?:webRoutesType[]
+    isActive:boolean,
+    route:string,
+    routesChildren?:webRoutesType[],
+    id:number
 }

@@ -3,66 +3,91 @@ import React, { useEffect, useState } from "react";
 import { webRoutesType } from "../Types/webRoutesTypes";
 import { IconType } from "react-icons";
 import clsx from "clsx";
+import { CircleChevronRight, CircleMinus, CirclePlus } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import useHamburgerMenu from "@/store/useHamburgerMenu";
+import Link from "next/link";
+const RoutesItem = ({webRoute}:{webRoute:webRoutesType}) => {
+  const{routesChildren,route,isActive,text,filledIcon,emptyIcon,id}=webRoute;
+  const [openChildren, setOpenChildren] = useState<any>({});
+  const hamburgerState = useHamburgerMenu((state) => state.hamburgerMenuState);
+  const hamburgerToggle = useHamburgerMenu((state) => state.toggleHamburgerMenuState);
 
-const RoutesItem = ({
-  emptyIcon,
-  filledIcon,
-  text,
-  routesChildren,
-  isActive,
-  
-  route,
-}: {
-  text: string;
-  filledIcon: IconType;
-  emptyIcon: IconType;
-  isActive?: boolean;
-  route?: string;
-  routesChildren?: webRoutesType[];
-}) => {
-  const [openChildren, setOpenChildren] = useState<string[]>([])
   useEffect(() => {
-  //  console.log(openChildren);
-   
-  }, [openChildren])
-  
-  const handleOpen=(text:string)=>{
-    // console.log(text);
-    
-    if (openChildren.includes(text)) {
-      setOpenChildren(openChildren.filter((item)=>item!==text))
-    }
-    if (!openChildren.includes(text)) {
-      setOpenChildren([...openChildren,text])
-      
-    }
-  }
-  return (
-    <div
-    onClick={()=>handleOpen(text)}
-      key={text}
-      className="cursor-pointer w-full flex flex-col items-center justify-start"
-    >
-      {routesChildren && "+"}
+    hamburgerState === false && setOpenChildren({});
+  }, [hamburgerState]);
 
-      {text}
+  useEffect(() => {
+  }, [openChildren]);
+const closeHamburgerAfterClick=()=>{
+  hamburgerToggle()
+}
+  const handleToggleChildren = (currentLabel: string) => {
+    setOpenChildren({
+      ...openChildren,
+      [currentLabel]: !openChildren[currentLabel],
+    });
+
+    console.log(openChildren);
+  };
+  return (
+    <div className="ml-2 select-none my-2">
+      <div className="flex  items-center    ">
+        <Link
+        onClick={closeHamburgerAfterClick}
+        href={route}
+        className="flex cursor-pointer hover:font-bold transition-all duration-300">
+
+        {isActive===true? <webRoute.filledIcon className="mr-2 w-6 h-6"/>: <webRoute.emptyIcon className="mr-2 w-6 h-6"/>}
+        {`${text} `}
+        </Link>
+        {routesChildren && routesChildren.length && (
+          <div
+            onClick={() => handleToggleChildren(text)}
+            className="ml-2 cursor-pointer "
+          >
+            {
+              <CircleChevronRight
+                className={clsx(
+                  `transition-all duration-200 hover:fill-slate-300 w-8 h-8`,
+                  openChildren[text] && "rotate-90"
+                )}
+              />
+            }
+          </div>
+        )}
+      </div>
       {routesChildren &&
-        routesChildren.map((child: webRoutesType) => {
-       
-          return (
-            <div className={clsx('bg-slate-500 block',openChildren.includes(text&&'hidden'))} key={child.text}>
-              <RoutesItem
-                emptyIcon={child.emptyIcon}
-                filledIcon={child.filledIcon}
-                text={child.text}
-                isActive={child.isActive}
-                key={child.text}
-                route={child.route}
-                routesChildren={child.routesChildren}
-              />{" "}
-            </div>
-          );
-        })}
+        openChildren[text] &&
+        routesChildren.map((child: webRoutesType) => 
+           
+            <AnimatePresence>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: -20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -20,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 1000,
+                  damping: 15,
+                }}
+                className={`ml-3`}
+                key={child.id}
+              >
+                <RoutesItem key={child.id} webRoute={child}/>
+              </motion.div>
+            </AnimatePresence>
+          
+        )}
     </div>
   );
 };

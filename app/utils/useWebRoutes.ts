@@ -5,15 +5,21 @@ import { BsTelephone, BsTelephoneFill } from "react-icons/bs";
 import { SlSocialLinkedin } from "react-icons/sl";
 import { GrLinkedinOption } from "react-icons/gr";
 import { MdEmail, MdOutlineMail } from "react-icons/md";
+import { useMemo } from "react";
+import { usePathname } from "next/navigation";
 
+const useWebRoutes = () => {
+    const pathName = usePathname();
 
-export const webRoutes:webRoutesType[]=[
+ const webRoutes = useMemo<webRoutesType[]>(
+    () => [
     {
         text:"Home",
         route:"/",
         emptyIcon:IoHomeOutline,
         filledIcon:IoHome,
-        isActive:false,
+        isActive:pathName==="/",
+        id:1
 
     },
     {
@@ -21,19 +27,24 @@ export const webRoutes:webRoutesType[]=[
         route:"/Projects",
         emptyIcon:PiNewspaperClipping,
         filledIcon:PiNewspaperClippingFill,
-        isActive:false,
+        isActive:pathName.includes("/Projects"),
+        id:2,
         routesChildren:[
             {
                 text:"Real Projects",
                 route:"/Projects#Real-Projects",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
+                isActive:pathName==="/Projects#Real-Projects",
+                id:3
             },
             {
                 text:"Projects for Practice",
                 route:"/Projects#Projects-for-Practice",
                 emptyIcon:PiNewspaperClipping,
-                filledIcon:PiNewspaperClippingFill
+                filledIcon:PiNewspaperClippingFill,
+                isActive:pathName==="/Projects#Projects-for-Practice",
+                id:4
             }
         ]
     },
@@ -42,28 +53,51 @@ export const webRoutes:webRoutesType[]=[
         route:"/Contact",
         emptyIcon:BsTelephone,
         filledIcon:BsTelephoneFill,
-        isActive:false,
+        isActive:pathName.includes('/Contact'),
+        id:5,
         routesChildren:[
             {
                 text:"Social Media Apps",
-                route:"/Contact/#Social-Media-Apps",
+                route:"/Contact/Social-Media-Apps",
                 emptyIcon:SlSocialLinkedin,
-                filledIcon:GrLinkedinOption
+                filledIcon:GrLinkedinOption,
+                isActive:pathName==="/Contact/Social-Media-Apps",
+                id:6,
+                routesChildren:[
+                  
+                    {
+                        text:"Email2",
+        
+                        route:"/Contact#Email2",
+                        emptyIcon:MdOutlineMail,
+                        filledIcon:MdEmail ,
+                        isActive:pathName==="/Contact#Email2",
+                        id:7
+                    }
+                ]
             },
             {
                 text:"Email",
 
                 route:"/Contact#Email",
                 emptyIcon:MdOutlineMail,
-                filledIcon:MdEmail 
+                filledIcon:MdEmail ,
+                isActive:pathName==="/Contact#Email",
+                id:9
             },
             {
                 text:"Online Chat",
 
                 route:"/Contact#Online-Chat",
                 emptyIcon:MdOutlineMail,
-                filledIcon:MdEmail
+                filledIcon:MdEmail,
+                isActive:pathName==="/Contact#Online-Chat",
+
+                id:10
             }
         ]
     }
-]
+],[pathName])
+return webRoutes
+}
+export default useWebRoutes;

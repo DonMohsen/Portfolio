@@ -1,7 +1,22 @@
+"use client"
+
+import { GridDemo } from "@/components/GridDemo";
+import useShowHeader from "@/store/useShowHeader";
+import { useEffect } from "react"
+//! 09jan : add grid acetirnity ui and infinite rolling then do the mobile footer,dark mode, hero.tsx ,header navigating
+//! 10jan : build backend and create projects and routes tables, fetch them cliently
 export default function Home() {
+  const toggleResumeShow=useShowHeader((state)=>state.toggleShowHeaderState)
+  useEffect(() => {
+    toggleResumeShow()
+  }, [])
+  
   return (
-   <div className="w-full flex items-center justify-end  h-[200vh]">
-    hi
+   <div className="  h-[300vh]">
+    <div className="w-full absolute items-center h-[100vh] justify-center">
+
+    <GridDemo/>
+    </div>
    </div>
   );
 }

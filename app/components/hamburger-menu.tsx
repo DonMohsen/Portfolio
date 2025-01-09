@@ -2,19 +2,20 @@
 import "@/app/globals.css";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
 import clsx from "clsx";
+import { useEffect } from "react";
 const HamburgerMenu = () => {
   const toggleHamburger = useHamburgerMenu(
     (state) => state.toggleHamburgerMenuState
   );
   const hamburgerState = useHamburgerMenu((state) => state.hamburgerMenuState);
+  useEffect(() => {
+    hamburgerState===false?document.body.style.overflow = "auto":document.body.style.overflow = "hidden";
+  }, [hamburgerState])
   const handleToggleHamburger = () => {
     toggleHamburger();
-   hamburgerState===false?document.body.style.overflow = "hidden":document.body.style.overflow = "auto";
   };
   return (
     <div className="">
-
-    
     <svg
       className={clsx(`ham hamRotate ham1`, hamburgerState && "active")}
       viewBox="0 0 100 100"

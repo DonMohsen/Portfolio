@@ -10,25 +10,22 @@ import Link from "next/link";
 import clsx from "clsx";
 import ThemeToggle from "./ThemeToggle";
 import HamburgerMenu from "./hamburger-menu";
+import { Button } from "@/components/ui/button";
+import { webRoutesType } from "../Types/webRoutesTypes";
+import useWebRoutes from "../utils/useWebRoutes";
+import useShowHeader from "@/store/useShowHeader";
+import { X } from "lucide-react";
 
-export const Header = ({
-  navItems,
-  className,
-}: {
-  navItems: {
-    name: string;
-    link: string;
-  }[];
-  className?: string;
-}) => {
+export const Header = () => {
+  const webRoutes=useWebRoutes();
   const { scrollYProgress } = useScroll();
+  const resumeShow = useShowHeader((state) => state.ShowHeaderState);
+  const resumeToggle = useShowHeader((state) => state.toggleShowHeaderState);
 
   // set true for the initial state so that nav bar is visible in the hero section
   const [visible, setVisible] = useState(true);
   //FOR showinf the extra layer of header on top0 or top-7
   const [showTopZero, setShowTopZero] = useState(false);
-  const [changeHamburgerMenuOpen, setChangedleHamburgerMenuOpen] =
-    useState(false);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     // Check if current is not undefined and is a number
@@ -53,7 +50,7 @@ export const Header = ({
 
   return (
     <>
-      <div className=" fixed bg-[#151515] top-0 h-[30px] w-full z-10"></div>
+      <div className={clsx(`fixed bg-[#151515] top-0 h-[30px] w-full z-10`,resumeShow===false&&'hidden')}></div>
       <AnimatePresence>
         <motion.div
           initial={{
@@ -67,11 +64,14 @@ export const Header = ({
           }}
           className={clsx(
             `w-full z-50  h-[40px] max-md:h-[52px] fixed bg-[#151515] border-[#6a6868] border-b-[0.5px]`
-          )}
+          ,resumeShow===false&&'hidden')}
         >
-          <div className="w-full h-full bg-white flex items-center justify-center">
-            <h2>Hi</h2>
-            <button>Click</button>
+          <div className="relative w-full h-full bg-white flex items-center justify-center gap-[20%]">
+            <h2>Take a look at my resume</h2>
+            <Button className="rounded-full shadow-none border-2 border-black hover:bg-slate-200 ">Download</Button>
+            <X
+            onClick={resumeToggle}
+            className="absolute right-0 mr-5 text-red-700 cursor-pointer"/>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -89,21 +89,21 @@ export const Header = ({
             duration: 0.2,
           }}
           className={clsx(
-            "bg-[#151515] h-[60px] text-[#dddada]  font-signika flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3  font-extralight items-center justify-between space-x-10",
-            className
+            "bg-[#151515] h-[60px] text-[#dddada]  font-signika flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3  font-extralight items-center justify-between space-x-10"
+            
           )}
         >
           <div className="flex items-center justify-center w-full gap-[3%]  max-md:hidden">
-            {navItems.map((navItem: any, idx: number) => (
+            {webRoutes.map((item: webRoutesType, idx: number) => (
               <Link
                 key={`link=${idx}`}
-                href={navItem.link}
+                href={item.route}
                 className={clsx(
                   "relative dark:text-neutral-50 items-center  flex space-x-1  dark:hover:text-neutral-300 hover:text-neutral-500"
                 )}
               >
                 <span className=" text-xs !cursor-pointer">
-                  {navItem?.name}
+                  {item?.text}
                 </span>
               </Link>
             ))}

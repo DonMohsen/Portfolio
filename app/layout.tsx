@@ -1,19 +1,11 @@
-
 import type { Metadata } from "next";
 // import { Signika_Negative } from "next/font/google";
 import "./globals.css";
 import MobileFooter from "./components/mobile-footer";
-import HamburgerMenu from "./components/hamburger-menu";
 import { Header } from "./components/header";
 import { navItems } from "@/public/data";
 import { ThemeProvider } from "./providers/theme-provider";
 import Navbar from "./components/navbar";
-
-// const SignikaNegative = Signika_Negative({
-//   weight:["300","400","600","700"],
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
 
 
 export const metadata: Metadata = {
@@ -31,11 +23,13 @@ export default function RootLayout({
       <body
       >
                 <ThemeProvider attribute="class" defaultTheme="light">
-
-        <Header navItems={navItems}/>
+        <Header/>
+<div className="mt-[60px] md:mt-[100px]">
 
         <Navbar/>
-        <MobileFooter/>
+</div>
+
+        {/* <MobileFooter/> */}
         {children}
         </ThemeProvider>
 
