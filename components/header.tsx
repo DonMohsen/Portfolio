@@ -11,13 +11,14 @@ import clsx from "clsx";
 import ThemeToggle from "./ThemeToggle";
 import HamburgerMenu from "./hamburger-menu";
 import { Button } from "@/components/ui/button";
-import { webRoutesType } from "../Types/webRoutesTypes";
-import useWebRoutes from "../utils/useWebRoutes";
 import useShowHeader from "@/store/useShowHeader";
 import { X } from "lucide-react";
+import useWebRoutes from "@/app/utils/useWebRoutes";
+import { webRoutesType } from "@/app/Types/webRoutesTypes";
+import HeaderChildItems from "./header-child-items";
 
 export const Header = () => {
-  const webRoutes=useWebRoutes();
+  const webRoutes = useWebRoutes();
   const { scrollYProgress } = useScroll();
   const resumeShow = useShowHeader((state) => state.ShowHeaderState);
   const resumeToggle = useShowHeader((state) => state.toggleShowHeaderState);
@@ -50,7 +51,12 @@ export const Header = () => {
 
   return (
     <>
-      <div className={clsx(`fixed bg-[#151515] top-0 h-[30px] w-full z-10`,resumeShow===false&&'hidden')}></div>
+      <div
+        className={clsx(
+          `fixed bg-[#151515] top-0 h-[30px] w-full z-10`,
+          resumeShow === false && "hidden"
+        )}
+      ></div>
       <AnimatePresence>
         <motion.div
           initial={{
@@ -63,15 +69,19 @@ export const Header = () => {
             duration: 0.2,
           }}
           className={clsx(
-            `w-full z-[60]  h-[40px] max-md:h-[52px] fixed bg-[#151515] border-[#6a6868] border-b-[0.5px]`
-          ,resumeShow===false&&'hidden')}
+            `w-full z-[60]  h-[40px] max-md:h-[52px] fixed bg-[#151515] border-[#6a6868] border-b-[0.5px]`,
+            resumeShow === false && "hidden"
+          )}
         >
           <div className="relative w-full h-full bg-white flex items-center justify-center gap-[20%]">
             <h2>Take a look at my resume</h2>
-            <Button className="rounded-full shadow-none border-2 border-black hover:bg-slate-200 ">Download</Button>
+            <Button className="rounded-full shadow-none border-2 border-black hover:bg-slate-200 ">
+              Download
+            </Button>
             <X
-            onClick={resumeToggle}
-            className="absolute right-0  mr-5 text-red-700 cursor-pointer"/>
+              onClick={resumeToggle}
+              className="absolute right-0  mr-5 text-red-700 cursor-pointer"
+            />
           </div>
         </motion.div>
       </AnimatePresence>
@@ -90,22 +100,26 @@ export const Header = () => {
           }}
           className={clsx(
             "bg-[#151515] h-[60px] text-[#dddada]  font-signika flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3  font-extralight items-center justify-between space-x-10"
-            
           )}
         >
-          <div className="flex items-center justify-center w-full gap-[3%]  max-md:hidden">
-            {webRoutes.map((item: webRoutesType, idx: number) => (
-              <Link
-                key={`link=${idx}`}
-                href={item.route}
-                className={clsx(
-                  "relative dark:text-neutral-50 items-center  flex space-x-1  dark:hover:text-neutral-300 hover:text-neutral-500"
+          <div className="flex  items-center justify-center w-full gap-[3%]  max-md:hidden">
+            {webRoutes.map((item: webRoutesType) => (
+              <div key={item.id} className=" group">
+                <Link
+                  href={item.route}
+                  className={clsx(
+                    " dark:text-neutral-50 items-center  flex space-x-1 py-3 px-4 dark:hover:text-neutral-300 hover:text-neutral-500"
+                  )}
+                >
+                  <span className=" text-xs !cursor-pointer">{item?.text}</span>
+                </Link>
+                {item.routesChildren && (
+                  <div
+                    className="hidden group-hover:block">
+                    <HeaderChildItems items={item.routesChildren} />
+                  </div>
                 )}
-              >
-                <span className=" text-xs !cursor-pointer">
-                  {item?.text}
-                </span>
-              </Link>
+              </div>
             ))}
             <ThemeToggle />
           </div>

@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 // import { Signika_Negative } from "next/font/google";
 import "./globals.css";
-import { Header } from "./components/header";
 import { navItems } from "@/public/data";
 import { ThemeProvider } from "./providers/theme-provider";
-import Navbar from "./components/navbar";
-import MobileFooter from "@/components/mobile-footer";
-
+import { Header } from "@/components/header";
+import Navbar from "@/components/navbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,19 +18,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-      >
-                <ThemeProvider attribute="class" defaultTheme="light">
-        <Header/>
-<div className="">
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="dark">
+          <div className="relative">
 
-        <Navbar/>
-</div>
-
-        <MobileFooter/>
-        {children}
+          <Header />
+          </div>
+            <Navbar />
+          {children}
         </ThemeProvider>
-
       </body>
     </html>
   );

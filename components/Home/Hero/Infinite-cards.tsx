@@ -91,19 +91,19 @@ export const InfiniteMovingCards = ({
 
             return (
               <li
-                 className="w-[250px]  relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 flex items-center justify-center max-md:w-[150px] "
-            style={{
-              background:
-                "linear-gradient(180deg, var(--slate-600), var(--slate-900)",
-            }}
+                 className="w-[250px] bg-slate-100 border-none max-md:text-xs  relative rounded-2xl border dark:bg-gradient-to-b from-slate-900 to-slate-700 dark:bg-slate-900  flex-shrink-0  flex items-center justify-center max-md:w-[150px] "
+            // style={{
+            //   background:
+            //     "linear-gradient(180deg, var(--slate-600), var(--slate-900)",
+            // }}
             key={item.id}
           >
-            <div className="flex flex-col items-center justify-center py-5">
+            <div className="flex flex-col items-center justify-center py-5 max-md:py-2">
               
                   <Image 
-                  className="w-12 h-12"
+                  className="w-12 h-12 max-md:w-8 max-md:h-8"
                   alt="nextjs-icon" src={item.src} width={70} height={70}/>
-                    <p>
+                    <p className="text-black">
                         {item.name}
                     </p>
              

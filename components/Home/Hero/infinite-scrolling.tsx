@@ -3,7 +3,7 @@ import NextjsIcon from "../public/icons/react-svgrepo-com.svg"
 import React, { useEffect, useState } from "react";
 import { InfiniteMovingCards } from "./Infinite-cards";
 
-export function InfiniteDemo() {
+export function InfiniteScrolling() {
   return (
     <div className=" absolute w-full h-full rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-end  overflow-hidden">
       <InfiniteMovingCards
@@ -89,7 +89,13 @@ export const logos = [
     ,id:11
 },
    
-   
+          
+{
+  src:"/icons/framermotion.svg",
+  name:"Framer Motion"
+  ,id:12
+},
+ 
  
    
        
