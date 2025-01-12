@@ -18,13 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="dark">
-          <div className="relative">
 
           <Header />
+          <div className="overflow-hidden">
+
+            <Navbar/>
           </div>
-            <Navbar />
           {children}
         </ThemeProvider>
       </body>

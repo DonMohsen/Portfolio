@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   motion,
   AnimatePresence,
@@ -48,9 +48,12 @@ export const Header = () => {
       }
     }
   });
+useEffect(() => {
+  resumeToggle()
+}, [])
 
   return (
-    <>
+    <div>
       <div
         className={clsx(
           `fixed bg-[#151515] top-0 h-[30px] w-full z-10`,
@@ -130,6 +133,6 @@ export const Header = () => {
           </div>
         </motion.div>
       </AnimatePresence>
-    </>
+    </div>
   );
 };

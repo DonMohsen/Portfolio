@@ -34,11 +34,11 @@ const Navbar = () => {
           duration: 0.4,
         }}
         className="
-          mt-[60px] md:mt-[60px]  z-[70] absolute w-full h-full bg-transparent  items-center justify-end flex "
+          mt-[60px]  md:mt-[60px]  z-[70] fixed w-full h-full bg-transparent  items-center justify-end flex "
       >
         <div
           onClick={toggleHamburger}
-          className="w-full h-full  bg-transparent flex"
+          className="w-full h-full   bg-transparent flex"
         ></div>
         <div className=" fixed h-full w-[50%] bg-slate-400">
           {webRoutes.map((item: webRoutesType) => (

@@ -15,7 +15,7 @@ const HamburgerMenu = () => {
     toggleHamburger();
   };
   return (
-    <div className="">
+    <div className="z-[100000]">
     <svg
       className={clsx(`ham hamRotate ham1`, hamburgerState && "active")}
       viewBox="0 0 100 100"

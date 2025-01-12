@@ -77,6 +77,7 @@ const RoutesItem = ({ webRoute }: { webRoute: webRoutesType }) => {
               }}
               exit={{
                 y: -60,
+                
               }}
               transition={{
                 y: {
