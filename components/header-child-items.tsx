@@ -30,7 +30,7 @@ const HeaderChildItems = ({items}:{items:webRoutesType[]}) => {
                  className={clsx(`fixed top-[0%]  left-[40%] h-[50%] w-full mt-[50px] flex items-center justify-center bg-black`,)}>
                    {/* {item.text} */}
                    {items.map((item)=>(
-                    <div className='text-white'>
+                    <div key={item.id} className='text-white'>
                         {item.text}
                     </div>
                    ))}

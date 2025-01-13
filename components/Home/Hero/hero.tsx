@@ -8,7 +8,7 @@ const Hero = () => {
          <div className="w-full absolute items-center h-[100vh] justify-center">
     <GridBg/>
     </div>
-    <div className="w-full absolute items-center h-[100vh] justify-center">
+    <div className="w-full min-h-[500px] md:min-h-[700px] absolute items-center h-[100vh] justify-center ">
 
     <InfiniteScrolling/>
     </div>

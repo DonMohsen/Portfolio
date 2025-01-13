@@ -91,7 +91,7 @@ export const InfiniteMovingCards = ({
 
             return (
               <li
-                 className="w-[250px] bg-slate-100 border-none max-md:text-xs  relative rounded-2xl border dark:bg-gradient-to-b from-slate-900 to-slate-700 dark:bg-slate-900  flex-shrink-0  flex items-center justify-center max-md:w-[150px] "
+                 className="w-[250px] bg-slate-100 border-none max-md:text-xs  relative rounded-2xl border dark:bg-gradient-to-b from-slate-800 to-slate-600   flex-shrink-0  flex items-center justify-center max-md:w-[150px] "
             // style={{
             //   background:
             //     "linear-gradient(180deg, var(--slate-600), var(--slate-900)",

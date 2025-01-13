@@ -8,9 +8,9 @@ const HamburgerMenu = () => {
     (state) => state.toggleHamburgerMenuState
   );
   const hamburgerState = useHamburgerMenu((state) => state.hamburgerMenuState);
-  useEffect(() => {
-    hamburgerState===false?document.body.style.overflow = "auto":document.body.style.overflow = "hidden";
-  }, [hamburgerState])
+  // useEffect(() => {
+  //   hamburgerState===false?document.body.style.overflow = "auto":document.body.style.overflow = "hidden";
+  // }, [hamburgerState])
   const handleToggleHamburger = () => {
     toggleHamburger();
   };

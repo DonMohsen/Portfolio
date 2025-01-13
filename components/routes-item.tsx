@@ -7,7 +7,7 @@ import { AnimatePresence, motion, spring } from "framer-motion";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
 import Link from "next/link";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
-const RoutesItem = ({ webRoute }: { webRoute: webRoutesType }) => {
+const RoutesItem = ({ webRoute,className }: { webRoute: webRoutesType,className?:React.ReactNode }) => {
   const { routesChildren, route, isActive, text, filledIcon, emptyIcon, id } =
     webRoute;
   const [openChildren, setOpenChildren] = useState<any>({});
@@ -33,12 +33,33 @@ const RoutesItem = ({ webRoute }: { webRoute: webRoutesType }) => {
     console.log(openChildren);
   };
   return (
-    <div className="ml-2 select-none my-2">
-      <div className="flex  items-center    ">
+    <>
+
+    <motion.div
+    initial={{
+      y: "-100%",
+    }}
+    animate={{
+      opacity: 1,
+      y: 0,
+    }}
+    
+    transition={{
+      y: {
+    
+      },
+      opacity:{duration:0.5},
+      scale:{duration:0.5}
+      // type: "spring",
+      // stiffness: 1000,
+      // damping: 15,
+    }}
+    className={clsx(`ml-2 select-none my-2 flex flex-col items-center  min-h-[35px] justify-center`,className)}>
+      <div className={clsx(`flex  items-center justify-center w-full h-full    `)}>
         <Link
           onClick={closeHamburgerAfterClick}
           href={route}
-          className="flex cursor-pointer hover:font-bold transition-all duration-300"
+          className="flex cursor-pointer items-center justify-start w-full h-full hover:font-bold z-[20]  transition-all duration-300"
         >
           {isActive === true ? (
             <webRoute.filledIcon className="mr-2 w-6 h-6" />
@@ -50,7 +71,7 @@ const RoutesItem = ({ webRoute }: { webRoute: webRoutesType }) => {
         {routesChildren && routesChildren.length && (
           <div
             onClick={() => handleToggleChildren(text)}
-            className="ml-2 cursor-pointer "
+            className="cursor-pointer w-auto h-full flex items-center justify-center "
           >
             {
               <CircleChevronRight
@@ -63,40 +84,17 @@ const RoutesItem = ({ webRoute }: { webRoute: webRoutesType }) => {
           </div>
         )}
       </div>
-      <AnimatePresence>
+    </motion.div>
+    <AnimatePresence>
+
         {routesChildren &&
           openChildren[text] &&
           routesChildren.map((child: webRoutesType) => (
-            <motion.div
-              initial={{
-                y: "-100%",
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              exit={{
-                y: -60,
-                
-              }}
-              transition={{
-                y: {
-              
-                },
-                opacity:{duration:0.5},
-                scale:{duration:0.5}
-                // type: "spring",
-                // stiffness: 1000,
-                // damping: 15,
-              }}
-              className={`ml-3`}
-              key={child.id}
-            >
-              <RoutesItem key={child.id} webRoute={child} />
-            </motion.div>
+            
+            <RoutesItem className="pl-5" key={child.id} webRoute={child} />
           ))}
-      </AnimatePresence>
-    </div>
+          </AnimatePresence>
+          </>
   );
 };
 

@@ -40,7 +40,7 @@ const Navbar = () => {
           onClick={toggleHamburger}
           className="w-full h-full   bg-transparent flex"
         ></div>
-        <div className=" fixed h-full w-[50%] bg-slate-400">
+        <div className=" fixed h-full w-[50%] flex flex-col bg-slate-400">
           {webRoutes.map((item: webRoutesType) => (
             <RoutesItem key={item.id} webRoute={item} />
           ))}

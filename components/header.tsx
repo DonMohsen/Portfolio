@@ -16,13 +16,16 @@ import { X } from "lucide-react";
 import useWebRoutes from "@/app/utils/useWebRoutes";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
 import HeaderChildItems from "./header-child-items";
+import useHamburgerMenu from "@/store/useHamburgerMenu";
 
 export const Header = () => {
   const webRoutes = useWebRoutes();
   const { scrollYProgress } = useScroll();
   const resumeShow = useShowHeader((state) => state.ShowHeaderState);
   const resumeToggle = useShowHeader((state) => state.toggleShowHeaderState);
-
+  const hamburgerMenuState = useHamburgerMenu(
+    (state) => state.hamburgerMenuState
+  );
   // set true for the initial state so that nav bar is visible in the hero section
   const [visible, setVisible] = useState(true);
   //FOR showinf the extra layer of header on top0 or top-7
@@ -33,17 +36,18 @@ export const Header = () => {
     if (typeof current === "number") {
       const direction = current! - scrollYProgress.getPrevious()!;
 
-      if (scrollYProgress.get() < 0.05) {
+      if (scrollYProgress.get() < 0.05&&hamburgerMenuState==false) {
         // also set true for the initial state
         setVisible(true);
         setShowTopZero(false);
       } else {
-        if (direction < 0) {
+        if (direction < 0&&hamburgerMenuState==false) {
           setVisible(true);
           setShowTopZero(false);
-        } else {
-          setVisible(false);
-          setShowTopZero(true);
+        } else  {
+
+        hamburgerMenuState==false&&  setVisible(false);
+        hamburgerMenuState==false&& setShowTopZero(true);
         }
       }
     }
