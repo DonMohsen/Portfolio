@@ -85,7 +85,7 @@ export async function PUT(
     }
   }
   
-  export async function Delete(
+  export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
   ): Promise<NextResponse> {     try {
