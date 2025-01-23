@@ -106,7 +106,7 @@ useEffect(() => {
             duration: 0.2,
           }}
           className={clsx(
-            "bg-[#151515] h-[60px] text-[#dddada]  font-signika flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3  font-extralight items-center justify-between space-x-10"
+            "bg-[#160d1c] h-[60px] text-[#dddada]  font-signika flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3  font-extralight items-center justify-between space-x-10"
           )}
         >
           <div className="flex  items-center justify-center w-full gap-[3%]  max-md:hidden">

@@ -8,10 +8,12 @@ import { MdEmail } from "react-icons/md";
 import { HiOutlineMail } from "react-icons/hi";
 import { LuGithub } from "react-icons/lu";
 import { FaLinkedinIn, FaTelegramPlane } from "react-icons/fa";
+import { PiTelegramLogoBold } from "react-icons/pi";
+import { SlSocialLinkedin } from "react-icons/sl";
 
 const Presentation = () => {
   return (
-    <div className="absolute w-full  z-[60] mx-[5px] h-full flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl">
+    <div className="absolute w-full  z-[60]  h-full flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl">
       <h1 className="text-7xl ">Text Text</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, rem
@@ -21,7 +23,7 @@ const Presentation = () => {
         <Link
           target="_blank"
           rel="noopener noreferrer"
-          className="w-8 h-8 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
+          className="hover:bg-purple-950 dark:hover:bg-purple-200 w-10 h-10 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
           href="https://github.com/MohsenDorado"
         >
           <LuGithub
@@ -33,10 +35,10 @@ const Presentation = () => {
         <Link
           target="_blank"
           rel="noopener noreferrer"
-          className="w-8 h-8 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
+          className="hover:bg-purple-950 dark:hover:bg-purple-200 w-10 h-10 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
           href="https://t.me/donmohsen"
         >
-          <FaTelegramPlane
+          <PiTelegramLogoBold 
             width={100}
             height={100}
             className="w-6 h-6 absolute z-[20] text-white dark:text-black"
@@ -45,7 +47,7 @@ const Presentation = () => {
         <Link
           target="_blank"
           rel="noopener noreferrer"
-          className="w-8 h-8 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
+          className="hover:bg-purple-950 dark:hover:bg-purple-200 w-10 h-10 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
           href="mailto:mohsenkhojastehnezhad@gmail.com"
         >
           <HiOutlineMail
@@ -57,10 +59,10 @@ const Presentation = () => {
         <Link
           target="_blank"
           rel="noopener noreferrer"
-          className="w-8 h-8 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
+          className="hover:bg-purple-950 dark:hover:bg-purple-200 w-10 h-10 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
           href="https://www.linkedin.com/in/mohsen-khojasteh-nezhad"
         >
-          <FaLinkedinIn
+          <SlSocialLinkedin 
             width={100}
             height={100}
             className="w-6 h-6 absolute z-[20] text-white dark:text-black"
@@ -68,7 +70,9 @@ const Presentation = () => {
         </Link>
       </div>
 
-      <Button>Click</Button>
+      <Button 
+      className="bg-black dark:bg-white mt-3 px-10 text-white dark:text-black rounded-xl hover:bg-purple-950 dark:hover:bg-purple-200"
+      >Online chat</Button>
     </div>
   );
 };

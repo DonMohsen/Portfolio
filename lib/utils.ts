@@ -7,4 +7,3 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-export const prisma=new PrismaClient;
