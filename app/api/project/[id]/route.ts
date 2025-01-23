@@ -2,11 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient, ProjectTypes } from "@prisma/client";
 
 const prisma = new PrismaClient();
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const numberId = parseInt(params.id, 10);
+export async function GET(req: Request, context: { params: { id: string } }) {
+  const { id } = context.params;
+
+  const numberId = parseInt(id, 10);
 
   if (isNaN(numberId)) {
     return NextResponse.json({ error: "Invalid project ID." }, { status: 400 });
