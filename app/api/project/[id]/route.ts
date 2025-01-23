@@ -3,11 +3,11 @@ import { PrismaClient, ProjectTypes } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET(
-  { params }: { params: { id: string } }
+export async function GET(req: NextRequest,{ params }: { params: { id: string } }
 ) {
-  const projectId = params;
   const numberId=parseInt(params.id)
+  const body=req.body;
+  
   if (isNaN(numberId)) {
     return NextResponse.json({ error: 'Invalid project ID.' }, { status: 400 });
   }
