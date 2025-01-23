@@ -2,9 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient, ProjectTypes } from "@prisma/client";
 
 const prisma = new PrismaClient();
-export async function GET(req: Request, context: { params: { id: string } }) {
-  const { id } = context.params;
 
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
+  const { id } = await params;
   const numberId = parseInt(id, 10);
 
   if (isNaN(numberId)) {
