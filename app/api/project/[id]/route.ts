@@ -42,13 +42,18 @@ export async function GET(
     );
   }
 }
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-    const projectId = parseInt(params.id);
-  
-    if (isNaN(projectId)) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {  
+    const { id } = await params;
+  const numberId = parseInt(id, 10);
+
+    if (isNaN(numberId)) {
       return NextResponse.json({ error: 'Invalid project ID.' }, { status: 400 });
     }
-    const body = await req.json();
+  
+    const body = await request.json();
 
     try {
       const {
@@ -66,7 +71,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         return NextResponse.json({ error: 'Request body is missing.' }, { status: 400 });
       }
       const updatedProject = await prisma.projects.update({
-        where: { id: projectId },
+        where: { id: numberId },
         data: body, // Directly assign the body to data
         include: { techStack: true }, // Include relations
       });
@@ -80,10 +85,12 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
   }
   
-  export async function DELETE(req:NextRequest,{ params }: { params: { id: string } }) {
-    try {
-      const projectId = params;
-      const numberId=parseInt(params.id)
+  export async function Delete(
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+  ): Promise<NextResponse> {     try {
+    const { id } = await params;
+    const numberId = parseInt(id, 10);
   
       if (isNaN(numberId)) {
         return NextResponse.json({ error: 'Invalid project ID.' }, { status: 400 });
