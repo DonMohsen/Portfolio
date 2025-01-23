@@ -5,3 +5,13 @@ export const navItems = [
     { name: "Contact", link: "#contact" },
   ];
   
+  // type connectOptionsType={
+  //   name:string,
+  //   href:string,
+
+  // }
+  // export const connectOptions=[
+  //   {
+
+  //   }
+  // ]

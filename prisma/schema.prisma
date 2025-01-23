@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectTypes {
+  Practice
+  Copy
+  Forked
+  Real
+}
+
+model Technology {
+  id       Int                      @id @default(autoincrement())
+  name     String
+  projects ProjectsOnTechnologies[]
+  imageUrl String
+}
+
+model Projects {
+  id            Int                      @id @default(autoincrement())
+  createdAt     DateTime                 @default(now())
+  lastUpdatedAt DateTime                 @updatedAt
+  name          String
+  description   String
+  liveLink      String?
+  image         String?
+  competency    Int
+  projectType   ProjectTypes
+  githubLink    String
+  techStack     ProjectsOnTechnologies[]
+}
+
+model ProjectsOnTechnologies {
+  project      Projects   @relation(fields: [projectId], references: [id] ,onDelete:Cascade)
+  projectId    Int // Relation scalar field
+  technology   Technology @relation(fields: [technologyId], references: [id],onDelete:Cascade)
+  technologyId Int // Relation scalar field
+  addedAt      DateTime   @default(now()) // Metadata field
+  addedBy      String // Metadata field for tracking
+
+  @@id([projectId, technologyId]) // Composite key
+}

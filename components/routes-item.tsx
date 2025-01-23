@@ -43,16 +43,21 @@ const RoutesItem = ({ webRoute,className }: { webRoute: webRoutesType,className?
       opacity: 1,
       y: 0,
     }}
+    exit={{
+
+    }
+    }
     
     transition={{
       y: {
+        
     
       },
       opacity:{duration:0.5},
-      scale:{duration:0.5}
-      // type: "spring",
-      // stiffness: 1000,
-      // damping: 15,
+      scale:{duration:0.5},
+      type: "spring",
+      stiffness: 1000,
+      damping: 15,
     }}
     className={clsx(`ml-2 select-none my-2 flex flex-col items-center  min-h-[35px] justify-center`,className)}>
       <div className={clsx(`flex  items-center justify-center w-full h-full    `)}>

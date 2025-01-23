@@ -12,16 +12,7 @@ export function GridBg  () {
       </div>
       
     </div>
-      <div className=" w-full z-[60] mx-[45px] h-auto flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl">
-      <h1 className="text-7xl ">Text Text</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, rem reiciendis aliquam facere quod saepe?</p>
-      <Button>
-        Click
-      </Button>
-      <div>
-        connection
-      </div>
-      </div>
+     
       
     </div>
 
