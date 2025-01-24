@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
   Prisma,
   PrismaClient,
@@ -28,3 +28,22 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    const AllTechs: Technology[] = await prisma.technology.findMany();
+    if (AllTechs) {
+      
+      return NextResponse.json(AllTechs, { status: 200 });
+    }
+    }
+    catch (error) {
+      console.error("Error Finding technology:", error);
+      return NextResponse.json(
+        { error: "An error occurred while Finding all the technologies." },
+        { status: 500 }
+      );
+    }
+  } 
+
+
