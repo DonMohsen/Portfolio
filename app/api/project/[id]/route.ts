@@ -45,18 +45,43 @@ export async function GET(
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-): Promise<NextResponse> {  
-    const { id } = await params;
+): Promise<NextResponse> {
+  const { id } = await params;
   const numberId = parseInt(id, 10);
 
-    if (isNaN(numberId)) {
-      return NextResponse.json({ error: 'Invalid project ID.' }, { status: 400 });
-    }
-  
-    const body = await request.json();
+  if (isNaN(numberId)) {
+    return NextResponse.json({ error: "Invalid project ID." }, { status: 400 });
+  }
 
-    try {
-      const {
+  const body = await request.json();
+  console.log("Request Body:", body); // Debugging
+
+  try {
+    const {
+      name,
+      description,
+      liveLink,
+      image,
+      competency,
+      projectType,
+      githubLink,
+      techStack,
+    } = body;
+
+    if (!body) {
+      return NextResponse.json(
+        { error: "Request body is missing." },
+        { status: 400 }
+      );
+    }
+
+    await prisma.projectsOnTechnologies.deleteMany({
+      where: { projectId: numberId },
+    });
+
+    const updatedProject = await prisma.projects.update({
+      where: { id: numberId },
+      data: {
         name,
         description,
         liveLink,
@@ -64,27 +89,31 @@ export async function PUT(
         competency,
         projectType,
         githubLink,
-        techStack,
-      } = body;
-  
-      if (!body) {
-        return NextResponse.json({ error: 'Request body is missing.' }, { status: 400 });
-      }
-      const updatedProject = await prisma.projects.update({
-        where: { id: numberId },
-        data: body, // Directly assign the body to data
-        include: { techStack: true }, // Include relations
-      });
-      return NextResponse.json(updatedProject, { status: 200 });
-    } catch (error: any) {
-      console.error('Error updating project:', error);
-      if (error.code === 'P2025') {
-        return NextResponse.json({ error: 'Project not found.' }, { status: 404 });
-      }
-      return NextResponse.json({ error: 'Internal server error.' }, { status: 500 });
+        techStack: techStack?.create
+          ? {
+              create: techStack.create.map((entry: any) => ({
+                technologyId: entry.technologyId,
+                addedBy: entry.addedBy,
+              })),
+            }
+          : undefined, 
+      },
+      include: { techStack: { include: { technology: true } } }, 
+    });
+
+    return NextResponse.json(updatedProject, { status: 200 });
+  } catch (error: any) {
+    console.error("Error updating project:", error);
+    if (error.code === "P2025") {
+      return NextResponse.json({ error: "Project not found." }, { status: 404 });
     }
+    return NextResponse.json(
+      { error: error.message || "Internal server error." },
+      { status: 500 }
+    );
   }
-  
+}
+
   export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }

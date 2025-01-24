@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "generate:zod": "zod-prisma-types",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -11,9 +12,12 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@cloudinary/url-gen": "^1.21.0",
+    "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "^6.2.1",
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/react-slot": "^1.1.1",
+    "@tanstack/react-query": "^5.64.2",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -23,12 +27,16 @@
     "mini-svg-data-uri": "^1.4.4",
     "next": "15.1.3",
     "next-themes": "^0.4.4",
+    "prisma-zod-generator": "^0.8.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
     "react-icons": "^5.4.0",
     "sass": "^1.83.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.1",
+    "zod-to-ts": "^1.2.0",
     "zustand": "^5.0.2"
   },
   "devDependencies": {
@@ -41,6 +49,7 @@
     "postcss": "^8",
     "prisma": "^6.2.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "zod-prisma-types": "^3.2.1"
   }
 }
