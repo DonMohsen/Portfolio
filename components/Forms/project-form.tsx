@@ -55,20 +55,24 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
 
   const [creationLoading, setCreationLoading] = useState(false);
   useEffect(() => {
+    project&&
+      setTechStack( project?.techStack.map((tech)=>tech.technology))
+      // console.log("selectedddddd",selectedTechs);
+      
 
-  project?.techStack.forEach((tech) =>
-    setRecievedTechStack((prev) => {
-      // Ensure the array only contains `tech.technology` objects
-      if (prev.some((item) => item.id === tech.technology.id)) {
-        // If the tech item is already in the stack, remove it
-        return [...prev]
-      } else {
-        // Otherwise, add the tech item to the stack
-        return [...prev, tech.technology];
-      }
-    })
-  );
-  setTechStack(recievedTechStack)
+  // project?.techStack.forEach((tech) =>
+  //   setRecievedTechStack((prev) => {
+  //     // Ensure the array only contains `tech.technology` objects
+  //     if (prev.some((item) => item.id === tech.technology.id)) {
+  //       // If the tech item is already in the stack, remove it
+  //       return [...prev]
+  //     } else {
+  //       // Otherwise, add the tech item to the stack
+  //       return [...prev, tech.technology];
+  //     }
+  //   })
+  // );
+  // setTechStack(recievedTechStack)
 
   }, [project]);
 
@@ -170,7 +174,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
               <CloudinaryUploadButton onUpload={handleUpload} />
             </div>
             <img
-              src={imageURL||project?.image  || `/image-placeholder.webp`}
+              src={imageURL||type==='put'&& project?.image  || `/image-placeholder.webp`}
               alt="Uploaded"
               className="w-full h-full max-w-[400px] min-h-[100px] rounded-xl object-cover absolute z-[50] "
             />
@@ -204,7 +208,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
             Name
           </label>
           <input
-            defaultValue={project?.name}
+            defaultValue={type==="put"&& project?.name||""}
             id="name"
             {...register("name")}
             className="block w-full border rounded px-3 py-2"
@@ -294,10 +298,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
             key={tech.id}
               onClick={() => handleTechClick(tech)}
               className={clsx(
-                `rounded-3xl px-4 py-1 cursor-pointer hover:brightness-50 `,
-                recievedTechStack.some((item)=>item.id===tech.id)?'bg-black'
-
-                :techStack.some((item) => item.id === tech.id)
+                `rounded-3xl px-4 py-1 cursor-pointer hover:brightness-50 `,techStack.some((item) => item.id === tech.id)
                   ? "bg-black"
                   : "bg-slate-600"
               )}
@@ -312,9 +313,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           </label> */}
           {/* {project?.techStack.map((tech)=>tech.technology.name).join(", ")} */}
           <input
-            defaultValue={project?.techStack
-              .map((tech) => tech.technology.name)
-              .join(", ")}
+            // defaultValue={project?.techStack
+            //   .map((tech) => tech.technology.name)
+            //   .join(", ")}
             id="techStack"
             value={techStack.map((tech) => tech.name).join(", ")} // Display selected tech names
             disabled

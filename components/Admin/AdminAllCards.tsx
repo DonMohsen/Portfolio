@@ -20,6 +20,7 @@ import { useState } from "react";
 //   }[];
 // };
 const AdminAllCards = () => {
+  const [formType, setFormType] = useState<'put'|'post'>('put')
   const [currentProject, setCurrentProject] = useState<ProjectsWithTechsType>()
     const {isOpen,setFormState,toggleForm}=useProjectForm()
   async function fetchProjects(): Promise<ProjectsWithTechsType[]> {
@@ -34,8 +35,12 @@ const AdminAllCards = () => {
   const openTheForm=(id:number)=>{
     data?.map((project)=>{project.id===id&& setCurrentProject(project)})
     console.log(currentProject);
-    
+    setFormType('put')
     console.log(isOpen);
+    setFormState(true)
+  }
+  const handleAddProject=()=>{
+    setFormType('post')
     setFormState(true)
   }
   return (
@@ -45,7 +50,7 @@ const AdminAllCards = () => {
         {
           isOpen===true&&
           
-          <ProjectForm type='put' project={currentProject}   />
+          <ProjectForm type={formType} project={currentProject}   />
         }
         </AnimatePresence>
       {isLoading && (
@@ -103,6 +108,11 @@ const AdminAllCards = () => {
           </div>
         </div>
       ))}
+      <Button
+      onClick={handleAddProject}
+      >
+        Add
+      </Button>
     </div>
   );
 };
