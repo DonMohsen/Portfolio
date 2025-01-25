@@ -42,8 +42,9 @@ export default function CloudinaryUploadButton({ onUpload }: { onUpload: (url: s
   };
 
   return (
-    <div>
+    <div className='w-full h-full'>
       <input
+      className='w-full h-full '
         type="file"
         accept="image/*"
         onChange={handleUpload}

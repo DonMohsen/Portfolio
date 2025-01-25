@@ -8,6 +8,9 @@ import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import { Button } from "../ui/button";
 import { Pencil, Trash } from "lucide-react";
 import useProjectForm from "@/store/useProjectForm";
+import ProjectForm from "../Forms/project-form";
+import { AnimatePresence } from "framer-motion";
+import { useState } from "react";
 // export type ProjectsWithTechsType = Projects & {
 //   techStack: {
 //     technology: {
@@ -17,6 +20,7 @@ import useProjectForm from "@/store/useProjectForm";
 //   }[];
 // };
 const AdminAllCards = () => {
+  const [currentProject, setCurrentProject] = useState<ProjectsWithTechsType>()
     const {isOpen,setFormState,toggleForm}=useProjectForm()
   async function fetchProjects(): Promise<ProjectsWithTechsType[]> {
     const response = await axios.get("/api/project");
@@ -27,12 +31,23 @@ const AdminAllCards = () => {
     queryKey: ["todos"],
     queryFn: fetchProjects,
   });
-  const openTheForm=()=>{
+  const openTheForm=(id:number)=>{
+    data?.map((project)=>{project.id===id&& setCurrentProject(project)})
+    console.log(currentProject);
+    
     console.log(isOpen);
     setFormState(true)
   }
   return (
     <div className="min-h-[110vh] gap-4 flex flex-col pt-[100px]">
+      <AnimatePresence>
+
+        {
+          isOpen===true&&
+          
+          <ProjectForm type='put' project={currentProject}   />
+        }
+        </AnimatePresence>
       {isLoading && (
         <div className="w-full pt-[100px] h-[200px] animate-pulse bg-slate-500 flex items-center justify-center"></div>
       )}
@@ -77,7 +92,7 @@ const AdminAllCards = () => {
             </div>
             <div className=" flex w-full gap-4 items-center justify-end pr-5 ">
                 <Button
-                onClick={() => openTheForm()}
+                onClick={() => openTheForm(project.id)}
                 className="">
                 <Pencil   />
                 </Button>

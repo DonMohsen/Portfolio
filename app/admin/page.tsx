@@ -4,21 +4,24 @@ import ReactQueryProvider from '../providers/react-query-provider'
 import AdminAllCards from '@/components/Admin/AdminAllCards'
 import ProjectForm from '@/components/Forms/project-form'
 import useProjectForm from '@/store/useProjectForm'
+import { AnimatePresence } from 'framer-motion'
 
 const AdminPage = () => {
     const {isOpen,setFormState,toggleForm}=useProjectForm()
 
   return (
+    <ReactQueryProvider>
 
     <div>
-        {
-            isOpen===true&&
-        <ProjectForm/>
-        }
-        <ReactQueryProvider>
+        
+        {/* {
+          isOpen===true&&
+          <ProjectForm type='post'   />
+        } */}
             <AdminAllCards/>
-        </ReactQueryProvider>
+    
     </div>
+        </ReactQueryProvider>
   )
 }
 

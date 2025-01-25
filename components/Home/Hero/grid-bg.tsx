@@ -3,7 +3,7 @@ import React from "react";
 import Presentation from "../Presentation";
 import { InfiniteMovingCards } from "./Infinite-cards";
 import { InfiniteScrolling } from "./infinite-scrolling";
- 
+
 export function GridBg  () {
   return (
     <div className="h-[100vh] min-h-[600px]  z-[50]      w-full relative flex items-center justify-center" >
@@ -17,7 +17,7 @@ export function GridBg  () {
     </div>
     <Presentation/>
     <InfiniteScrolling />
-      
+ 
     </div>
 
   );
