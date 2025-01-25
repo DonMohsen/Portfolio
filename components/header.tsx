@@ -28,6 +28,7 @@ export const Header = () => {
   );
   // set true for the initial state so that nav bar is visible in the hero section
   const [visible, setVisible] = useState(true);
+  const [hoveredRouteItem, setHoveredRouteItem] = useState<webRoutesType>();
   //FOR showinf the extra layer of header on top0 or top-7
   const [showTopZero, setShowTopZero] = useState(false);
 
@@ -36,25 +37,24 @@ export const Header = () => {
     if (typeof current === "number") {
       const direction = current! - scrollYProgress.getPrevious()!;
 
-      if (scrollYProgress.get() < 0.05&&hamburgerMenuState==false) {
+      if (scrollYProgress.get() < 0.05 && hamburgerMenuState == false) {
         // also set true for the initial state
         setVisible(true);
         setShowTopZero(false);
       } else {
-        if (direction < 0&&hamburgerMenuState==false) {
+        if (direction < 0 && hamburgerMenuState == false) {
           setVisible(true);
           setShowTopZero(false);
-        } else  {
-
-        hamburgerMenuState==false&&  setVisible(false);
-        hamburgerMenuState==false&& setShowTopZero(true);
+        } else {
+          hamburgerMenuState == false && setVisible(false);
+          hamburgerMenuState == false && setShowTopZero(true);
         }
       }
     }
   });
-useEffect(() => {
-  resumeToggle()
-}, [])
+  useEffect(() => {
+    resumeToggle();
+  }, []);
 
   return (
     <div>
@@ -109,25 +109,76 @@ useEffect(() => {
             "bg-[#160d1c] h-[60px] text-[#dddada]  font-signika flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3  font-extralight items-center justify-between space-x-10"
           )}
         >
-          <div className="flex  items-center justify-center w-full gap-[3%]  max-md:hidden">
-            {webRoutes.map((item: webRoutesType) => (
-              <div key={item.id} className=" group">
-                <Link
-                  href={item.route}
-                  className={clsx(
-                    " dark:text-neutral-50 items-center  flex space-x-1 py-3 px-4 dark:hover:text-neutral-300 hover:text-neutral-500"
-                  )}
+          <div className="flex  items-center justify-center w-full relative gap-[3%]  max-md:hidden">
+            <AnimatePresence>
+              {webRoutes.map((item: webRoutesType) => (
+                <div
+
+                  onMouseEnter={() => setHoveredRouteItem(item)}
+                  key={item.id}
+                  className=" group "
                 >
-                  <span className=" text-xs !cursor-pointer">{item?.text}</span>
-                </Link>
-                {item.routesChildren && (
-                  <div
-                    className="hidden group-hover:block">
-                    <HeaderChildItems items={item.routesChildren} />
-                  </div>
-                )}
-              </div>
-            ))}
+                  <Link
+                    href={item.route}
+                    className={clsx(
+                      " dark:text-neutral-50 items-center  flex space-x-1 py-3 px-4 dark:hover:text-neutral-300 hover:text-neutral-500"
+                    )}
+                  >
+                    <span className=" text-xs !cursor-pointer">
+                      {item?.text}
+                    </span>
+                  </Link>
+                    <AnimatePresence>
+
+                  {item.routesChildren && hoveredRouteItem?.id === item.id && (
+                      <motion.div
+                      onMouseLeave={()=>setHoveredRouteItem(undefined)}
+
+                      initial={{
+                        opacity:0
+                      }}
+                      animate={{
+                        opacity:1
+                      }}
+                      exit={{
+                        opacity:0
+                      }}
+                      transition={{
+                        ease:"easeInOut",
+                        duration: 0.1,
+                      }}
+                      className="fixed top-[50px] w-[100%] right-[0%]">
+                        <div className="bg-[#160d1c]  h-[300px] flex items-center flex-col justify-start ">
+                          <div className="text-3xl font-extrabold mt-6">
+                            {item.text}
+                          </div>
+                          <div className="w-full  flex items-start justify-center gap-10 flex-wrap mt-10">
+                            {item.routesChildren &&
+                              item.routesChildren.map((child) => (
+                                <>
+                                  <div className="flex items-center flex-col justify-center min-w-[200px] font-medium ">
+                                    <div>{child.text}</div>
+                                    <div>
+                                      {child.routesChildren?.map((child) => (
+                                        <>
+                                          <div className="flex items-center justify-center min-w-[200px] text-xs font-extralight mt-10 ">
+                                            {child.text}
+                                          </div>
+                                        </>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </>
+                              ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                  )}
+                                      </AnimatePresence>
+
+                </div>
+              ))}
+            </AnimatePresence>
             <ThemeToggle />
           </div>
 

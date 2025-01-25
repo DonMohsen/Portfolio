@@ -57,23 +57,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   useEffect(() => {
     project&&
       setTechStack( project?.techStack.map((tech)=>tech.technology))
-      // console.log("selectedddddd",selectedTechs);
-      
-
-  // project?.techStack.forEach((tech) =>
-  //   setRecievedTechStack((prev) => {
-  //     // Ensure the array only contains `tech.technology` objects
-  //     if (prev.some((item) => item.id === tech.technology.id)) {
-  //       // If the tech item is already in the stack, remove it
-  //       return [...prev]
-  //     } else {
-  //       // Otherwise, add the tech item to the stack
-  //       return [...prev, tech.technology];
-  //     }
-  //   })
-  // );
-  // setTechStack(recievedTechStack)
-
+if (type==='post') {
+  setTechStack([])
+}
   }, [project]);
 
   const {
@@ -131,6 +117,14 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   }, [techStack, setValue]);
 
   const { isOpen, setFormState, toggleForm } = useProjectForm();
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = ""; // Reset to default
+    }
+  }, [isOpen]);
+
   const handleTechClick = (tech: Technology) => {
     setTechStack((prevStack) => {
    
@@ -143,12 +137,12 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
       }
     });
   };
-  useEffect(() => {
-    console.log(techStack);
-  }, [techStack]);
+  // useEffect(() => {
+  //   console.log(techStack);
+  // }, [techStack]);
 
   return (
-    <div className="absolute w-full h-full bg-transparent z-[200000]  flex items-center justify-center">
+    <div className="fixed w-full h-full bg-transparent top-0 z-[200000]  flex items-center justify-center overflow-hidden">
       <div
         onClick={() => setFormState(false)}
         className="w-full h-full bg-transparent absolute "
@@ -157,11 +151,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
       <motion.form
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0, opacity: 0 }}
+        // exit={{ scale: 0, opacity: 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         key="projectform"
         onSubmit={handleSubmit(onSubmit)}
-        className="relative bg-slate-800 rounded-lg    h-[70%] w-[80%] flex items-center justify-start flex-col pt-10 md:px-10 max-md:px-2"
+        className="relative bg-slate-800 rounded-lg    h-[70%] w-[80%] max-sm:w-full max-sm:h-[85%] flex items-center justify-start flex-col pt-10 md:px-10 max-md:px-2"
       >
         <CircleX
           onClick={() => setFormState(false)}
@@ -341,3 +335,16 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   );
 };
 export default ProjectForm;
+//!  1.style for deployment ready app(form,buttons,...)                                   2        
+//!  2.ask before close or save                                                           1.5
+//!  3.behavior after saved                                                               1.5
+//!  4.loading state of forms                                                             2
+//!  5.simple auth without 0auth etc... just protect admin                                2
+//!  6.Projects page with client side loading                                             2
+//!  7.projects/[id] and style                                                            2
+//!  8.why images dont load?????????????????                                              1.5
+//!  9.desktop header fix and style                                                       1.5
+//!  10.Create navigation tool (?page=1&s=react) and filtering the projects Not cliently  4
+
+
+//!  All       In           25  Jan                                                       20

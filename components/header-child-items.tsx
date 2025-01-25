@@ -1,42 +1,36 @@
-"use client"
-import { webRoutesType } from '@/app/Types/webRoutesTypes'
-import clsx from 'clsx'
-import { AnimatePresence, motion } from 'framer-motion'
-import React, { useState } from 'react'
+"use client";
+import { webRoutesType } from "@/app/Types/webRoutesTypes";
+import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useState } from "react";
 
-const HeaderChildItems = ({items}:{items:webRoutesType[]}) => {
-    //   const [openChildren, setOpenChildren] = useState<any>({});
-    
+const HeaderChildItems = ({ item }: { item: webRoutesType }) => {
   return (
-    <AnimatePresence>
-   
+    <div className="fixed top-[50px] w-[100%] right-[0%]">
+      <div className="bg-[#160d1c]  h-[300px] flex items-center flex-col justify-start ">
+        <div className="text-3xl font-extrabold mt-6">{item.text}</div>
+        <div className="w-full  flex items-start justify-center gap-10 flex-wrap mt-10">
+          {item.routesChildren &&
+            item.routesChildren.map((child) => (
+              <>
+                <div className="flex items-center flex-col justify-center min-w-[200px] font-medium ">
+                  <div>{child.text}</div>
+                  <div>
+                    {child.routesChildren?.map((child) => (
+                      <>
+                        <div className="flex items-center justify-center min-w-[200px] text-xs font-extralight mt-10 ">
+                          {child.text}
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                </div>
+              </>
+            ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-                 <motion.div
-                      initial={{
-                        opacity: 0,
-                        y: -20,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                      }}
-                    //   exit={{
-                    //     opacity: 0,
-                    //     y: -20,
-                    //   }}
-                      transition={{
-                        duration:0.5
-                      }}
-                 className={clsx(`fixed top-[0%]  left-[40%] h-[50%] w-full mt-[50px] flex items-center justify-center bg-black`,)}>
-                   {/* {item.text} */}
-                   {items.map((item)=>(
-                    <div key={item.id} className='text-white'>
-                        {item.text}
-                    </div>
-                   ))}
-                 </motion.div>
-                 </AnimatePresence>
-  )
-}
-
-export default HeaderChildItems
+export default HeaderChildItems;
