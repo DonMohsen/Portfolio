@@ -151,7 +151,7 @@ if (type==='post') {
       <motion.form
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        // exit={{ scale: 0, opacity: 0 }}
+        exit={{ scale: 0, opacity: 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         key="projectform"
         onSubmit={handleSubmit(onSubmit)}
