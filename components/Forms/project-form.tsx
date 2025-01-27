@@ -225,7 +225,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
             />
           </div>
           {/* //!Enum project types */}
-          <div className="w-full p-10">
+          <div className="w-full py-10 px-2">
            
       
 
@@ -234,7 +234,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
                 {errors.projectType.message}
               </p>
             )}
-          <div className=" w-full ">
+          <div className=" w-full flex flex-col items-start justify-start h-full  ">
            <p>
             Competency
            </p>
@@ -253,6 +253,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   )}
 />
            </div>
+           <div className="w-full  flex-col flex items-end justify-center gap-2  ">
+
            <p className="text-xs m-1">
 
            Project type
@@ -260,13 +262,14 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
            <select
               id="status"
               {...register("projectType", { required: "Status is required" })}
-            >
+              >
               {Object.values(ProjectTypes).map((type) => (
                 <option key={type} value={type}>
                   {type}
                 </option>
               ))}
             </select>
+              </div>
           </div>
         </div>
         {errors.image && (
@@ -513,14 +516,14 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
               key={tech.id}
               onClick={() => handleTechClick(tech)}
               className={clsx(
-                `rounded-3xl px-4 py-1 cursor-pointer hover:brightness-50 `,
+                `rounded-3xl px-4 py-1 max-md:text-sm max-md:px-3 max-md:py-1 cursor-pointer hover:brightness-50 `,
                 techStack.some((item) => item.id === tech.id)
                   ? "bg-black"
                   : "bg-slate-600"
               )}
             >
               <div className="flex gap-2 items-center justify-center">
-                <img className="w-8 h-8" src={tech.imageUrl} alt={tech.name} />
+                <img className="w-8 h-8 max-md:w-5 max-md:h-5" src={tech.imageUrl} alt={tech.name} />
                 {tech.name}
               </div>
             </div>
