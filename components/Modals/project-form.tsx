@@ -14,6 +14,11 @@ import clsx from "clsx";
 import { ProjectFormProps } from "@/app/Types/PropsTypes";
 import TextField from "@mui/material/TextField";
 import { InputBase, Slider, useTheme } from "@mui/material";
+import ConfirmModal, { ModalEnum } from "./confirm-modal";
+import useConfirmModal from "@/store/useConfirmModal";
+import ButtonLoading from "../Loadings/button-loading";
+import toast from "react-hot-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const FormSchema = z.object({
   name: z.string().nonempty("Name is required"),
@@ -74,86 +79,116 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
   });
+  const askFromModal = () => {
+    setModalState(true);
+  };
+  const { toast } = useToast(); // Access the toast function
   const onSubmit = (formData: FormData) => {
-    if (type==="post") {
-      
-    
-    try {
-      const techStackToSubmit = techStack.map((tech) => ({
-        technologyId: tech.id,
-        addedBy: tech.name,
-      }));
-
-      const formPayload = {
-        ...formData,
-        techStack: {
-          create: techStackToSubmit,
-        },
-      };
-
-      console.log(formPayload);
-      setCreationLoading(true);
-      axios
-        .post("/api/project/create", formPayload)
-        .then((response) => {
-          console.log("Project submitted:", response);
-        })
-        .catch((error) => {
-          console.error("Error submitting project:", error);
-        })
-        .finally(() => {
-          setCreationLoading(false);
+  
+    if (type === "post") {
+      try {
+        const techStackToSubmit = techStack.map((tech) => ({
+          technologyId: tech.id,
+          addedBy: tech.name,
+        }));
+  
+        const formPayload = {
+          ...formData,
+          techStack: {
+            create: techStackToSubmit,
+          },
+        };
+  
+        setCreationLoading(true);
+  
+        axios
+          .post("/api/project/create", formPayload)
+          .then((response) => {
+            toast({
+              title: "Success",
+              description: "Project successfully created! 🎉",
+            });
+            console.log("Project submitted:", response);
+          })
+          .catch((error) => {
+            toast({
+              title: "Error",
+              description: "Failed to create project. Please try again.",
+              variant: "destructive", // Red styling for errors
+            });
+            console.error("Error submitting project:", error);
+          })
+          .finally(() => {
+            setCreationLoading(false);
+            setModalState(false);
+          });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred. Please try again.",
+          variant: "destructive",
         });
-    } catch (error) {
-      console.error("Error in form submission:", error);
-    }
-  }
-  else if (type==="put") {
-    try {
-      const techStackToSubmit = techStack.map((tech) => ({
-        technologyId: tech.id,
-        addedBy: tech.name,
-      }));
-
-      const formPayload = {
-        ...formData,
-        techStack: {
-          create: techStackToSubmit,
-        },
-      };
-
-      console.log(formPayload);
-      setCreationLoading(true);
-      axios
-        .put(`/api/project/${project?.id}`, formPayload)
-        .then((response) => {
-          console.log("Project submitted:", response);
-        })
-        .catch((error) => {
-          console.error("Error submitting project:", error);
-        })
-        .finally(() => {
-          setCreationLoading(false);
+        console.error("Error in form submission:", error);
+      }
+    } else if (type === "put") {
+      try {
+        const techStackToSubmit = techStack.map((tech) => ({
+          technologyId: tech.id,
+          addedBy: tech.name,
+        }));
+  
+        const formPayload = {
+          ...formData,
+          techStack: {
+            create: techStackToSubmit,
+          },
+        };
+  
+        setCreationLoading(true);
+  
+        axios
+          .put(`/api/project/${project?.id}`, formPayload)
+          .then((response) => {
+            toast({
+              title: "Success",
+              description: "Project successfully updated! 🎉",
+            });
+            console.log("Project submitted:", response);
+          })
+          .catch((error) => {
+            toast({
+              title: "Error",
+              description: "Failed to update project. Please try again.",
+              variant: "destructive",
+            });
+            console.error("Error submitting project:", error);
+          })
+          .finally(() => {
+            setCreationLoading(false);
+            setModalState(false);
+          });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred. Please try again.",
+          variant: "destructive",
         });
-    } catch (error) {
-      console.error("Error in form submission:", error);
+        console.error("Error in form submission:", error);
+      }
     }
- }
-  }
+  };
+  
   const handleUpload = (url: string) => {
     setImageURL(url); // Update local state
     setValue("image", url, { shouldValidate: true }); // Update React Hook Form state
   };
   useEffect(() => {
-    if (project?.image&&type==="put") {
-      setImageURL(project.image)
-      console.log(imageURL,"urllllllllllllllllll");
+    if (project?.image && type === "put") {
+      setImageURL(project.image);
       setValue("image", project?.image, { shouldValidate: true }); // Update React Hook Form state
     }
-  
+  }, [project, type]);
 
-  }, [project,type])
-  
   useEffect(() => {
     // Map through the selected technologies and update the form field 'techStack'
     const techStackToSubmit = techStack.map((tech) => ({
@@ -165,6 +200,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   }, [techStack, setValue]);
 
   const { isOpen, setFormState, toggleForm } = useProjectForm();
+  const { isModalOpen, setModalState, toggleModal } = useConfirmModal();
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -184,14 +220,14 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
       }
     });
   };
-  // useEffect(() => {
-  //   console.log(techStack);
-  // }, [techStack]);
 
+  const handleClickOutsideOfForm = () => {
+    isModalOpen ? setModalState(false) : setFormState(false);
+  };
   return (
-    <div className="fixed w-full h-full bg-black bg-opacity-75 top-0 z-[200000]  flex items-center justify-center overflow-hidden">
+    <div className="fixed  w-full h-full bg-black bg-opacity-75 top-0 z-[20000]  flex items-center justify-center overflow-hidden">
       <div
-        onClick={() => setFormState(false)}
+        onClick={handleClickOutsideOfForm}
         className="w-full h-full bg-transparent absolute "
       ></div>
 
@@ -205,7 +241,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
         className="relative bg-white sm:rounded-lg dark:bg-[#271731]    h-[85%] w-[80%] max-md:w-full max-md:h-[100%] flex items-center justify-start flex-col pt-10 md:px-10 max-md:px-2"
       >
         <CircleX
-          onClick={() => setFormState(false)}
+          onClick={handleClickOutsideOfForm}
           className="absolute text-red-600 top-4 right-4 cursor-pointer hover:fill-red-50 "
         />
         <div className="flex items-start w-full min-h-[100px] gap-5 justify-between h-[150px] max-sm:h-[90px] ">
@@ -226,50 +262,42 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           </div>
           {/* //!Enum project types */}
           <div className="w-full py-10 px-2">
-           
-      
-
             {errors.projectType && (
               <p className="text-red-500 text-sm">
                 {errors.projectType.message}
               </p>
             )}
-          <div className=" w-full flex flex-col items-start justify-start h-full  ">
-           <p>
-            Competency
-           </p>
-           <Controller
-           defaultValue={type==="put"?project?.competency:0}
-  name="competency"
-  control={control}
-  render={({ field }) => (
-    <Slider
-      {...field}
-      value={field.value} // Bind the value directly to the form state
-      onChange={(_, value) => field.onChange(value)} // Update the form state when slider value changes
-      aria-label="Competency Slider"
-      valueLabelDisplay="auto"
-    />
-  )}
-/>
-           </div>
-           <div className="w-full  flex-col flex items-end justify-center gap-2  ">
-
-           <p className="text-xs m-1">
-
-           Project type
-           </p>
-           <select
-              id="status"
-              {...register("projectType", { required: "Status is required" })}
+            <div className=" w-full flex flex-col items-start justify-start h-full  ">
+              <p>Competency</p>
+              <Controller
+                defaultValue={type === "put" ? project?.competency : 0}
+                name="competency"
+                control={control}
+                render={({ field }) => (
+                  <Slider
+                    {...field}
+                    value={field.value} // Bind the value directly to the form state
+                    onChange={(_, value) => field.onChange(value)} // Update the form state when slider value changes
+                    aria-label="Competency Slider"
+                    valueLabelDisplay="auto"
+                  />
+                )}
+              />
+            </div>
+            <div className="w-full  flex-col flex items-end justify-center gap-2  ">
+              <p className="text-xs m-1">Project type</p>
+              <select
+                className="z-[2000000]"
+                id="status"
+                {...register("projectType", { required: "Status is required" })}
               >
-              {Object.values(ProjectTypes).map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-              </div>
+                {Object.values(ProjectTypes).map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
         {errors.image && (
@@ -328,7 +356,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           </div>
           <div className="w-full max-sm:pt-5 ">
             <TextField
-            className="w-full"
+              className="w-full"
               sx={{
                 // Input text color (ensure it overrides all styles)
                 "& .MuiInputBase-input": {
@@ -379,11 +407,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
             />
           </div>
         </div>
-            <div className="sm:flex gap-10 sm:justify-between w-full sm:mt-10 ">
-
-            <div className="w-full max-sm:pt-5 ">
+        <div className="sm:flex gap-10 sm:justify-between w-full sm:mt-10 ">
+          <div className="w-full max-sm:pt-5 ">
             <TextField
-            className="w-full"
+              className="w-full"
               sx={{
                 // Input text color (ensure it overrides all styles)
                 "& .MuiInputBase-input": {
@@ -430,12 +457,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
               id="livelink"
               label="Live link"
               variant="outlined"
-              
             />
           </div>
           <div className="w-full max-sm:pt-5 ">
             <TextField
-            className="w-full"
+              className="w-full"
               sx={{
                 // Input text color (ensure it overrides all styles)
                 "& .MuiInputBase-input": {
@@ -482,10 +508,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
               id="githubLink"
               label="Github link"
               variant="outlined"
-              
             />
           </div>
-        </div>  
+        </div>
         <div>
           <input
             type="hidden"
@@ -499,18 +524,17 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           />
         </div>
         <div className="flex max-w-[100%] flex-wrap text-center items-center justify-center gap-4 mt-5">
-          {isLoading&&
-          Array.from({ length: 10 }).map((_, index) => (
-            <div
-              key={index}
-              className="rounded-3xl px-4 py-1 bg-gray-300 animate-pulse"
-            >
-              <div className="flex gap-2 items-center justify-center h-[30px] w-[90px]">
-                {/* <div className="w-8 h-8 bg-gray-400 rounded-full"></div> */}
+          {isLoading &&
+            Array.from({ length: 10 }).map((_, index) => (
+              <div
+                key={index}
+                className="rounded-3xl px-4 py-1 bg-gray-300 animate-pulse"
+              >
+                <div className="flex gap-2 items-center justify-center h-[30px] w-[90px]">
+                  {/* <div className="w-8 h-8 bg-gray-400 rounded-full"></div> */}
+                </div>
               </div>
-            </div>
-          ))
-          }
+            ))}
           {data?.map((tech) => (
             <div
               key={tech.id}
@@ -523,41 +547,79 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
               )}
             >
               <div className="flex gap-2 items-center justify-center">
-                <img className="w-8 h-8 max-md:w-5 max-md:h-5" src={tech.imageUrl} alt={tech.name} />
+                <img
+                  className="w-8 h-8 max-md:w-5 max-md:h-5"
+                  src={tech.imageUrl}
+                  alt={tech.name}
+                />
                 {tech.name}
               </div>
             </div>
           ))}
         </div>
         <div className="mt-4">
-       
-      {errors.competency && (
+          {/* {errors.competency && (
         <p className="text-red-500 text-sm">{errors.competency.message}</p>
-      )}
-          {/* <label htmlFor="techStack" className="block text-sm font-medium">
-            Selected Technologies
-          </label> */}
-          {/* {project?.techStack.map((tech)=>tech.technology.name).join(", ")} */}
-          <input
-            // defaultValue={project?.techStack
-            //   .map((tech) => tech.technology.name)
-            //   .join(", ")}
+      )} */}
+          {/* <input
+            
             id="techStack"
             value={techStack.map((tech) => tech.name).join(", ")} // Display selected tech names
             disabled
             className=" w-full border rounded px-3 py-2 hidden"
-          />
+          /> */}
           {errors.techStack && (
             <p className="text-red-500 text-sm">{errors.techStack.message}</p>
           )}
         </div>
-        <div>{recievedTechStack.map((tech) => tech.name)}</div>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-600 w-full text-white rounded hover:bg-blue-700"
+        <div
+          onClick={askFromModal}
+          className="px-4 py-2 flex items-center justify-center  bg-blue-600 w-full text-white rounded hover:bg-blue-700"
         >
-          {creationLoading ? "loading" : "submit"}
-        </button>
+          {type === "post" ? "Create" : "Edit"}
+          {/* {creationLoading ? "loading" : "submit"} */}
+        </div>
+        {isModalOpen && (
+          <ConfirmModal type={ModalEnum.Add}>
+            <div className="w-full h-full flex flex-col">
+              <div className="flex-1">
+                <h2 className="pt-2 font-extrabold text-2xl tracking-tighter">{`${
+                  type === "post" ? "Create" : "Edit"
+                } project`}</h2>
+              </div>
+              <div className="flex-1">
+                <p>
+                  {`Are you sure to ${
+                    type === "post" ? "create" : "edit"
+                  } this project?`}
+                </p>
+              </div>
+
+              <div className="w-full flex items-center gap-4 p-3 justify-center">
+                <button
+                  type="submit"
+                  className="px-4 py-2 h-[50px] bg-blue-600 w-full text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out flex items-center justify-center"
+                  disabled={creationLoading}
+                  aria-busy={creationLoading}
+                >
+                  {creationLoading ? (
+                    <ButtonLoading />
+                  ) : type === "put" ? (
+                    "Submit"
+                  ) : (
+                    "Create"
+                  )}
+                </button>
+                <div
+                  onClick={() => setModalState(false)}
+                  className="px-4 py-2 h-[50px] flex items-center justify-center cursor-pointer bg-red-600 w-full text-white rounded hover:bg-red-700"
+                >
+                  Cancel
+                </div>
+              </div>
+            </div>
+          </ConfirmModal>
+        )}
       </motion.form>
     </div>
   );

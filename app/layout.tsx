@@ -5,6 +5,7 @@ import { navItems } from "@/public/data";
 import { ThemeProvider } from "./providers/theme-provider";
 import { Header } from "@/components/header";
 import Navbar from "@/components/navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,7 +28,11 @@ export default function RootLayout({
             <Navbar/>
           </div>
           {children}
+          <Toaster
+          
+          />
         </ThemeProvider>
+    
       </body>
     </html>
   );

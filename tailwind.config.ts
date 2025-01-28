@@ -19,6 +19,9 @@ export default {
   ],
   theme: {
   	extend: {
+		zIndex: {
+			'max': '99999999999', // Add a custom max z-index value
+		  },
 		animation: {
 			scroll:
 			  "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",

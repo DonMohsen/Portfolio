@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactQueryProvider from '../providers/react-query-provider'
 import AdminAllCards from '@/components/Admin/AdminAllCards'
-import ProjectForm from '@/components/Forms/project-form'
+import ProjectForm from '@/components/Modals/project-form'
 import useProjectForm from '@/store/useProjectForm'
 import { AnimatePresence } from 'framer-motion'
 

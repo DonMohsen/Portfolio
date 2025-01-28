@@ -8,9 +8,10 @@ import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import { Button } from "../ui/button";
 import { Pencil, Trash } from "lucide-react";
 import useProjectForm from "@/store/useProjectForm";
-import ProjectForm from "../Forms/project-form";
+import ProjectForm from "../Modals/project-form";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import ConfirmModal from "../Modals/confirm-modal";
 // export type ProjectsWithTechsType = Projects & {
 //   techStack: {
 //     technology: {
@@ -50,6 +51,7 @@ const AdminAllCards = () => {
         <Button
         className="bg-green-400 hover:bg-green-300 w-[50%] float items-center justify-center"
         onClick={handleAddProject}>Add</Button>
+
       <AnimatePresence>
         {isOpen === true && (
           <ProjectForm type={formType} project={currentProject} />
