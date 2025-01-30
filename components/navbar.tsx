@@ -36,7 +36,7 @@ const Navbar = () => {
               stiffness: 400,
               damping: 30,
             }}
-            className="fixed h-full w-[60%] md:w-[40%] lg:w-[30%] bg-white shadow-xl flex flex-col px-4 py-6"
+            className="fixed h-full w-[85%] md:w-[40%] lg:w-[30%] bg-white dark:bg-[#160d1c] shadow-xl flex flex-col px-4 py-6"
           >
             {webRoutes.map((item: webRoutesType) => (
               <RoutesItem key={item.id} webRoute={item} />

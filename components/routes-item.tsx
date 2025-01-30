@@ -43,7 +43,7 @@ const RoutesItem = ({ webRoute, className }: { webRoute: webRoutesType; classNam
         <motion.div
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400, damping: 15 }}
-          className="flex items-center justify-between w-full px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition cursor-pointer"
+          className="flex items-center justify-between w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-black dark:hover:bg-slate-800 hover:bg-gray-200 transition cursor-pointer"
         >
           <Link onClick={closeHamburgerAfterClick} href={route} className="flex items-center space-x-3">
             {isActive ? <webRoute.filledIcon className="w-6 h-6 text-blue-500" /> : <webRoute.emptyIcon className="w-6 h-6 text-gray-500" />}

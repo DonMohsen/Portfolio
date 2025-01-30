@@ -375,7 +375,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           </span>
         </div>
         <Controller
-        defaultValue={project?.competency}
+        defaultValue={type==="put"?project?.competency:0}
           name="competency"
           control={control}
           render={({ field }) => (
@@ -402,7 +402,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           Project Type
         </label>
         <select
-        defaultValue={project?.projectType}
+        defaultValue={type==="put"?project?.projectType:"Practice"}
           id="projectType"
           {...register("projectType")}
           className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
@@ -423,7 +423,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   {/* Name & Description Fields */}
   <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
     <TextField
-    defaultValue={project?.name}
+    defaultValue={type==="put"?project?.name:""}
       fullWidth
       label="Project Name"
       error={!!errors.name}
@@ -435,7 +435,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
       {...register("name")}
     />
     <TextField
-    defaultValue={project?.description}
+    defaultValue={type==="put"?project?.description:""}
       fullWidth
       label="Description"
       multiline
@@ -450,7 +450,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   {/* Links Section */}
   <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
     <TextField
-    defaultValue={project?.liveLink}
+    defaultValue={type==="put"?project?.liveLink:""}
       fullWidth
       label="Live URL"
       error={!!errors.liveLink}
@@ -459,7 +459,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
       {...register("liveLink")}
     />
     <TextField
-    defaultValue={project?.githubLink}
+    defaultValue={type==="put"?project?.githubLink:""}
       fullWidth
       label="GitHub URL"
       error={!!errors.githubLink}
