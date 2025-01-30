@@ -132,7 +132,7 @@ export async function PUT(
         },
       });
   
-      return NextResponse.json({ message: `Project with ID ${numberId} deleted successfully` }, { status: 200 });
+      return NextResponse.json({ message: `Project with ID ${numberId} deleted successfully` ,deleted}, { status: 200 });
     } catch (error) {
       console.error('Error deleting project:', error);
       return NextResponse.json({ error: 'An error occurred while deleting the project.' }, { status: 500 });

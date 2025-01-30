@@ -155,20 +155,21 @@ export const Header = () => {
                           <div className="w-full  flex items-start justify-center gap-10 flex-wrap mt-10">
                             {item.routesChildren &&
                               item.routesChildren.map((child) => (
-                                <>
-                                  <div className="flex items-center flex-col justify-center min-w-[200px] font-medium ">
+                                  <div
+                                  key={child.id}
+                                  className="flex items-center flex-col justify-center min-w-[200px] font-medium ">
                                     <div>{child.text}</div>
                                     <div>
                                       {child.routesChildren?.map((child) => (
-                                        <>
-                                          <div className="flex items-center justify-center min-w-[200px] text-xs font-extralight mt-10 ">
+                                          <div 
+                                          key={child.id}
+                                          className="flex items-center justify-center min-w-[200px] text-xs font-extralight mt-10 ">
                                             {child.text}
                                           </div>
-                                        </>
                                       ))}
                                     </div>
                                   </div>
-                                </>
+                                
                               ))}
                           </div>
                         </div>

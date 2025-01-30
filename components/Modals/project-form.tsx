@@ -27,8 +27,8 @@ const FormSchema = z.object({
   image: z.string().url("No image found"),
   competency: z
     .number()
-    .min(0)
-    .max(100, "Competency must be between 0 and 100"),
+    .min(1, "Competency must be a percentage 1-100")
+    .max(100, "Competency must be a percentage 1-100"),
   projectType: z.enum([
     ProjectTypes.Copy,
     ProjectTypes.Forked,
@@ -80,9 +80,27 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
   });
-  const askFromModal = () => {
-    setModalState(true);
+  // const askFromModal = () => {
+  //   setModalState(true);
+  // };
+ const askFromModal = async () => {
+    // Trigger form validation
+    const isValid = await handleSubmit((data) => {
+      setFormData(data); // Set form data if valid
+      setModalState(true); // Open the modal
+    }, (errors) => {
+      // Handle validation errors
+      console.error("Validation errors:", errors);
+      toast({
+        title: "Validation Error",
+        description: "Please fix the errors in the form before submitting.",
+        variant: "destructive",
+      });
+    })();
+  
+    // If the form is valid, the modal will open automatically
   };
+  
   const [formData, setFormData] = useState<FormData | null>(null);
 
   const { toast } = useToast(); // Access the toast function
@@ -350,7 +368,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
             <div className="w-full  flex-col flex items-end justify-center gap-2  ">
               <p className="text-xs m-1">Project type</p>
               <select
-                className="z-[2000000]"
+                className="z-[20000]"
                 id="status"
                 {...register("projectType", { required: "Status is required" })}
               >
@@ -365,6 +383,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
         </div>
         {errors.image && (
           <p className="text-red-500 text-sm">{errors.image.message}</p>
+        )}
+        {errors.competency&&(
+                    <p className="text-red-500 text-sm">{errors.competency.message}</p>
+
         )}
         <div className="sm:flex w-full  sm:items-center sm:justify-between mt-10 gap-10">
           <div>
@@ -632,7 +654,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
         </div>
         {isModalOpen && (
           <ConfirmModal
-          type={ModalEnum.Add}
+          type={type==="post"?ModalEnum.Add:ModalEnum.Update}
 
           title={type === "post" ? "Create Project" : "Edit Project"}
           description={`Are you sure to ${type === "post" ? "create" : "edit"} this project?`}

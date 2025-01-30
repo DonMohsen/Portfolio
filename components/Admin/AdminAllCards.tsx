@@ -59,10 +59,13 @@ const AdminAllCards = () => {
 
 
       const deletedProject=await axios.delete(`/api/project/${deletingProjectId}`)
+      
       .then((response) => {
+        const deletedProjectData = response.data.deleted;
+
         toast({
           title: "Success",
-          description:` Project successfully deleted! 🎉`,
+          description:` ${deletedProjectData.name} successfully deleted! 🎉`,
         });
         console.log("Project deleted:", response);
       })
