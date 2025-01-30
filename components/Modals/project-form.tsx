@@ -75,6 +75,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
     control,
     handleSubmit,
     setValue,
+    watch,
     reset,
     formState: { errors },
   } = useForm<FormData>({
@@ -258,6 +259,27 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
       }
     }
   };
+  const textFieldStyles = {
+    "& .MuiOutlinedInput-root": {
+      color: theme.palette.mode === "dark" ? "#fff" : "#000",
+      "& fieldset": {
+        borderColor: theme.palette.mode === "dark" ? "#4B5563" : "#D1D5DB",
+      },
+      "&:hover fieldset": {
+        borderColor: theme.palette.mode === "dark" ? "#9333ea" : "#9333ea",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#9333ea",
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: theme.palette.mode === "dark" ? "#9CA3AF" : "#6B7280",
+    },
+    "& .MuiFormHelperText-root": {
+      position: "absolute",
+      bottom: "-1.5rem",
+    }
+  };
   
   const handleUpload = (url: string) => {
     setImageURL(url); // Update local state
@@ -312,358 +334,200 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
         className="w-full h-full bg-transparent absolute "
       ></div>
 
-      <motion.form
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        // exit={{ scale: 0, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        key="projectform"
-        onSubmit={handleSubmit(onSubmit)}
-        className="relative bg-white sm:rounded-lg dark:bg-[#271731]    h-[85%] w-[80%] max-md:w-full max-md:h-[100%] flex items-center justify-start flex-col pt-10 md:px-10 max-md:px-2"
-      >
-        <CircleX
-          onClick={handleClickOutsideOfForm}
-          className="absolute text-red-600 top-4 right-4 cursor-pointer hover:fill-red-50 "
-        />
-        <div className="flex items-start w-full min-h-[100px] gap-5 justify-between h-[150px] max-sm:h-[90px] ">
-          {/* //!the image upload */}
-          <div className="relative w-[50%] h-full bg-black bg-opacity-10">
-            <div className="w-full h-full bg-purple-500 absolute opacity-0  z-[100]">
-              <CloudinaryUploadButton onUpload={handleUpload} />
-            </div>
-            <img
-              src={
-                imageURL ||
-                (type === "put" && project?.image) ||
-                `/image-placeholder.webp`
-              }
-              alt="Project img"
-              className="w-full h-full max-w-[400px] min-h-[100px] rounded-xl object-cover absolute z-[50] "
-            />
-          </div>
-          {/* //!Enum project types */}
-          <div className="w-full py-10 px-2">
-            {errors.projectType && (
-              <p className="text-red-500 text-sm">
-                {errors.projectType.message}
-              </p>
-            )}
-            <div className=" w-full flex flex-col items-start justify-start h-full  ">
-              <p>Competency</p>
-              <Controller
-                defaultValue={type === "put" ? project?.competency : 0}
-                name="competency"
-                control={control}
-                render={({ field }) => (
-                  <Slider
-                    {...field}
-                    value={field.value} // Bind the value directly to the form state
-                    onChange={(_, value) => field.onChange(value)} // Update the form state when slider value changes
-                    aria-label="Competency Slider"
-                    valueLabelDisplay="auto"
-                  />
-                )}
-              />
-            </div>
-            <div className="w-full  flex-col flex items-end justify-center gap-2  ">
-              <p className="text-xs m-1">Project type</p>
-              <select
-                className="z-[20000]"
-                id="status"
-                {...register("projectType", { required: "Status is required" })}
-              >
-                {Object.values(ProjectTypes).map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-        {errors.image && (
-          <p className="text-red-500 text-sm">{errors.image.message}</p>
-        )}
-        {errors.competency&&(
-                    <p className="text-red-500 text-sm">{errors.competency.message}</p>
+<motion.form
+  initial={{ scale: 0, opacity: 0 }}
+  animate={{ scale: 1, opacity: 1 }}
+  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+  key="projectform"
+  onSubmit={handleSubmit(onSubmit)}
+  className="relative bg-white dark:bg-[#271731] rounded-2xl shadow-xl h-[85vh] w-full max-w-3xl mx-4 flex flex-col items-center p-6 space-y-6 overflow-y-auto"
+>
+  <CircleX
+    onClick={handleClickOutsideOfForm}
+    className="absolute text-red-500 top-4 right-6 cursor-pointer hover:text-red-600 transition-colors w-8 h-8"
+  />
 
-        )}
-        <div className="sm:flex w-full  sm:items-center sm:justify-between mt-10 gap-10">
-          <div>
-            <TextField
-              sx={{
-                // Input text color (ensure it overrides all styles)
-                "& .MuiInputBase-input": {
-                  color:
-                    theme.palette.mode === "dark"
-                      ? "white !important"
-                      : "inherit",
-                },
-                // Placeholder text color
-                "& .MuiInputBase-input::placeholder": {
-                  color:
-                    theme.palette.mode === "dark"
-                      ? "white !important"
-                      : "inherit",
-                  opacity: 0.7,
-                },
-                // Label color
-                "& .MuiInputLabel-root": {
-                  color: theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                // Border colors
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor:
-                    theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor:
-                      theme.palette.mode === "dark" ? "white" : "inherit",
-                  },
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor:
-                      theme.palette.mode === "dark" ? "white" : "inherit",
-                  },
-              }}
-              helperText={errors?.name?.message}
-              error={!!errors.name}
-              {...register("name")}
-              defaultValue={(type === "put" && project?.name) || ""}
-              id="name"
-              label="Name"
-              variant="outlined"
-            />
-          </div>
-          <div className="w-full max-sm:pt-5 ">
-            <TextField
-              className="w-full"
-              sx={{
-                // Input text color (ensure it overrides all styles)
-                "& .MuiInputBase-input": {
-                  color:
-                    theme.palette.mode === "dark"
-                      ? "white !important"
-                      : "inherit",
-                },
-                // Placeholder text color
-                "& .MuiInputBase-input::placeholder": {
-                  color:
-                    theme.palette.mode === "dark"
-                      ? "white !important"
-                      : "inherit",
-                  opacity: 0.7,
-                },
-                // Label color
-                "& .MuiInputLabel-root": {
-                  color: theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                // Border colors
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor:
-                    theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor:
-                      theme.palette.mode === "dark" ? "white" : "inherit",
-                  },
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor:
-                      theme.palette.mode === "dark" ? "white" : "inherit",
-                  },
-              }}
-              helperText={errors?.description?.message}
-              error={!!errors.description}
-              {...register("description")}
-              defaultValue={(type === "put" && project?.description) || ""}
-              id="description"
-              label="Description"
-              variant="outlined"
-              multiline
-            />
-          </div>
+  {/* Image Upload & Project Type Section */}
+  <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+    {/* Image Upload */}
+    <div className="relative group aspect-square w-full bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden cursor-pointer transition-all hover:shadow-lg">
+      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center">
+        <CloudinaryUploadButton onUpload={handleUpload} />
+        <span className="text-white font-medium">Upload Image</span>
+      </div>
+      <img
+        src={imageURL || (type === "put" && project?.image) || `/image-placeholder.webp`}
+        alt="Project preview"
+        className="w-full h-full object-cover absolute z-0"
+      />
+    </div>
+
+    {/* Competency & Project Type */}
+    <div className="space-y-6">
+      {/* Competency Slider */}
+      <div className="space-y-2">
+        <div className="flex justify-between items-center">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Competency Level
+          </label>
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {watch('competency')}%
+          </span>
         </div>
-        <div className="sm:flex gap-10 sm:justify-between w-full sm:mt-10 ">
-          <div className="w-full max-sm:pt-5 ">
-            <TextField
-              className="w-full"
+        <Controller
+        defaultValue={project?.competency}
+          name="competency"
+          control={control}
+          render={({ field }) => (
+            <Slider
+              {...field}
+              className="text-primary"
               sx={{
-                // Input text color (ensure it overrides all styles)
-                "& .MuiInputBase-input": {
-                  color:
-                    theme.palette.mode === "dark"
-                      ? "white !important"
-                      : "inherit",
-                },
-                // Placeholder text color
-                "& .MuiInputBase-input::placeholder": {
-                  color:
-                    theme.palette.mode === "dark"
-                      ? "white !important"
-                      : "inherit",
-                  opacity: 0.7,
-                },
-                // Label color
-                "& .MuiInputLabel-root": {
-                  color: theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                // Border colors
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor:
-                    theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor:
-                      theme.palette.mode === "dark" ? "white" : "inherit",
-                  },
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor:
-                      theme.palette.mode === "dark" ? "white" : "inherit",
-                  },
+                color: theme.palette.mode === 'dark' ? '#fff' : '#9333ea',
+                '& .MuiSlider-thumb': {
+                  backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#9333ea',
+                }
               }}
-              helperText={errors?.liveLink?.message}
-              error={!!errors.liveLink}
-              {...register("liveLink")}
-              defaultValue={(type === "put" && project?.liveLink) || ""}
-              id="livelink"
-              label="Live link"
-              variant="outlined"
             />
-          </div>
-          <div className="w-full max-sm:pt-5 ">
-            <TextField
-              className="w-full"
-              sx={{
-                // Input text color (ensure it overrides all styles)
-                "& .MuiInputBase-input": {
-                  color:
-                    theme.palette.mode === "dark"
-                      ? "white !important"
-                      : "inherit",
-                },
-                // Placeholder text color
-                "& .MuiInputBase-input::placeholder": {
-                  color:
-                    theme.palette.mode === "dark"
-                      ? "white !important"
-                      : "inherit",
-                  opacity: 0.7,
-                },
-                // Label color
-                "& .MuiInputLabel-root": {
-                  color: theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                // Border colors
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor:
-                    theme.palette.mode === "dark" ? "white" : "inherit",
-                },
-                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor:
-                      theme.palette.mode === "dark" ? "white" : "inherit",
-                  },
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor:
-                      theme.palette.mode === "dark" ? "white" : "inherit",
-                  },
-              }}
-              helperText={errors?.githubLink?.message}
-              error={!!errors.githubLink}
-              {...register("githubLink")}
-              defaultValue={(type === "put" && project?.githubLink) || ""}
-              id="githubLink"
-              label="Github link"
-              variant="outlined"
-            />
-          </div>
-        </div>
-        <div>
-          <input
-            type="hidden"
-            id="image"
-            value={imageURL}
-            {...register("image", {
-              required: "Image URL is required",
-            })}
-            readOnly
-            className="block w-full border rounded px-3 py-2"
-          />
-        </div>
-        <div className="flex max-w-[100%] flex-wrap text-center items-center justify-center gap-4 mt-5">
-          {isLoading &&
-            Array.from({ length: 10 }).map((_, index) => (
-              <div
-                key={index}
-                className="rounded-3xl px-4 py-1 bg-gray-300 animate-pulse"
-              >
-                <div className="flex gap-2 items-center justify-center h-[30px] w-[90px]">
-                </div>
-              </div>
-            ))}
-          {data?.map((tech) => (
-            <div
-              key={tech.id}
-              onClick={() => handleTechClick(tech)}
-              className={clsx(
-                `rounded-3xl px-4 py-1 max-md:text-sm max-md:px-3 max-md:py-1 cursor-pointer hover:brightness-50 `,
-                techStack.some((item) => item.id === tech.id)
-                  ? "bg-black"
-                  : "bg-slate-600"
-              )}
-            >
-              <div className="flex gap-2 items-center justify-center">
-                <img
-                  className="w-8 h-8 max-md:w-5 max-md:h-5"
-                  src={tech.imageUrl}
-                  alt={tech.name}
-                />
-                {tech.name}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4">
-          {errors.techStack && (
-            <p className="text-red-500 text-sm">{errors.techStack.message}</p>
           )}
-        </div>
-        <div
-          onClick={askFromModal}
-          className="px-4 py-2 flex items-center justify-center  bg-blue-600 w-full text-white rounded hover:bg-blue-700"
-        >
-          {type === "post" ? "Create" : "Edit"}
-        </div>
-        {isModalOpen && (
-          <ConfirmModal
-          type={type==="post"?ModalEnum.Add:ModalEnum.Update}
-
-          title={type === "post" ? "Create Project" : "Edit Project"}
-          description={`Are you sure to ${type === "post" ? "create" : "edit"} this project?`}
-          onSubmit={handleFormSubmission}
-          isLoading={creationLoading}
-          submitText={type === "post" ? "Create" : "Save Changes"}
         />
+        {errors.competency && (
+          <p className="text-red-500 text-sm mt-1">{errors.competency.message}</p>
         )}
-      </motion.form>
+      </div>
+
+      {/* Project Type Dropdown */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Project Type
+        </label>
+        <select
+        defaultValue={project?.projectType}
+          id="projectType"
+          {...register("projectType")}
+          className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+        >
+          {Object.values(ProjectTypes).map((type) => (
+            <option key={type} value={type} className="dark:bg-gray-800">
+              {type}
+            </option>
+          ))}
+        </select>
+        {errors.projectType && (
+          <p className="text-red-500 text-sm mt-1">{errors.projectType.message}</p>
+        )}
+      </div>
+    </div>
+  </div>
+
+  {/* Name & Description Fields */}
+  <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+    <TextField
+    defaultValue={project?.name}
+      fullWidth
+      label="Project Name"
+      error={!!errors.name}
+      helperText={errors?.name?.message}
+      sx={{ 
+        ...textFieldStyles,
+        mb: 0 
+      }}
+      {...register("name")}
+    />
+    <TextField
+    defaultValue={project?.description}
+      fullWidth
+      label="Description"
+      multiline
+      rows={3}
+      error={!!errors.description}
+      helperText={errors?.description?.message}
+      sx={textFieldStyles}
+      {...register("description")}
+    />
+  </div>
+
+  {/* Links Section */}
+  <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+    <TextField
+    defaultValue={project?.liveLink}
+      fullWidth
+      label="Live URL"
+      error={!!errors.liveLink}
+      helperText={errors?.liveLink?.message}
+      sx={textFieldStyles}
+      {...register("liveLink")}
+    />
+    <TextField
+    defaultValue={project?.githubLink}
+      fullWidth
+      label="GitHub URL"
+      error={!!errors.githubLink}
+      helperText={errors?.githubLink?.message}
+      sx={textFieldStyles}
+      {...register("githubLink")}
+    />
+  </div>
+
+  {/* Tech Stack Section */}
+  <div className="w-full space-y-4">
+    <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">
+      Select Technologies
+    </h3>
+    <div className="flex flex-wrap gap-3">
+      {isLoading ? (
+        Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className="h-10 w-24 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" />
+        ))
+      ) : data?.map((tech) => (
+        <motion.div
+          key={tech.id}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => handleTechClick(tech)}
+          className={clsx(
+            "flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer transition-colors",
+            techStack.some(t => t.id === tech.id)
+              ? "bg-purple-600 text-white"
+              : "bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
+          )}
+        >
+          <img
+            src={tech.imageUrl}
+            alt={tech.name}
+            className="w-6 h-6 object-contain"
+          />
+          <span className="text-sm">{tech.name}</span>
+        </motion.div>
+      ))}
+    </div>
+    {errors.techStack && (
+      <p className="text-red-500 text-sm mt-1">{errors.techStack.message}</p>
+    )}
+  </div>
+
+  {/* Submit Button */}
+  <motion.button
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
+    type="button"
+    onClick={askFromModal}
+    className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
+  >
+    {type === "post" ? "Create Project" : "Save Changes"}
+  </motion.button>
+
+  {isModalOpen && (
+    <ConfirmModal
+      type={type === "post" ? ModalEnum.Add : ModalEnum.Update}
+      title={type === "post" ? "Create Project" : "Edit Project"}
+      description={`Are you sure you want to ${type === "post" ? "create" : "update"} this project?`}
+      onSubmit={handleFormSubmission}
+      isLoading={creationLoading}
+      submitText={type === "post" ? "Create" : "Save Changes"}
+    />
+  )}
+</motion.form>
     </div>
   );
 };
