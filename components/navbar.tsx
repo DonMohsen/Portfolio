@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
-
 import RoutesItem from "./routes-item";
 import { AnimatePresence, motion } from "framer-motion";
-import clsx from "clsx";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
 import useWebRoutes from "@/app/utils/useWebRoutes";
@@ -14,42 +12,39 @@ const Navbar = () => {
   const toggleHamburger = useHamburgerMenu(
     (state) => state.toggleHamburgerMenuState
   );
+
   return (
     <AnimatePresence>
-    {hamValue&&
-    
+      {hamValue && (
+        <motion.div
+          initial={{ x: "100%", opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: "100%", opacity: 0 }}
+          transition={{ ease: "easeInOut", duration: 0.5 }}
+          className="mt-[60px] z-[70] fixed w-full h-full flex justify-end bg-black/30"
+        >
+          {/* Overlay for closing menu */}
+          <div onClick={toggleHamburger} className="w-full h-full"></div>
 
-      <motion.div
-        initial={{
-          x: "50%",
-        }}
-        animate={{
-          x: 0,
-        }}
-        exit={{
-          x: "50%"
-        }}
-        transition={{
-          ease:"easeInOut",
-          duration: 0.4,
-        }}
-        className="
-          mt-[60px]  md:mt-[60px]  z-[70] fixed w-full h-full bg-transparent  items-center justify-end flex "
-      >
-        <div
-          onClick={toggleHamburger}
-          className="w-full h-full   bg-transparent flex"
-        ></div>
-        <div className=" fixed h-full w-[50%] flex flex-col bg-slate-400">
-          {webRoutes.map((item: webRoutesType) => (
-            <RoutesItem key={item.id} webRoute={item} />
-          ))}
-        </div>
-      </motion.div>
-
-    }
-      </AnimatePresence>
-
+          {/* Sidebar */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
+            }}
+            className="fixed h-full w-[60%] md:w-[40%] lg:w-[30%] bg-white shadow-xl flex flex-col px-4 py-6"
+          >
+            {webRoutes.map((item: webRoutesType) => (
+              <RoutesItem key={item.id} webRoute={item} />
+            ))}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
