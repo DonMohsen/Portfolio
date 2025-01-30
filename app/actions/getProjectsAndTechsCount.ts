@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+
 const getAllProjectsCount =async () => {
 
-    const prisma = new PrismaClient();
     
       try {
         // Count all projects

@@ -1,7 +1,8 @@
-import { Prisma, PrismaClient, Projects } from "@prisma/client";
+import { Prisma,  Projects } from "@prisma/client";
 import { ProjectsWithTechsType } from "../Types/AllTechstackTypes";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
+
 
 export async function getAllProjects(): Promise<ProjectsWithTechsType[]> {
   try {

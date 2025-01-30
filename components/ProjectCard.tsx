@@ -1,6 +1,5 @@
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
-import { Projects } from "@prisma/client";
-import clsx from "clsx";
+
 import Image from "next/image";
 import Link from "next/link";
 
