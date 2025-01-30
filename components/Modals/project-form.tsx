@@ -75,6 +75,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
     control,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
@@ -82,7 +83,69 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   const askFromModal = () => {
     setModalState(true);
   };
+  const [formData, setFormData] = useState<FormData | null>(null);
+
   const { toast } = useToast(); // Access the toast function
+  //!new code.............................................
+  const handleFormSubmission = () => {
+    // This function will be called when modal is confirmed
+    if (!formData) return; // formData should come from your form state
+  
+    const submitHandler = () => {
+      const techStackToSubmit = techStack.map((tech) => ({
+        technologyId: tech.id,
+        addedBy: tech.name,
+      }));
+  
+      const formPayload = {
+        ...formData,
+        techStack: { create: techStackToSubmit },
+      };
+  
+      setCreationLoading(true);
+  
+      const apiCall = type === "post" 
+        ? axios.post("/api/project/create", formPayload)
+        : axios.put(`/api/project/${project?.id}`, formPayload);
+  
+      apiCall
+        .then((response) => {
+          toast({
+            title: "Success",
+            description: `Project successfully ${type === "post" ? "created" : "updated"}! 🎉`,
+          });
+          console.log("Project submitted:", response);
+        })
+        .catch((error) => {
+          toast({
+            title: "Error",
+            description: `Failed to ${type === "post" ? "create" : "update"} project. Please try again.`,
+            variant: "destructive",
+          });
+          console.error("Error submitting project:", error);
+        })
+        .finally(() => {
+          setCreationLoading(false);
+          setModalState(false);
+          reset(); // If using form reset
+        });
+    };
+  
+    // Execute the submission logic
+    try {
+      submitHandler();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Error in form submission:", error);
+      setCreationLoading(false);
+      setModalState(false);
+    }
+  };
+  
   const onSubmit = (formData: FormData) => {
   
     if (type === "post") {
@@ -531,7 +594,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
                 className="rounded-3xl px-4 py-1 bg-gray-300 animate-pulse"
               >
                 <div className="flex gap-2 items-center justify-center h-[30px] w-[90px]">
-                  {/* <div className="w-8 h-8 bg-gray-400 rounded-full"></div> */}
                 </div>
               </div>
             ))}
@@ -558,16 +620,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           ))}
         </div>
         <div className="mt-4">
-          {/* {errors.competency && (
-        <p className="text-red-500 text-sm">{errors.competency.message}</p>
-      )} */}
-          {/* <input
-            
-            id="techStack"
-            value={techStack.map((tech) => tech.name).join(", ")} // Display selected tech names
-            disabled
-            className=" w-full border rounded px-3 py-2 hidden"
-          /> */}
           {errors.techStack && (
             <p className="text-red-500 text-sm">{errors.techStack.message}</p>
           )}
@@ -577,48 +629,17 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           className="px-4 py-2 flex items-center justify-center  bg-blue-600 w-full text-white rounded hover:bg-blue-700"
         >
           {type === "post" ? "Create" : "Edit"}
-          {/* {creationLoading ? "loading" : "submit"} */}
         </div>
         {isModalOpen && (
-          <ConfirmModal type={ModalEnum.Add}>
-            <div className="w-full h-full flex flex-col">
-              <div className="flex-1">
-                <h2 className="pt-2 font-extrabold text-2xl tracking-tighter">{`${
-                  type === "post" ? "Create" : "Edit"
-                } project`}</h2>
-              </div>
-              <div className="flex-1">
-                <p>
-                  {`Are you sure to ${
-                    type === "post" ? "create" : "edit"
-                  } this project?`}
-                </p>
-              </div>
+          <ConfirmModal
+          type={ModalEnum.Add}
 
-              <div className="w-full flex items-center gap-4 p-3 justify-center">
-                <button
-                  type="submit"
-                  className="px-4 py-2 h-[50px] bg-blue-600 w-full text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out flex items-center justify-center"
-                  disabled={creationLoading}
-                  aria-busy={creationLoading}
-                >
-                  {creationLoading ? (
-                    <ButtonLoading />
-                  ) : type === "put" ? (
-                    "Submit"
-                  ) : (
-                    "Create"
-                  )}
-                </button>
-                <div
-                  onClick={() => setModalState(false)}
-                  className="px-4 py-2 h-[50px] flex items-center justify-center cursor-pointer bg-red-600 w-full text-white rounded hover:bg-red-700"
-                >
-                  Cancel
-                </div>
-              </div>
-            </div>
-          </ConfirmModal>
+          title={type === "post" ? "Create Project" : "Edit Project"}
+          description={`Are you sure to ${type === "post" ? "create" : "edit"} this project?`}
+          onSubmit={handleFormSubmission}
+          isLoading={creationLoading}
+          submitText={type === "post" ? "Create" : "Save Changes"}
+        />
         )}
       </motion.form>
     </div>
