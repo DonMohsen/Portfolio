@@ -26,8 +26,10 @@ const AdminAllCards = () => {
   const [formType, setFormType] = useState<"put" | "post" | "delete">("put");
   const [currentProject, setCurrentProject] = useState<ProjectsWithTechsType>();
   const { isOpen, setFormState, toggleForm } = useProjectForm();
-  const [deletionLoading, setDeletionLoading] = useState(false)
-  const [deletingProjectId, setDeletingProjectId] = useState<number|undefined>()
+  const [deletionLoading, setDeletionLoading] = useState(false);
+  const [deletingProjectId, setDeletingProjectId] = useState<
+    number | undefined
+  >();
   const { toast } = useToast(); // Access the toast function
 
   async function fetchProjects(): Promise<ProjectsWithTechsType[]> {
@@ -53,36 +55,36 @@ const AdminAllCards = () => {
     setFormType("post");
     setFormState(true);
   };
-  const handleDeleteProject =async () => {
+  const handleDeleteProject = async () => {
     try {
-      setDeletionLoading(true)
+      setDeletionLoading(true);
 
+      const deletedProject = await axios
+        .delete(`/api/project/${deletingProjectId}`)
 
-      const deletedProject=await axios.delete(`/api/project/${deletingProjectId}`)
-      
-      .then((response) => {
-        const deletedProjectData = response.data.deleted;
+        .then((response) => {
+          const deletedProjectData = response.data.deleted;
 
-        toast({
-          title: "Success",
-          description:` ${deletedProjectData.name} successfully deleted! 🎉`,
+          toast({
+            title: "Success",
+            description: ` ${deletedProjectData.name} successfully deleted! 🎉`,
+          });
+          console.log("Project deleted:", response);
+        })
+        .catch((error) => {
+          toast({
+            title: "Error",
+            description: `Failed to delete project. Please try again.`,
+            variant: "destructive",
+          });
+          console.error("Error deleting project:", error);
+        })
+        .finally(() => {
+          setDeletionLoading(false);
+          setModalState(false);
         });
-        console.log("Project deleted:", response);
-      })
-      .catch((error) => {
-        toast({
-          title: "Error",
-          description: `Failed to delete project. Please try again.`,
-          variant: "destructive",
-        });
-        console.error("Error deleting project:", error);
-      })
-      .finally(() => {
-        setDeletionLoading(false);
-        setModalState(false);
-      });
     } catch (error) {
-        toast({
+      toast({
         title: "Error",
         description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
@@ -91,16 +93,15 @@ const AdminAllCards = () => {
       setDeletionLoading(false);
       setModalState(false);
     }
-
   };
   const handleOpenForm = (id: number) => {
     setFormType("put");
     openTheForm(id);
   };
-  const handleDeleteButton =async (id:number) => {
+  const handleDeleteButton = async (id: number) => {
     setFormType("delete");
-    setDeletingProjectId(id)
-    setModalState(true)
+    setDeletingProjectId(id);
+    setModalState(true);
   };
   return (
     <div className="min-h-[110vh] gap-4 flex flex-col items-center justify-center  pt-[150px]">
@@ -130,7 +131,6 @@ const AdminAllCards = () => {
               <div className="flex max-sm:hidden gap-2">
                 <div className="w-10 h-10 bg-gray-300 rounded-full animate-pulse"></div>
                 <div className="w-10 h-10 bg-gray-300 rounded-full animate-pulse"></div>
-         
               </div>
               <div className="flex w-full gap-4 items-center justify-end pr-5">
                 <div className="w-10 h-10 bg-gray-300 rounded-md animate-pulse"></div>
@@ -148,7 +148,6 @@ const AdminAllCards = () => {
           type={ModalEnum.Delete}
           submitText="Delete forever"
           isLoading={deletionLoading}
-
         />
       )}
       {data?.map((project) => (
@@ -213,7 +212,7 @@ const AdminAllCards = () => {
                 <Pencil />
               </Button>
               <Button
-                onClick={()=>handleDeleteButton(project.id)}
+                onClick={() => handleDeleteButton(project.id)}
                 className="bg-red-500 hover:bg-red-400"
               >
                 <Trash />
