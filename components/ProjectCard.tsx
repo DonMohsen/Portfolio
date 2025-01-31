@@ -18,7 +18,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
   >
     {/* Image Container */}
     {project.image && (
-      <div className="w-full min-h-[400px] relative max-sm:min-h-[300px] bg-pink-800 flex items-center justify-center rounded-xl overflow-hidden">
+      <div className="w-full border-none min-h-[400px] relative max-sm:min-h-[300px]  flex items-center justify-center rounded-xl overflow-hidden">
         <Image
           src={project.image}
           alt={project.name}
@@ -26,7 +26,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
           height={975}
           quality={100}
           priority={true}
-          className="w-full h-full object-cover transition-transform duration-500 "
+          className="border-none w-full h-full object-cover transition-transform duration-500 "
         />
         
         {/* Image Overlay Interactions */}
@@ -61,7 +61,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
           project.projectType === "Practice" ? "bg-blue-500/90 text-blue-100" :
           "bg-red-500/90 text-red-100"
         )}>
-          {project.projectType}
+          {`${project.projectType} project`}
         </div>
       </div>
     )}
@@ -76,7 +76,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
           {project.techStack.slice(0,3).map((tech, index) => (
             <div
               key={tech.technology.id}
-              className="w-10 h-10 bg-white dark:bg-neutral-900 border-2 border-white dark:border-neutral-800 rounded-full flex items-center justify-center shadow-sm"
+              className="w-10 h-10 bg-white dark:bg-neutral-900 border border-black/[.2] dark:border-neutral-800 rounded-full flex items-center justify-center shadow-sm"
             >
               <img
                 src={tech.technology.imageUrl}
@@ -86,7 +86,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
             </div>
           ))}
           {project.techStack.length > 3 && (
-            <div className="w-10 h-10 bg-white dark:bg-neutral-900 border-2 border-white dark:border-neutral-800 rounded-full flex items-center justify-center text-sm font-medium text-neutral-600 dark:text-neutral-400">
+            <div className="w-10 h-10 bg-white dark:bg-neutral-900 border border-black/[.2] dark:border-neutral-800 rounded-full flex items-center justify-center text-sm font-medium text-neutral-600 dark:text-neutral-400">
               +{project.techStack.length - 3}
             </div>
           )}

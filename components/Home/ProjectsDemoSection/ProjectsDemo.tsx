@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import MagicButton from "@/components/ui/magic-button"
 import { Projects } from "@prisma/client"
 import Image from "next/image"
+import Link from "next/link"
 import { FaArrowRight } from "react-icons/fa"
 import { IoCopyOutline } from "react-icons/io5"
 
@@ -23,12 +24,14 @@ const ProjectsDemo = async({projects}:{projects:ProjectsWithTechsType[]}) => {
     <ProjectCard projects={projects}/>
      
     </div>
+    <Link href="/projects" >
     <MagicButton
               title={`Check out all ${projectCount.toString()} projects`}
-                icon={<FaArrowRight  />}
-                position="right"
-                otherClasses="dark:bg-[#161A31] rounded-[12px] bg-white text-black"
+              icon={<FaArrowRight  />}
+              position="right"
+              otherClasses="dark:bg-[#161A31] rounded-[12px] bg-white text-black"
               />
+              </Link>
              
   </div>
   
