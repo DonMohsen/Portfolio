@@ -1,35 +1,32 @@
-import axios from "axios";
-import { ProjectsWithTechsType } from "../Types/AllTechstackTypes"
+import ClientProjectCard from "@/components/Projects/client-project-card";
 import { prisma } from "@/lib/prisma";
 
-export const revalidate=600
+export default async function ProjectsPage() {
+  // Fetch data directly within the component
+  const allProjects = await prisma.projects.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+    include: {
+      techStack: {
+        include: {
+          technology: true,
+        },
+      },
+      _count: true,
+    },
+  });
 
-export async function generateStaticParams() {
-    const allProjects = await prisma.projects.findMany({
-              orderBy: {
-                createdAt: 'desc',
-              },
-              include:{
-                techStack:{
-                  include:{
-                    technology:true
-                  }
-                },
-                _count:true,
-              },
-            })
-                return  allProjects.map((project)=>({
-                    project
-
-                }))
-        }
-const ProjectsPage = () => {
-    // console.log(projects);
-    
-  return (
-    <div>
-    </div>
-  )
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">Projects</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {allProjects.map((project) => (
+            <ClientProjectCard key={project.id} project={project} />
+          ))}
+        </div>
+      </div>
+    );
+  
 }
-
-export default ProjectsPage
+export const revalidate = 600; // Revalidate every 600 seconds (10 minutes)
