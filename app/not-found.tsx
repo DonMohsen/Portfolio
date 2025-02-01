@@ -37,7 +37,7 @@ export default function NotFound() {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white px-6 text-center overflow-hidden">
+    <div className=" relative flex min-h-[101vh] flex-col items-center justify-center bg-gray-900 text-white px-6 text-center overflow-hidden">
       <motion.div
         className="absolute inset-0 backdrop-blur-lg bg-white/10 rounded-xl"
         initial={{ opacity: 1 }}

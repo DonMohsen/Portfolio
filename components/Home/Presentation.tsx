@@ -1,13 +1,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { SiGithub } from "react-icons/si";
-import { BsTelegram } from "react-icons/bs";
-import { CgMail } from "react-icons/cg";
-import Image from "next/image";
-import { MdEmail } from "react-icons/md";
 import { HiOutlineMail } from "react-icons/hi";
 import { LuGithub } from "react-icons/lu";
-import { FaLinkedinIn, FaTelegramPlane } from "react-icons/fa";
 import { PiTelegramLogoBold } from "react-icons/pi";
 import { SlSocialLinkedin } from "react-icons/sl";
 
@@ -72,7 +66,7 @@ const Presentation = () => {
 
       <Button 
       className="bg-black dark:bg-white mt-3 px-10 text-white dark:text-black rounded-xl hover:bg-purple-950 dark:hover:bg-purple-200"
-      >Online chat</Button>
+      >Download CV</Button>
     </div>
   );
 };

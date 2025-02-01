@@ -1,8 +1,5 @@
-import { getAllProjects } from "@/app/actions/getAllProjects";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import axios from "axios";
-import { Projects } from "@prisma/client";
 import Image from "next/image";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import { Button } from "../ui/button";
