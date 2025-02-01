@@ -1,21 +1,5 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 
-const prisma = new PrismaClient();
-
-export type ProjectsWithTechsType = Prisma.ProjectsGetPayload<{
-  include: {
-    techStack: {
-      include: {
-        technology: true;
-      };
-    };
-    _count: true;
-  };
-}>;
-
-type ProjectsPageProps = {
-  projects: ProjectsWithTechsType[];
-};
 
 export default async function ProjectsPage() {
   // Fetch data directly within the component
@@ -54,3 +38,4 @@ export default async function ProjectsPage() {
     </div>
   );
 }
+export const revalidate = 600; // Revalidate every 600 seconds (10 minutes)
