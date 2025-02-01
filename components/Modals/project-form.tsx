@@ -494,7 +494,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
         >
           <img
             src={tech.imageUrl}
-            alt={tech.name}
+            alt={`${tech.name}image`}
             className="w-6 h-6 object-contain"
           />
           <span className="text-sm">{tech.name}</span>

@@ -21,7 +21,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
       <div className="w-full border-none min-h-[400px] relative max-sm:min-h-[300px]  flex items-center justify-center rounded-xl overflow-hidden">
         <Image
           src={project.image}
-          alt={project.name}
+          alt={`${project.name}image`}
           width={1919}
           height={975}
           quality={100}
@@ -80,7 +80,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
             >
               <img
                 src={tech.technology.imageUrl}
-                alt={tech.technology.name}
+                alt={`${tech.technology.name}image`}
                 className="w-6 h-6 object-contain"
               />
             </div>
