@@ -14,10 +14,7 @@ const AdminPage = () => {
 
     <div>
         
-        {/* {
-          isOpen===true&&
-          <ProjectForm type='post'   />
-        } */}
+       
             <AdminAllCards/>
     
     </div>
