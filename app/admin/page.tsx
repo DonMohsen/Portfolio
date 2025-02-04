@@ -7,7 +7,6 @@ import useProjectForm from '@/store/useProjectForm'
 import { AnimatePresence } from 'framer-motion'
 
 const AdminPage = () => {
-    const {isOpen,setFormState,toggleForm}=useProjectForm()
 
   return (
     <ReactQueryProvider>
