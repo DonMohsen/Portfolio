@@ -1,32 +1,27 @@
 import ClientProjectCard from "@/components/Projects/client-project-card";
-import { prisma } from "@/lib/prisma";
+import { getAllProjects } from "../actions/getAllProjects";
 
 export default async function ProjectsPage() {
-  // Fetch data directly within the component
-  const allProjects = await prisma.projects.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    include: {
-      techStack: {
-        include: {
-          technology: true,
-        },
-      },
-      _count: true,
-    },
-  });
+
+
+  const allProjects= await getAllProjects()
 
     return (
-      <div className="space-y-6">
-        <h1 className="text-3xl font-bold">Projects</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allProjects.map((project) => (
-            <ClientProjectCard key={project.id} project={project} />
-          ))}
+      <div className="min-h-[110vh]">
+        {/* //! The filtering section */}
+        <div>
+
         </div>
+                {/* //! The Cards section */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+         {allProjects.map((project)=>(
+
+           <ClientProjectCard project={project} key={project.id}/>
+         ))}
+        </div>
+
       </div>
     );
   
 }
-export const revalidate = 600; // Revalidate every 600 seconds (10 minutes)

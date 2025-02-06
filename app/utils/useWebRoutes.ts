@@ -24,10 +24,10 @@ const useWebRoutes = () => {
     },
     {
         text:"Projects",
-        route:"/Projects",
+        route:"/projects",
         emptyIcon:PiNewspaperClipping,
         filledIcon:PiNewspaperClippingFill,
-        isActive:pathName.includes("/Projects"),
+        isActive:pathName.includes("/projects"),
         id:2,
         routesChildren:[
             {
