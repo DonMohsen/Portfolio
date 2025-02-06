@@ -159,7 +159,7 @@ const AdminAllCards = () => {
               {project.image && (
                 <Image
                   src={project.image}
-                  alt={`${project.name}image`}
+                  alt={`${project.name} image`}
                   width={1919}
                   height={975}
                   quality={100}
@@ -182,7 +182,7 @@ const AdminAllCards = () => {
                 >
                   <img
                     src={tech.technology.imageUrl}
-                    alt={`${tech.technology.name}image`}
+                    alt={`${tech.technology.name} image`}
                     className="w-8 h-8 dark:text-white z-10"
                   />
                 </div>

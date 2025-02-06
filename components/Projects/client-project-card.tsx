@@ -1,6 +1,5 @@
 "use client"
 import { ProjectsWithTechsType } from '@/app/Types/AllTechstackTypes';
-import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { FC } from 'react';
 
@@ -42,7 +41,7 @@ const ClientProjectCard: FC<ClientProjectCardProps> = ({ project }) => {
                   return (
                     <motion.span
                       key={technology.id}
-                      className="px-4 py-2 flex items-center justify-center gap-4 text-white rounded-lg text-sm font-medium"
+                      className="px-3 py-1 flex items-center justify-center gap-2 text-white rounded-lg text-sm font-medium"
                       style={{
                         backgroundImage: `linear-gradient(to top right, black, ${color2})` // Apply new gradient style
                       }}

@@ -21,7 +21,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
       <div className="w-full border-none min-h-[400px] relative max-sm:min-h-[300px]  flex items-center justify-center rounded-xl overflow-hidden">
         <Image
           src={project.image}
-          alt={`${project.name}image`}
+          alt={`${project.name} image`}
           width={1919}
           height={975}
           quality={100}
@@ -61,7 +61,11 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
           project.projectType === "Practice" ? "bg-blue-500/90 text-blue-100" :
           "bg-red-500/90 text-red-100"
         )}>
-          {`${project.projectType} project`}
+          {`${project.projectType}`}
+        </div>
+        <div className={clsx(
+          "absolute bottom-10 left-3 rounded-full px-4 py-1 text-sm font-medium bg-green-50",)}>
+          {`${project.liveLink}`}
         </div>
       </div>
     )}
@@ -80,7 +84,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
             >
               <img
                 src={tech.technology.imageUrl}
-                alt={`${tech.technology.name}image`}
+                alt={`${tech.technology.name} image`}
                 className="w-6 h-6 object-contain"
               />
             </div>
