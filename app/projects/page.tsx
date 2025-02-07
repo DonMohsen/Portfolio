@@ -36,7 +36,7 @@ export default async function ProjectsPage() {
         </div>
                 {/* //! The Cards section */}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-white dark:bg-black px-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-white dark:bg-black px-5">
          {allProjects.map((project)=>(
             // <ClientProjectCard project={project} key={project.id}/>
           <ProjectCardItem project={project} key={project.id} />

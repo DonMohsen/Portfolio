@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="">
+      <body className="dark:bg-black">
         <ThemeProvider attribute="class" defaultTheme="dark">
 
           <Header />
@@ -28,9 +28,7 @@ export default function RootLayout({
             <Navbar/>
           </div>
           {children}
-          <Toaster
-          
-          />
+          <Toaster/>
         </ThemeProvider>
     
       </body>

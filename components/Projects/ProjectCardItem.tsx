@@ -1,20 +1,19 @@
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 
 import Image from "next/image";
-import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import clsx from "clsx";
-import { CircleChevronRight } from "lucide-react";
+import { CircleChevronRight, Github, Link } from "lucide-react";
 const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
   
   return (
     <>
   <div
-    className="bg-white border-black/[0.1] border group dark:bg-black text-white flex flex-col  rounded-xl w-full  duration-300"
+    className="bg-white p-[12px] border-black/[0.1] dark:border-white/[0.4] border  dark:bg-black text-white flex flex-col  rounded-[20px]   duration-300"
   >
     {/* Image Container */}
     {project.image && (
-        <div className="relative min-h-[250px] max-h-[400px] overflow-hidden rounded-xl">
+        <div className=" relative    min-h-[200px] h-[200px]  rounded-[10px]">
         <Image
           src={project.image}
           alt={`${project.name} image`}
@@ -25,54 +24,56 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
           className="border-none w-full h-full object-cover transition-transform duration-500 rounded-xl "
         />
         
-        {/* Image Overlay Interactions */}
-        <div className="absolute top-0 w-full bg-black/0 transition-all duration-500 group-hover:bg-black/30 flex items-center justify-between px-10">
-          <Link 
-            href={project.githubLink} 
-            target="_blank"
-            className="opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 hover:scale-110"
-          >
-            <FaGithub className="w-10 h-10 text-white/90 hover:text-white" />
-          </Link>
-          <Link 
-            href={project.liveLink || ""} 
-            target="_blank"
-            className="opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 hover:scale-110"
-          >
-            <Image
-              width={50}
-              height={50} 
-              className="w-10 h-10"
-              alt="liveLink" 
-              src="/icons/web.png" 
-            />
-          </Link>
-        </div>
+      <div className="transition-all duration-500 absolute w-full h-full z-50 bg-black top-0 right-0 rounded-[10px] dark:bg-opacity-20 bg-opacity-0">
 
-        {/* Project Type Badge */}
-        <div className={clsx(
-          "absolute bottom-3 left-3 rounded-full px-4 py-1 text-sm font-medium backdrop-blur-sm",
-          project.projectType === "Copy" ? "bg-green-500/90 text-green-100" :
-          project.projectType === "Forked" ? "bg-purple-500/90 text-purple-100" :
-          project.projectType === "Practice" ? "bg-blue-500/90 text-blue-100" :
-          "bg-red-500/90 text-red-100"
-        )}>
-          {`${project.projectType}`}
-        </div>
-        {/* <div className={clsx(
-          "absolute bottom-10 left-3 rounded-full px-4 py-1 text-sm font-medium bg-green-50",)}>
-          {`${project.liveLink}`}
-        </div> */}
+      </div>
       </div>
     )}
 
     {/* Content Section */}
-    <div className="w-full mt-4 flex-grow flex flex-col select-none px-3 pb-4 space-y-4">
-      <div className="flex justify-between items-start">
-        <h3 className="text-2xl font-bold tracking-tight text-black dark:text-white">
+    <div className=" mt-[1rem]   select-none">
+    <div className={clsx(
+          "  rounded-[4px] w-fit p-[4px] mb-[24px]  text-sm font-medium flex-shrink",
+          project.projectType === "Copy" ? "bg-green-300 text-green-900" :
+          project.projectType === "Forked" ? "bg-purple-300 text-purple-900" :
+          project.projectType === "Practice" ? "bg-blue-300 text-blue-900" :
+          "bg-red-500/90 text-red-100"
+        )}>
+          {`${project.projectType}`}
+        </div>
+      <div className="flex-col justify-between  items-center">
+        <div className="text-[24px] leading-[26px] mb-2 font-bold tracking-tight text-black dark:text-white">
           {project.name}
-        </h3>
-        <div className="flex -space-x-3">
+        </div>
+        <div className="text-[16px] line-clamp-3 text-black dark:text-white">
+          {project.description}
+        </div>
+   
+      </div>
+      <div className="w-full flex-col mt-6 text-black dark:text-white">
+        <div className="flex justify-between w-full text-[16px] ">
+
+        <p>
+          Progress
+          </p>
+          <div>
+            {`${project.competency}%`}
+          </div>
+        </div>
+        <div className="h-[4px] relative bg-gray-200 rounded-full mt-2 ">
+          <div 
+          style={{ width: `${project.competency}% `} }
+          className={`h-[4px] absolute bg-green-600 rounded-full`}>
+
+          </div>
+        </div>
+      </div>
+      <div>
+        
+      </div>
+      <div className="flex items-center justify-between mt-6">
+   
+      <div className="flex -space-x-3">
           {project.techStack.slice(0,3).map((tech, index) => (
             <div
               key={tech.technology.id}
@@ -91,9 +92,13 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
             </div>
           )}
         </div>
+        <div className="flex items-center justify-center gap-5">
+        <Github className="text-black dark:text-white" />
+        <Link className="text-black dark:text-white"/>
+        </div>
+
       </div>
 
-    
     </div>
 
 
