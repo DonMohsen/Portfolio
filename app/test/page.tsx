@@ -1,10 +1,18 @@
 import ProjectsList from "@/components/project-list";
 import { getProjects } from "@/lib/getProjects";
 import { Suspense } from "react";
-
-export default async function TestPage({ searchParams }: { searchParams: { order?: string; search?: string } }) {
+interface Props {
+  searchParams: Promise<{ order: string ,search:string}>;
+}
+export default async function TestPage(props: Props) {
   // Get data from the database or API
-  const projects = await getProjects(searchParams.order, searchParams.search);
+  const searchParams = await props.searchParams;
+
+  const {
+    order,search
+  } = searchParams;
+
+  const projects = await getProjects(order, search);
 
   return (
     <main className="container mx-auto p-6">

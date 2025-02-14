@@ -2,16 +2,20 @@
 import {  Search, SlidersHorizontal } from "lucide-react";
 import ProjectCardItem from "@/components/Projects/ProjectCardItem";
 import { getAllProjects } from "../actions/getAllProjects";
-type Props = {
-  searchParams: Promise<{ [key: string]: string | undefined }>;
-};
-export default async function ProjectsPage({searchParams}:Props) {
+interface Props {
+  searchParams: Promise<{ order: string ,search:string}>;
+}
+export default async function ProjectsPage(props: Props) {
+  const searchParams = await props.searchParams;
 
-  
-  const params=await searchParams;
+  const {
+    order,search
+  } = searchParams;
+
+  // const params=await searchParams;
   // console.log(order,search);
-  const search = params?.search || ''; // Provide default values if undefined
-  const order = params?.order || '';   // Provide default values if undefined
+  // const search = params?.search || ''; // Provide default values if undefined
+  // const order = params?.order || '';   // Provide default values if undefined
 
   const allProjects= await getAllProjects(search,order)
     return (
