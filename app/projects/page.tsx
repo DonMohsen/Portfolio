@@ -2,17 +2,18 @@
 import {  Search, SlidersHorizontal } from "lucide-react";
 import ProjectCardItem from "@/components/Projects/ProjectCardItem";
 import { getAllProjects } from "../actions/getAllProjects";
-interface PageProps {
-  searchParams: {
-    search: string;
-    order: string;
-  };
-}
-export default async function ProjectsPage({searchParams}:PageProps) {
+type Props = {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+};
+export default async function ProjectsPage({searchParams}:Props) {
 
   
-  
-  const allProjects= await getAllProjects(searchParams.search,searchParams.order)
+  const params=await searchParams;
+  // console.log(order,search);
+  const search = params?.search || ''; // Provide default values if undefined
+  const order = params?.order || '';   // Provide default values if undefined
+
+  const allProjects= await getAllProjects(search,order)
     return (
       <div className="min-h-[110vh] bg-white dark:bg-black">
         {/* //! The filtering section */}
