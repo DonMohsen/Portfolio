@@ -1,41 +1,30 @@
-import { prisma } from '@/lib/prisma';
+import ProjectsList from "@/components/project-list";
+import { getProjects } from "@/lib/getProjects";
+import { Suspense } from "react";
 
-
-export default async function ProjectsPage() {
-  // Fetch data directly within the component
-  const allProjects = await prisma.projects.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    include: {
-      techStack: {
-        include: {
-          technology: true,
-        },
-      },
-      _count: true,
-    },
-  });
+export default async function TestPage({ searchParams }: { searchParams: { order?: string; search?: string } }) {
+  // Get data from the database or API
+  const projects = await getProjects(searchParams.order, searchParams.search);
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Projects</h1>
-      <ul>
-        {allProjects.map((project) => (
-          <li key={project.id} className="p-4 border-b">
-            <h2 className="text-xl font-semibold">{project.name}</h2>
-            <p>{project.description}</p>
-            <div className="flex gap-2 mt-2">
-              {project.techStack.map(({ technology }) => (
-                <span key={technology.id} className="px-2 py-1 bg-gray-200 rounded">
-                  {technology.name}
-                </span>
-              ))}
-            </div>
-          </li>
-        ))}
-      </ul>
+    <main className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-4">Projects</h1>
+
+      {/* Filter & List inside Suspense for loading effect */}
+      <Suspense fallback={<SkeletonLoader />}>
+        <ProjectsList initialProjects={projects} />
+      </Suspense>
+    </main>
+  );
+}
+
+// Example Skeleton Loader Component
+function SkeletonLoader() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {Array(6).fill(0).map((_, i) => (
+        <div key={i} className="bg-gray-200 h-40 rounded-md animate-pulse"></div>
+      ))}
     </div>
   );
 }
-export const revalidate = 600; // Revalidate every 600 seconds (10 minutes)

@@ -1,15 +1,21 @@
 
-import {  Search, SlidersHorizontal } from "lucide-react";
+import { ChartNoAxesColumn, Search, SlidersHorizontal } from "lucide-react";
+import ProjectCard from "@/components/ProjectCard";
 import ProjectCardItem from "@/components/Projects/ProjectCardItem";
-import { getAllProjects } from "../actions/getAllProjects";
+import axios from "axios";
+import { use } from "react";
 
-export default async function ProjectsPage({searchParams}:{searchParams:{search:string;order:string}}) {
+export default async function ProjectsCardList({searchParams}:{searchParams:{search:string;order:string}}) {
 
+  const {order,search}=await searchParams;
+
+  async function fetchProjects(search: string, order: string) {
+    const { data } = await axios.get(`/api/projects/search?search=${search || ""}&order=${order || ""}`);
+    return data;
+  }
   
-  const{order,search}=await searchParams;
-  console.log(order,search);
+  const allProjects = use(fetchProjects(search, order));
   
-  const allProjects= await getAllProjects(search,order)
     return (
       <div className="min-h-[110vh] bg-white dark:bg-black">
         {/* //! The filtering section */}

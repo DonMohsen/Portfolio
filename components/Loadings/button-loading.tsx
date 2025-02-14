@@ -6,7 +6,8 @@ const ButtonLoading = () => {
     <div className="animate-wave h-3 w-3 bg-white rounded-full"></div>
     <div className="animate-wave h-3 w-3 bg-white rounded-full animation-delay-200"></div>
     <div className="animate-wave h-3 w-3 bg-white rounded-full animation-delay-400"></div>
-  </div>  )
+  </div> 
+   )
 }
 
 export default ButtonLoading
