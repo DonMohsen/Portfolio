@@ -7,6 +7,7 @@ import { GrLinkedinOption } from "react-icons/gr";
 import { MdEmail, MdOutlineMail } from "react-icons/md";
 import { useMemo } from "react";
 import { usePathname } from "next/navigation";
+import { CgWebsite } from "react-icons/cg";
 
 const useWebRoutes = () => {
     const pathName = usePathname();
@@ -32,7 +33,7 @@ const useWebRoutes = () => {
         routesChildren:[
             {
                 text:"Real Projects",
-                route:"/Projects#Real-Projects",
+                route:"/projects#Real-Projects",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
                 isActive:pathName==="/Projects#Real-Projects",
@@ -40,7 +41,7 @@ const useWebRoutes = () => {
             },
             {
                 text:"Projects for Practice",
-                route:"/Projects#Projects-for-Practice",
+                route:"/projects#Projects-for-Practice",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
                 isActive:pathName==="/Projects#Projects-for-Practice",
@@ -49,11 +50,11 @@ const useWebRoutes = () => {
         ]
     },
     {
-        text:"Contact",
-        route:"/Contact",
-        emptyIcon:BsTelephone,
-        filledIcon:BsTelephoneFill,
-        isActive:pathName.includes('/Contact'),
+        text:"Blog",
+        route:"/blog",
+        emptyIcon:CgWebsite ,
+        filledIcon:CgWebsite,
+        isActive:pathName.includes('/blog'),
         id:5,
         routesChildren:[
             {

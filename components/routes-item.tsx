@@ -41,7 +41,6 @@ const RoutesItem = ({ webRoute, className }: { webRoute: webRoutesType; classNam
       >
         {/* Main Route Item */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400, damping: 15 }}
           className="flex items-center justify-between w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-black dark:hover:bg-slate-800 hover:bg-gray-200 transition cursor-pointer"
         >

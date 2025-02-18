@@ -45,9 +45,9 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
         <div className="text-[24px] leading-[26px] mb-2 font-bold tracking-tight text-black dark:text-white">
           {project.name}
         </div>
-        <div className="text-[16px] line-clamp-2 text-black dark:text-white">
+        {/* <div className="text-[16px] line-clamp-2 text-black dark:text-white">
           {project.description}
-        </div>
+        </div> */}
    
       </div>
       <div className="w-full flex-col mt-6 text-black dark:text-white">
