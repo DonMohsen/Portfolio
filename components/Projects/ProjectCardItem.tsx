@@ -1,3 +1,4 @@
+"use client"
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 
 import Image from "next/image";

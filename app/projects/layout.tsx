@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "پروژه های تمرینی و واقعی محسن خجسته نژاد",
 };
 
-export default function ProjectsLayout({
+export default async function ProjectsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
