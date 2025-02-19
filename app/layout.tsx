@@ -27,6 +27,7 @@ export default function RootLayout({
       <Head>
 
     <title>محسن خجسته نژاد</title>
+    <meta name="google-site-verification" content="8rnd6SZNcUVTXewASPcTSKtabrKxhaHnfN0hpXnO_nY" />
     <meta name="description" content="پرتفولیو محسن خجسته نژاد برنامه نویس تحت وب" />
     <meta name="robots" content="index, follow"/>
 
