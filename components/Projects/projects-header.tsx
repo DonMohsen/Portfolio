@@ -10,16 +10,12 @@ const ProjectsHeader = () => {
         <Search className="w-5 h-5 text-gray-500" />
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search
+          ..."
           className="flex-1 bg-transparent border-none outline-none px-2"
         />
       </div>
-      <Link href="/projects?type=Copy" prefetch={true}>
-Copy.......
-</Link>
-<Link href="/projects?type=Practice" prefetch={true}>
-Practice.......
-</Link>
+    
       <SlidersHorizontal className="cursor-pointer hover:scale-125 transition-all duration-300" />
     </div>
     <div className="w-full">

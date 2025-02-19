@@ -1,10 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 export default function Loading() {
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-purple-700 w-full">
+    <div className="flex h-screen items-center justify-center bg-purple-700 w-full">
       <motion.div
         className="relative flex space-x-2"
         initial={{ opacity: 0 }}
