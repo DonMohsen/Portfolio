@@ -508,6 +508,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
 
   {/* Submit Button */}
   <motion.button
+  
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
     type="button"

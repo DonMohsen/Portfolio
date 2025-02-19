@@ -4,14 +4,3 @@ export const navItems = [
     { name: "Testimonials", link: "#testimonials" },
     { name: "Contact", link: "#contact" },
   ];
-  
-  // type connectOptionsType={
-  //   name:string,
-  //   href:string,
-
-  // }
-  // export const connectOptions=[
-  //   {
-
-  //   }
-  // ]
