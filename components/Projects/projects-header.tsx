@@ -10,9 +10,8 @@ const ProjectsHeader = () => {
         <Search className="w-5 h-5 text-gray-500" />
         <input
           type="text"
-          placeholder="Search
-          ..."
-          className="flex-1 bg-transparent border-none outline-none px-2"
+          placeholder="Search..."
+          className="flex-1 bg-transparent border-none outline-none px-2 "
         />
       </div>
     

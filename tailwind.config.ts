@@ -19,6 +19,19 @@ export default {
   ],
   theme: {
   	extend: {
+			fontFamily: {
+				IRANSansXBlack: 'IRANSansXBlack',
+				IRANSansXExtraBold:"IRANSansXExtraBold",
+				IRANSansXBold: "IRANSansXBold",
+				IRANSansXDemiBold:"IRANSansXDemiBold",
+				IRANSansXMedium:"IRANSansXMedium",
+				IRANSansXRegular:"IRANSansXRegular",
+				IRANSansXLight:"IRANSansXLight",
+				IRANSansXUltraLight:"IRANSansXUltraLight",
+				IRANSansXThin:"IRANSansXThin"
+
+			},
+
 		zIndex: {
 			'max': '99999999999', // Add a custom max z-index value
 		  },

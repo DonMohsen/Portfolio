@@ -7,7 +7,7 @@ const ProjectsFilterNav = () => {
   const router=useRouter();
   return (
     <div  className='w-full  p-4 '>
-      <p className='text-right font-extrabold font-serif'>
+      <p className='text-right font-extrabold '>
         
         پروژه ها    
       </p>
