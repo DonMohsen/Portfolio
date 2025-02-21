@@ -15,7 +15,7 @@ const useWebRoutes = () => {
  const webRoutes = useMemo<webRoutesType[]>(
     () => [
     {
-        text:"Home",
+        text:"خانه",
         route:"/",
         emptyIcon:IoHomeOutline,
         filledIcon:IoHome,
@@ -24,7 +24,7 @@ const useWebRoutes = () => {
 
     },
     {
-        text:"Projects",
+        text:"پروژه ها",
         route:"/projects",
         emptyIcon:PiNewspaperClipping,
         filledIcon:PiNewspaperClippingFill,
@@ -32,67 +32,64 @@ const useWebRoutes = () => {
         id:2,
         routesChildren:[
             {
-                text:"Real Projects",
-                route:"/projects#Real-Projects",
+                text:"پروژه های کپی شده",
+                route:"/projects?type=Copy",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-                isActive:pathName==="/Projects#Real-Projects",
+                isActive:pathName==="/projects?type=Copy",
                 id:3
             },
             {
-                text:"Projects for Practice",
-                route:"/projects#Projects-for-Practice",
+                text:"پروژه های تمرینی",
+                route:"/projects?type=Practice",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-                isActive:pathName==="/Projects#Projects-for-Practice",
+                isActive:pathName==="/projects?type=Practice",
                 id:4
+            },
+            {
+                text:"کاستوم کامپوننت",
+                route:"/projects?type=Component",
+                emptyIcon:PiNewspaperClipping,
+                filledIcon:PiNewspaperClippingFill,
+                isActive:pathName==="/projects?type=Component",
+                id:44
             }
         ]
     },
     {
-        text:"Blog",
-        route:"/blog",
+        text:"بلاگ",
+        route:"/blogs",
         emptyIcon:CgWebsite ,
         filledIcon:CgWebsite,
-        isActive:pathName.includes('/blog'),
+        isActive:pathName.includes('/blogs'),
         id:5,
         routesChildren:[
             {
-                text:"Social Media Apps",
-                route:"/Contact/Social-Media-Apps",
+                text:"بلاگ های شخصی",
+                route:"/blogs",
                 emptyIcon:SlSocialLinkedin,
                 filledIcon:GrLinkedinOption,
-                isActive:pathName==="/Contact/Social-Media-Apps",
+                isActive:pathName==="/blogs?type=Personal",
                 id:6,
-                routesChildren:[
-                  
-                    {
-                        text:"Email2",
-        
-                        route:"/Contact#Email2",
-                        emptyIcon:MdOutlineMail,
-                        filledIcon:MdEmail ,
-                        isActive:pathName==="/Contact#Email2",
-                        id:7
-                    }
-                ]
+               
             },
             {
-                text:"Email",
+                text:"بلاگ های فنی",
 
-                route:"/Contact#Email",
+                route:"/blogs?type=Tech",
                 emptyIcon:MdOutlineMail,
                 filledIcon:MdEmail ,
-                isActive:pathName==="/Contact#Email",
+                isActive:pathName==="/blogs?type=Tech",
                 id:9
             },
             {
-                text:"Online Chat",
+                text:"بلاگ های متفرقه",
 
-                route:"/Contact#Online-Chat",
+                route:"/blogs?type=Others",
                 emptyIcon:MdOutlineMail,
                 filledIcon:MdEmail,
-                isActive:pathName==="/Contact#Online-Chat",
+                isActive:pathName==="/blogs?type=Others",
 
                 id:10
             }

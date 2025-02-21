@@ -1,5 +1,5 @@
 module.exports = {
-    siteUrl: 'https://yourdomain.ir',
+    siteUrl: 'https://donmohsen.ir',
     generateRobotsTxt: true, 
   };
   

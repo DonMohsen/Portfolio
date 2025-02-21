@@ -8,6 +8,7 @@ import Navbar from "@/components/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import Head from "next/head";
 import Script from "next/script";
+import NextLocalizationProvider from "./providers/next-localization-provider";
 
 export const metadata: Metadata = {
   title: "محسن خجسته نژاد",
@@ -22,7 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang="en" className="">
+    <html suppressHydrationWarning lang="fa">
+      {/* <NextLocalizationProvider> */}
+
       <body className="dark:bg-black ">
       <Head>
 
@@ -58,6 +61,7 @@ export default function RootLayout({
         </ThemeProvider>
     
       </body>
+  {/* </NextLocalizationProvider> */}
     </html>
   );
 }

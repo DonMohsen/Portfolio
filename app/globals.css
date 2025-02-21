@@ -80,13 +80,20 @@
 .hamRotate180.active {
   transform: rotate(180deg);
 }
+/* Default stroke for light theme */
 .line {
-  fill:none;
+  fill: none;
   transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
-  stroke:#ffffff;
-  stroke-width:3.5;
-  stroke-linecap:round;
+  stroke: #000000; /* Default stroke for light theme */
+  stroke-width: 3.5;
+  stroke-linecap: round;
 }
+
+/* Dark theme */
+.dark .line {
+  stroke: #ffffff; /* Stroke for dark theme */
+}
+  
 .ham1 .top {
   stroke-dasharray: 40 139;
 }

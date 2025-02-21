@@ -68,7 +68,7 @@ export const Header = () => {
   };
   
   return (
-    <div>
+    <div className="font-IRANSansXExtraBold">
       {/* Resume Header */}
       {resumeShow&&
       <div
@@ -88,14 +88,15 @@ export const Header = () => {
     animate={{ top: showTopZero ? "0rem" : "60px", opacity: 1 }}
     exit={{ top: "-60px", opacity: 0 }}
     transition={{ duration: 0.2, ease: "easeInOut" }}
-    className="fixed w-full z-[60] h-10 md:h-[52px] bg-white dark:bg-black border-b border-black/[0.2] text-black dark:text-white dark:border-white/[0.2]"
+    className="fixed w-full z-[60] h-10 md:h-[52px] bg-white  dark:bg-black border-b border-black/[0.2] text-black dark:text-white dark:border-white/[0.2]"
   >
-    <div className="relative flex items-center gap-4 max-sm:gap-2 justify-center w-full h-full px-0 md:px-[20%]">
+    <div className="relative flex text-xs md:text-sm items-center gap-4 max-sm:gap-2 justify-center w-full h-full px-0 md:px-[20%]">
       {/* 🏆 Improved Download Button with File Download */}
       <Button
   onClick={handleDownload}
   disabled={downloadLoading}
-  className="group rounded-full border-2 font-IRANSansXDemiBold border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
+  className="group rounded-full text-xs md:text-sm border-2 font-IR
+  ANSansXRegular  border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
 >
   {downloadLoading ? (
     <div className="flex items-center justify-center gap-2">
@@ -104,7 +105,7 @@ export const Header = () => {
   ) : (
     <div className="flex flex-col items-center justify-center">
       {/* ✅ Add transition here to fix animation issue */}
-      <ArrowDown className="w-8 h-8 translate-y-0 group-hover:translate-y-[6px] transition-transform duration-300" />
+      <ArrowDown className="w-8 h-8 group-hover:translate-y-[6px] max-sm:translate-y-[6px] transition-transform duration-300" />
       <Space className="w-8 h-8 -translate-y-1" />
     </div>
   )}
@@ -115,9 +116,9 @@ export const Header = () => {
 
 
       {/* 🌟 Improved Heading */}
-      <h2 className="text-sm font-IRANSansXExtraBold text-center">
-        نگاهی به رزومه‌ی من بندازید
-      </h2>
+      <p className=" font-IRANSansXRegular text-center">
+        نگاهی به رزومه‌ ی من بندازید
+      </p>
 
       {/* ❌ Enhanced Close Button */}
       <X
@@ -141,7 +142,7 @@ export const Header = () => {
           animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
           transition={{ duration: 0.2 }}
           className={clsx(
-            "bg-[#160d1c] h-[60px] text-[#dddada]  flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3 font-extralight items-center justify-between space-x-10"
+            "dark:bg-[#160d1c] bg-white border-b  border-black/[0.1] dark:border-white/[0.1] h-[60px] text-[#dddada]  flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3 font-extralight items-center justify-between space-x-10"
           )}
         >
           {/* Desktop Navigation */}
@@ -156,35 +157,42 @@ export const Header = () => {
              >
                <Link
                  href={item.route}
-                 className="dark:text-neutral-50 flex items-center space-x-1 py-3 px-4 dark:hover:text-neutral-300 hover:text-neutral-500"
+                 className="text-black dark:text-white flex items-center space-x-1 py-3 px-4 dark:hover:text-neutral-300 hover:text-neutral-500"
                >
-                 <span className="text-xs !cursor-pointer">{item?.text}</span>
+                 <span className="text-xs !cursor-pointer ">{item?.text}</span>
                </Link>
              
                {/* Dropdown Menu */}
                <AnimatePresence>
-                 {item.routesChildren && hoveredRouteItem?.id === item.id && (
-                   <motion.div
-                     initial={{ scaleY: 0, opacity: 0 }}
-                     animate={{ scaleY: 1, opacity: 1 }}
-                     exit={{ scaleY: 0, opacity: 0 }}
-                     transition={{ ease: "easeInOut", duration: 0.3 }}
-                     className="absolute left-0 top-full w-[250px] bg-[#160d1c] origin-top shadow-lg"
-                   >
-                     <div className="p-4">
-                       {item.routesChildren.map((child) => (
-                         <Link
-                           key={child.id}
-                           href={child.route}
-                           className="block py-2 px-4 text-white hover:bg-gray-700"
-                         >
-                           {child.text}
-                         </Link>
-                       ))}
-                     </div>
-                   </motion.div>
-                 )}
-               </AnimatePresence>
+  {item.routesChildren && hoveredRouteItem?.id === item.id && (
+    <motion.div
+      initial={{ scaleY: 0, opacity: 0 }}
+      animate={{ scaleY: 1, opacity: 1 }}
+      exit={{ scaleY: 0, opacity: 0 }}
+      transition={{ ease: "easeInOut", duration: 0.3 }}
+      className="absolute left-0 top-full w-[250px] dark:bg-[#1a0a1b] bg-white  origin-top shadow-lg rounded-md border border-gray-700"
+    >
+      <div className="p-4">
+        {item.routesChildren.map((child) => (
+          <Link
+            key={child.id}
+            href={child.route}
+            className="block py-2 px-4 text-black dark:text-white text-right hover:bg-gray-800 hover:rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all"
+            aria-label={child.text} // For accessibility
+          >
+            <div className="flex items-center justify-end gap-2">
+
+            {child.text}
+            <child.emptyIcon className="w-7 h-7"/>
+            </div>
+            
+          </Link>
+        ))}
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
              </div>
              
               ))}
@@ -193,7 +201,7 @@ export const Header = () => {
           </div>
 
           {/* Mobile Navigation */}
-          <div className="z-50 text-white w-full md:hidden flex items-center gap-3 justify-end -translate-y-1 translate-x-5">
+          <div className="z-50 text-white w-full md:hidden flex items-center gap-3 justify-end -translate-y-1 translate-x-5 ">
             <ThemeToggle />
             <HamburgerMenu />
           </div>
