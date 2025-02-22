@@ -10,7 +10,7 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
   return (
     <>
   <div
-    className="bg-white p-[12px] border-black/[0.1] dark:border-white/[0.4] border  dark:bg-black text-white flex flex-col  rounded-[20px]   duration-300"
+    className="bg-[#f6f6f6] p-[12px] border-black/[0.1] dark:border-white/[0.4] border  dark:bg-black text-white flex flex-col  rounded-[20px]   duration-300"
   >
     {/* Image Container */}
     {project.image && (

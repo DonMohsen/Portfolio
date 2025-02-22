@@ -24,7 +24,7 @@ function ThemeToggle() {
     <DarkModeToggle
       onChange={handleClick}
       checked={resolvedTheme === "dark"}
-      size={80}
+      size={60}
     />
   );
 }

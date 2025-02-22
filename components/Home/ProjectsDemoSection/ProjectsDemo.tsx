@@ -14,7 +14,7 @@ import { IoCopyOutline } from "react-icons/io5"
 const ProjectsDemo = async({projects}:{projects:ProjectsWithTechsType[]}) => {
   const {projectCount,technologyCount}=await getAllProjectsCount()
   return (
-    <div className=" w-full h-full relative flex flex-col items-center justify-center bg-slate-100 dark:bg-black px-[20%] max-sm:px-[10%]">
+    <div className=" w-full h-full relative flex flex-col items-center justify-center bg-white dark:bg-black px-[20%] max-sm:px-[10%]">
     <div className="w-full h-full flex flex-col items-center justify-center text-center">
       <div className=" text-[40px]  font-IRANSansXExtraBold">پروژه ها</div>
       <p className="pt-10 font-IRANSansXUltraLight">
