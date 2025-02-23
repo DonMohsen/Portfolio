@@ -1,15 +1,18 @@
 "use client"
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
-
+import Link from "next/link";
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
 import clsx from "clsx";
-import { CircleChevronRight, Github, Link } from "lucide-react";
+import { CircleChevronRight, Github } from "lucide-react";
+import { Link as LucideLink } from "lucide-react";
+
 const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
   
   return (
     <>
-  <div
+  <Link
+  href={`/projects/${project.id}`}
     className="bg-[#f6f6f6] p-[12px] border-black/[0.1] dark:border-white/[0.4] border  dark:bg-black text-white flex flex-col  rounded-[20px]   duration-300"
   >
     {/* Image Container */}
@@ -95,7 +98,7 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
         </div>
         <div className="flex items-center justify-center gap-5">
         <Github className="text-black dark:text-white" />
-        <Link className="text-black dark:text-white"/>
+        <LucideLink className="text-black dark:text-white"/>
         </div>
 
       </div>
@@ -103,7 +106,7 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
     </div>
 
 
-  </div>
+  </Link>
 
     </>
   );

@@ -13,11 +13,11 @@ const Presentation = () => {
     <div className="absolute w-full  z-[60]  h-full flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl -translate-y-[10%]">
       <h1 className="text-6xl max-md:text-5xl max-sm:text-3xl mb-3 font-IRANSansXBlack ">
         محسن خجسته نژاد
-        {/* Lorem ipsum dolor sit. */}
+        {/* Lorem ipsum dolor. */}
         </h1>
       <p className="text-[20px] max-sm:text-[15px] ">
       برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند
-      {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. */}
+      {/* Lorem ipsum dolor  sit amet consectetur adipisicing <br/> elit dolor Lorem, ipsum.. */}
       </p>
       <div className="flex items-center justify-center  w-full gap-3 mt-4 ">
         <Link

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { CircleChevronRight } from "lucide-react";
+import { CircleChevronLeft } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
 import Link from "next/link";
@@ -44,32 +44,32 @@ const RoutesItem = ({ webRoute, className }: { webRoute: webRoutesType; classNam
       transition={{ type: "spring", stiffness: 400, damping: 15 }}
       className="flex items-center justify-between w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-black transition cursor-pointer"
     >
-      <Link
-        onClick={closeHamburgerAfterClick}
-        href={route}
-        className="flex items-center space-x-3 w-full"
-      >
-        {isActive ? (
-          <webRoute.filledIcon className="w-6 h-6 text-blue-500" />
-        ) : (
-          <webRoute.emptyIcon className="w-6 h-6 text-gray-500" />
-        )}
-        <span
-          className="text-lg font-medium"
-          style={{ flex: 1, wordWrap: "break-word" }} // This allows the text to wrap
-        >
-          {text}
-        </span>
-      </Link>
-
       {routesChildren && routesChildren.length > 0 && (
         <button
           onClick={() => setOpenChildren(!openChildren)}
 className="p-1 w-[50%] flex items-center justify-center bg-slate-300 dark:bg-slate-900 rounded-xl " // Button takes 50% width
         >
-          <CircleChevronRight className={clsx(`w-6 h-6 transition-all duration-300`,openChildren&&"rotate-90")} />
+          <CircleChevronLeft className={clsx(`w-6 h-6 transition-all duration-300`,openChildren&&"-rotate-90")} />
         </button>
       )}
+      <Link
+        onClick={closeHamburgerAfterClick}
+        href={route}
+        className="flex items-center space-x-3 w-full"
+      >
+        <span
+          className="text-lg font-medium text-right"
+          style={{ flex: 1, wordWrap: "break-word" }} // This allows the text to wrap
+          >
+          {text}
+        </span>
+          {isActive ? (
+            <webRoute.filledIcon className="w-6 h-6 text-blue-500" />
+          ) : (
+            <webRoute.emptyIcon className="w-6 h-6 text-gray-500" />
+          )}
+      </Link>
+
     </motion.div>
       </motion.div>
 
@@ -81,7 +81,7 @@ className="p-1 w-[50%] flex items-center justify-center bg-slate-300 dark:bg-sla
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="ml-6 overflow-hidden origin-top space-y-1"
+            className="mr-4 overflow-hidden origin-top space-y-1"
           >
             {routesChildren.map((child: webRoutesType, index) => (
               <motion.div
@@ -92,7 +92,7 @@ className="p-1 w-[50%] flex items-center justify-center bg-slate-300 dark:bg-sla
                 exit="hidden"
                 transition={{ delay: index * 0.5 }} // Stagger effect
               >
-                <RoutesItem webRoute={child} className="pl-4" />
+                <RoutesItem webRoute={child} className="pl-1" />
               </motion.div>
             ))}
           </motion.div>

@@ -53,7 +53,8 @@ const useWebRoutes = () => {
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
                 isActive:pathName==="/projects?type=Component",
-                id:44
+                id:44,
+                
             }
         ]
     },
