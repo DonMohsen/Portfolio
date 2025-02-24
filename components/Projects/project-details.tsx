@@ -1,23 +1,25 @@
 "use client";
-
+import { ArrowRight } from "lucide-react";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import useShowHeader from "@/store/useShowHeader";
 import clsx from "clsx";
-import { useMotionValueEvent, useScroll } from "framer-motion";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Refs for different sections (Fixed TypeScript Error)
   const imagesRef = useRef<HTMLDivElement>(null!);
   const specificationsRef = useRef<HTMLDivElement>(null!);
   const linksRef = useRef<HTMLDivElement>(null!);
-
+  const router=useRouter()
   // Function to smoothly scroll to a section
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -68,40 +70,93 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
     }
   });
 
-
+const handleImageOpening=()=>{
+  setIsModalOpen(true)
+}
   return (
     <div className="min-h-[400dvh] mt-[70px] max-w-4xl flex flex-col items-center w-full">
       {/* Image Container */}
-      <div
-      ref={imagesRef}
-      className="w-full max-md:h-[400px] h-[550px] relative">
-        <div className="z-10 bg-slate-300 animate-pulse absolute w-full h-full"></div>
+      <div className="w-full max-md:h-[400px] h-[550px] relative">
+        {/* Skeleton Loader */}
+        <div className="z-10 bg-slate-300 animate-pulse absolute w-full h-full rounded-[8px]"></div>
+
+        {/* Clickable Image */}
         <Image
           width={1920}
           height={400}
           src={project.image || "/image-placeholder.webp"}
           alt={`${project.name} image`}
-          className="absolute w-full h-full object-cover z-20"
+          className="absolute w-full h-full object-cover z-20 rounded-[8px] cursor-pointer"
+          onClick={handleImageOpening}
         />
+
+        {/* Back Button */}
+        <div
+          onClick={() => router.back()}
+          className="z-20 bg-white absolute top-4 right-4 rounded-md p-2 cursor-pointer bg-opacity-40 lg:hidden"
+        >
+          <ArrowRight />
+        </div>
       </div>
 
+      {/* Modal with Animation */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-max"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsModalOpen(false)}
+          >
+            
+            {/* Image Wrapper with Scale Animation */}
+            <motion.div
+              className="relative p-4"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking on the image
+            >
+              {/* Close Button */}
+              <button
+                className="absolute top-2 right-2 text-white text-xl bg-red-700  bg-opacity-90 rounded-full px-2"
+                onClick={() => setIsModalOpen(false)}
+              >
+                ✕
+              </button>
+
+              {/* Full-size Image */}
+              <Image
+                width={1920}
+                height={1080}
+                src={project.image || "/image-placeholder.webp"}
+                alt={`${project.name} full-size image`}
+                className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Sticky Navigation Bar */}
-      <div className={clsx("sticky  transition-all duration-300 mt-6  z-50", visible ? " top-[65px] " :" top-5 ")}>
-        <div className="w-full flex justify-around items-center gap-4">
+      <div className={clsx("sticky  transition-all duration-300 mt-6 py-3 z-50 w-full bg-white dark:bg-black border-b dark:border-white/[0.3] border-black/[0.3] ", visible ? " top-[60px] " :" top-0 ")}>
+        <div className="w-full flex justify-around items-center gap-4   font-IRANSansXDemiBold">
           <Button
-            className={clsx(" bg-white dark:bg-[#160d1c]", activeSection === "images" && "bg-[#ac83c8] dark:bg-[#362144]")}
+            className={clsx(" bg-white dark:bg-[#362144] px-5", activeSection === "images" && "bg-[#ac83c8] dark:bg-[#ac83c8]")}
             onClick={() => scrollToSection(imagesRef)}
           >
             تصاویر
           </Button>
           <Button
-            className={clsx(" bg-white dark:bg-[#160d1c]", activeSection === "specifications" && "bg-[#ac83c8] dark:bg-[#362144]")}
+            className={clsx(" bg-white dark:bg-[#362144] px-5", activeSection === "specifications" && "bg-[#ac83c8] dark:bg-[#ac83c8]")}
             onClick={() => scrollToSection(specificationsRef)}
           >
             مشخصات
           </Button>
           <Button
-            className={clsx(" bg-white dark:bg-[#160d1c]", activeSection === "links" && "bg-[#ac83c8] dark:bg-[#362144]")}
+            className={clsx(" bg-white dark:bg-[#362144] px-5", activeSection === "links" && "bg-[#ac83c8] dark:bg-[#ac83c8]")}
             onClick={() => scrollToSection(linksRef)}
           >
             لینک ها
