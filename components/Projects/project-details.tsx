@@ -76,7 +76,9 @@ const handleImageOpening=()=>{
   return (
     <div className="min-h-[400dvh] mt-[70px] max-w-4xl flex flex-col items-center w-full">
       {/* Image Container */}
-      <div className="w-full max-md:h-[400px] h-[550px] relative">
+      <div
+      ref={imagesRef}
+      className="w-full max-md:h-[400px] h-[550px] relative">
         {/* Skeleton Loader */}
         <div className="z-10 bg-slate-300 animate-pulse absolute w-full h-full rounded-[8px]"></div>
 
@@ -113,9 +115,9 @@ const handleImageOpening=()=>{
             {/* Image Wrapper with Scale Animation */}
             <motion.div
               className="relative p-4"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
+              exit={{ scale: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking on the image
             >

@@ -128,12 +128,18 @@ export const Header = () => {
              
               ))}
             </AnimatePresence>
+            <div aria-hidden="false">
+
             <ThemeToggle />
+            </div>
           </div>
 
           {/* Mobile Navigation */}
           <div className="z-50 text-white w-full md:hidden flex items-center gap-3 justify-end -translate-y-1 translate-x-5 ">
+            <div aria-hidden="false">
+
             <ThemeToggle />
+            </div>
             <HamburgerMenu />
           </div>
         </motion.div>
