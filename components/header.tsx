@@ -73,7 +73,7 @@ export const Header = () => {
       {resumeShow&&
       <div
       className={clsx(
-        "fixed bg-[#151515] top-0 h-[30px] w-full z-10"
+        "fixed dark:bg-[#151515] bg-white  top-0 h-[30px] w-full z-10"
       )}
       ></div>
     }
