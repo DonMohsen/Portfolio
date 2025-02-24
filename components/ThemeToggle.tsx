@@ -21,11 +21,13 @@ function ThemeToggle() {
   };
 
   return (
+    <div aria-hidden="false">
     <DarkModeToggle
       onChange={handleClick}
       checked={resolvedTheme === "dark"}
       size={60}
     />
+  </div>
   );
 }
 
