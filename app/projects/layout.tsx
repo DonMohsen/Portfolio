@@ -1,7 +1,6 @@
 import ProjectsFilterNav from "@/components/Projects/projects-filter-nav";
 import ProjectsHeader from "@/components/Projects/projects-header";
 import type { Metadata } from "next";
-import Head from "next/head";
 export const metadata: Metadata = {
   title: "پروژه های محسن خجسته نژاد",
   description: "پروژه های تمرینی و واقعی محسن خجسته نژاد",

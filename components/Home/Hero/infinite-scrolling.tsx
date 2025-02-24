@@ -1,6 +1,4 @@
 "use client";
-import NextjsIcon from "../public/icons/react-svgrepo-com.svg"
-import React, { useEffect, useState } from "react";
 import { InfiniteMovingCards } from "./Infinite-cards";
 
 export function InfiniteScrolling() {

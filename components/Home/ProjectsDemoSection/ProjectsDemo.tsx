@@ -6,10 +6,8 @@ import { Button } from "@/components/ui/button"
 import MagicButton from "@/components/ui/magic-button"
 import { toPersianDigits } from "@/utils/format"
 import { Projects } from "@prisma/client"
-import Image from "next/image"
 import Link from "next/link"
 import { FaArrowRight } from "react-icons/fa"
-import { IoCopyOutline } from "react-icons/io5"
 
 const ProjectsDemo = async({projects}:{projects:ProjectsWithTechsType[]}) => {
   const {projectCount,technologyCount}=await getAllProjectsCount()

@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import React from "react";
 import Presentation from "../Presentation";
-import { InfiniteMovingCards } from "./Infinite-cards";
 import { InfiniteScrolling } from "./infinite-scrolling";
 
 export function GridBg  () {

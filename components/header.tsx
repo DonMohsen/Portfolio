@@ -13,7 +13,6 @@ import { webRoutesType } from "@/app/Types/webRoutesTypes";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
 
 export const Header = () => {
-  const [downloadLoading, setDownloadLoading] = useState(false)
   const webRoutes = useWebRoutes();
   const { scrollYProgress } = useScroll();
   const resumeShow = useShowHeader((state) => state.ShowHeaderState);
@@ -49,24 +48,7 @@ export const Header = () => {
     resumeToggle();
   }, [resumeToggle]);
 
-  const handleDownload = () => {
-    setDownloadLoading(true);
-  
-    // File URL (served from Next.js public folder)
-    const fileUrl = "/MohsenKhPersianCV.pdf"; // Relative to the public folder
-  
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.download = "MohsenKhPersianCV.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  
-    setTimeout(() => {
-      setDownloadLoading(false);
-    }, 1500);
-  };
-  
+ 
   return (
     <div className="font-IRANSansXExtraBold">
       {/* Resume Header */}
@@ -82,53 +64,7 @@ export const Header = () => {
       <AnimatePresence>
       <AnimatePresence>
      
-{resumeShow && (
-  <motion.div
-    initial={{ top: 0, opacity: 1 }}
-    animate={{ top: showTopZero ? "0rem" : "60px", opacity: 1 }}
-    exit={{ top: "-60px", opacity: 0 }}
-    transition={{ duration: 0.2, ease: "easeInOut" }}
-    className="fixed w-full z-[60] h-10 md:h-[52px] bg-white  dark:bg-black border-b border-black/[0.2] text-black dark:text-white dark:border-white/[0.2]"
-  >
-    <div className="relative flex text-xs md:text-sm items-center gap-4 max-sm:gap-2 justify-center w-full h-full px-0 md:px-[20%]">
-      {/* 🏆 Improved Download Button with File Download */}
-      <Button
-  onClick={handleDownload}
-  disabled={downloadLoading}
-  className="group rounded-full text-xs md:text-sm border-2 font-IR
-  ANSansXRegular  border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
->
-  {downloadLoading ? (
-    <div className="flex items-center justify-center gap-2">
-      <div className="w-5 h-5 border-2 border-gray-300 border-t-black dark:border-t-white rounded-full animate-spin"></div>
-    </div>
-  ) : (
-    <div className="flex flex-col items-center justify-center">
-      {/* ✅ Add transition here to fix animation issue */}
-      <ArrowDown className="w-8 h-8 group-hover:translate-y-[6px] max-sm:translate-y-[6px] transition-transform duration-300" />
-      <Space className="w-8 h-8 -translate-y-1" />
-    </div>
-  )}
-  <p className="flex items-center justify-center">
-    دانلود رزومه
-  </p>
-</Button>
 
-
-      {/* 🌟 Improved Heading */}
-      <p className=" font-IRANSansXRegular text-center">
-        نگاهی به رزومه‌ ی من بندازید
-      </p>
-
-      {/* ❌ Enhanced Close Button */}
-      <X
-        onClick={resumeToggle}
-        className="right-4 max-sm:right-3 text-red-700 cursor-pointer hover:text-red-500 transition-colors"
-        aria-label="بستن پنجره"
-      />
-    </div>
-  </motion.div>
-)}
 
 </AnimatePresence>
 

@@ -1,8 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import {
   Prisma,
-  Projects,
-  ProjectTypes,
   Technology,
 } from "@prisma/client";
 import { prisma } from "@/lib/prisma";

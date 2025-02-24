@@ -19,19 +19,17 @@ export default {
   ],
   theme: {
   	extend: {
-			fontFamily: {
-				IRANSansXBlack: 'IRANSansXBlack',
-				IRANSansXExtraBold:"IRANSansXExtraBold",
-				IRANSansXBold: "IRANSansXBold",
-				IRANSansXDemiBold:"IRANSansXDemiBold",
-				IRANSansXMedium:"IRANSansXMedium",
-				IRANSansXRegular:"IRANSansXRegular",
-				IRANSansXLight:"IRANSansXLight",
-				IRANSansXUltraLight:"IRANSansXUltraLight",
-				IRANSansXThin:"IRANSansXThin"
-
-			},
-
+		fontFamily: {
+			IRANSansXBlack: ['IRANSansXBlack', 'Arial', 'sans-serif'],
+			IRANSansXExtraBold: ['IRANSansXExtraBold', 'Arial', 'sans-serif'],
+			IRANSansXBold: ['IRANSansXBold', 'Arial', 'sans-serif'],
+			IRANSansXDemiBold: ['IRANSansXDemiBold', 'Arial', 'sans-serif'],
+			IRANSansXMedium: ['IRANSansXMedium', 'Arial', 'sans-serif'],
+			IRANSansXRegular: ['IRANSansXRegular', 'Arial', 'sans-serif'],
+			IRANSansXLight: ['IRANSansXLight', 'Arial', 'sans-serif'],
+			IRANSansXUltraLight: ['IRANSansXUltraLight', 'Arial', 'sans-serif'],
+			IRANSansXThin: ['IRANSansXThin', 'Arial', 'sans-serif'],
+		  },
 		zIndex: {
 			'max': '99999999999', // Add a custom max z-index value
 		  },
@@ -46,12 +44,7 @@ export default {
 			  },
 			},
 		  },
-  		// fontFamily: {
-  		// 	signika: [
-  		// 		'Signika Negative"',
-        //             ...fontFamily.sans
-        //         ]
-  		// },
+  		
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

@@ -2,9 +2,8 @@
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import Link from "next/link";
 import Image from "next/image";
-import { FaGithub } from "react-icons/fa";
 import clsx from "clsx";
-import { CircleChevronRight, Github } from "lucide-react";
+import {  Github } from "lucide-react";
 import { Link as LucideLink } from "lucide-react";
 
 const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
