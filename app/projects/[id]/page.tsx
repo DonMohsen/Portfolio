@@ -9,7 +9,9 @@ type Props = {
 
 // Generate metadata dynamically (SEO)
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const projectId = Number(params.id);
+  const searchParams= await params;
+  const idOfParams=searchParams.id;
+  const projectId = Number(idOfParams);
   if (isNaN(projectId)) return { title: "Project Not Found" };
 
   const project = await getProjectById(projectId);
@@ -23,7 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Fetch project data
 export default async function ProjectPage({ params }: Props) {
-  const projectId = Number(params.id);
+  const searchParams= await params;
+  const idOfParams=searchParams.id;
+  const projectId = Number(idOfParams);
   if (isNaN(projectId)) return notFound();
 
   const project = await getProjectById(projectId);

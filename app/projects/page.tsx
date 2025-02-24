@@ -1,10 +1,5 @@
-import { Search, SlidersHorizontal } from "lucide-react";
 import ProjectCardItem from "@/components/Projects/ProjectCardItem";
 import { getAllProjects } from "../actions/getAllProjects";
-import { ProjectTypes } from "@prisma/client";
-import Link from "next/link";
-import { Suspense } from "react";
-import { SkeletonLoader } from "@/components/Loadings/skeleton-loader";
 
 interface Props {
   searchParams: Promise<{ order: string ,search:string,type:string}>;
