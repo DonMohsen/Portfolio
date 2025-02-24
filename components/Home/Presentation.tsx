@@ -1,4 +1,3 @@
-"use server"
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { HiOutlineMail } from "react-icons/hi";
@@ -8,15 +7,16 @@ import { SlSocialLinkedin } from "react-icons/sl";
 import GitHubContributions from "./GitHubContributions";
 import ResumeDownloadButton from "./ResumeDownloadButton";
 import { ArrowLeft } from "lucide-react";
-
-const Presentation = () => {
+export const revalidate = 600
+const Presentation =async () => {
   return (
     <div className="absolute w-full  z-[60]  h-full flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl -translate-y-[10%]">
       <h1 className="text-6xl max-md:text-5xl max-sm:text-3xl mb-3 font-IRANSansXBlack ">
         محسن خجسته نژاد
-        {/* Lorem ipsum dolor. */}
+        {/* Lorem ipsum dolor. */
+        }
         </h1>
-      <p className="text-[20px] max-sm:text-[15px] "> 
+      <p className="text-[20px] max-sm:text-[15px] font-IRANSansXLight "> 
       برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند
       {/* Lorem ipsum dolor  sit amet consectetur adipisicing <br/> elit dolor Lorem, ipsum.. */}
       </p>
@@ -24,7 +24,8 @@ const Presentation = () => {
         <Link
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:bg-purple-950 dark:hover:bg-purple-200 w-8 h-8 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
+          className="hover:bg-purple-950 dark:hover:bg-purple-200 w-8 h-8 rounded-full bg-black dark:bg-
+          white flex items-center justify-center relative z-10"
           href="https://github.com/donmohsen"
             aria-label="GitHub Profile"
 
