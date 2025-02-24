@@ -3,23 +3,36 @@ import { ArrowRight } from "lucide-react";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import useShowHeader from "@/store/useShowHeader";
 import clsx from "clsx";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { Projects } from "@prisma/client";
+import { techColors } from "./client-project-card";
+import { useTheme } from "next-themes";
+import CompetencyCircle from "../CompetencyMeter";
 
 const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
+  console.log(project);
+
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { theme } = useTheme();
+    const isDarkMode = theme === 'dark';
 
   // Refs for different sections (Fixed TypeScript Error)
   const imagesRef = useRef<HTMLDivElement>(null!);
   const specificationsRef = useRef<HTMLDivElement>(null!);
   const linksRef = useRef<HTMLDivElement>(null!);
-  const router=useRouter()
+  const router = useRouter();
   // Function to smoothly scroll to a section
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -32,7 +45,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
 
   // Update active section on scroll
   useEffect(() => {
-    setActiveSection("images")
+    setActiveSection("images");
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 75; // Adjusted for header
 
@@ -46,7 +59,8 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
         if (
           section.ref.current &&
           scrollPosition >= section.ref.current.offsetTop &&
-          scrollPosition < section.ref.current.offsetTop + section.ref.current.clientHeight
+          scrollPosition <
+            section.ref.current.offsetTop + section.ref.current.clientHeight
         ) {
           setActiveSection(section.id);
           break;
@@ -70,15 +84,16 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
     }
   });
 
-const handleImageOpening=()=>{
-  setIsModalOpen(true)
-}
+  const handleImageOpening = () => {
+    setIsModalOpen(true);
+  };
   return (
     <div className="min-h-[400dvh] mt-[70px] max-w-4xl flex flex-col items-center w-full">
       {/* Image Container */}
       <div
-      ref={imagesRef}
-      className="w-full max-md:h-[400px] h-[550px] relative">
+        ref={imagesRef}
+        className="w-full max-md:h-[400px] h-[550px] relative"
+      >
         {/* Skeleton Loader */}
         <div className="z-10 bg-slate-300 animate-pulse absolute w-full h-full rounded-[8px]"></div>
 
@@ -111,7 +126,6 @@ const handleImageOpening=()=>{
             exit={{ opacity: 0 }}
             onClick={() => setIsModalOpen(false)}
           >
-            
             {/* Image Wrapper with Scale Animation */}
             <motion.div
               className="relative p-4"
@@ -143,22 +157,37 @@ const handleImageOpening=()=>{
       </AnimatePresence>
 
       {/* Sticky Navigation Bar */}
-      <div className={clsx("sticky  transition-all duration-300 mt-6 py-3 z-50 w-full bg-white dark:bg-black border-b dark:border-white/[0.3] border-black/[0.3] ", visible ? " top-[60px] " :" top-0 ")}>
+      <div
+        className={clsx(
+          "sticky  transition-all duration-300 mt-6 py-3 z-50 w-full bg-white dark:bg-black border-b dark:border-white/[0.3] border-black/[0.3] ",
+          visible ? " top-[60px] " : " top-0 "
+        )}
+      >
         <div className="w-full flex justify-around items-center gap-4   font-IRANSansXDemiBold">
           <Button
-            className={clsx(" bg-white dark:bg-[#362144] px-5", activeSection === "images" && "bg-[#ac83c8] dark:bg-[#ac83c8]")}
+            className={clsx(
+              " bg-white dark:bg-[#362144] px-5",
+              activeSection === "images" && "bg-[#ac83c8] dark:bg-[#ac83c8]"
+            )}
             onClick={() => scrollToSection(imagesRef)}
           >
             تصاویر
           </Button>
           <Button
-            className={clsx(" bg-white dark:bg-[#362144] px-5", activeSection === "specifications" && "bg-[#ac83c8] dark:bg-[#ac83c8]")}
+            className={clsx(
+              " bg-white dark:bg-[#362144] px-5",
+              activeSection === "specifications" &&
+                "bg-[#ac83c8] dark:bg-[#ac83c8]"
+            )}
             onClick={() => scrollToSection(specificationsRef)}
           >
             مشخصات
           </Button>
           <Button
-            className={clsx(" bg-white dark:bg-[#362144] px-5", activeSection === "links" && "bg-[#ac83c8] dark:bg-[#ac83c8]")}
+            className={clsx(
+              " bg-white dark:bg-[#362144] px-5",
+              activeSection === "links" && "bg-[#ac83c8] dark:bg-[#ac83c8]"
+            )}
             onClick={() => scrollToSection(linksRef)}
           >
             لینک ها
@@ -167,14 +196,76 @@ const handleImageOpening=()=>{
       </div>
 
       {/* Sections */}
-      <div 
-      ref={specificationsRef}
-      className="py-20 w-full">
-        <h2 className="text-lg font-semibold">Images Section</h2>
-        <p>Content related to images goes here.</p>
+      <div ref={specificationsRef} className="my-3 w-full max-lg:px-10 ">
+        <h2 className="text-[30px] font-extrabold">{project.name}</h2>
+        <div className="flex items-center justify-start gap-4 mb-3 mt-1">
+          {/* //! type tag */}
+          <div
+            className={clsx(
+              `px-3 py-1 rounded-md flex items-center justify-center`,
+              project.projectType === "Practice" ? "bg-green-400" : ""
+            )}
+          >
+            <p
+              className={clsx(
+                `font-bold`,
+                project.projectType === "Practice" ? "text-green-900" : ""
+              )}
+            >
+              {project.projectType}
+            </p>
+          </div>
+          {/* //! completed tag */}
+
+          <div
+            className={clsx(
+              "px-3 py-1 rounded-md bg-yellow-200 items-center justify-center",
+              {
+                hidden: project.competency !== 100,
+                block: project.competency === 100,
+              }
+            )}
+          >
+            <p className="text-yellow-950 font-bold">Completed</p>
+          </div>
+        </div>
+        <p className="font-IRANSansXUltraLight">{project.description}</p>
+        {/* //! Tech Stack */}
+        <div className="flex flex-wrap gap-2 my-4">
+  {project.techStack.map(({ technology }) => {
+    const [color1, color2] = techColors[technology.name]; // Fallback gradient
+
+    return (
+      <motion.span
+        key={technology.id}
+        className="px-3 py-1 flex items-center justify-center gap-2 text-white  rounded-lg text-sm font-medium"
+        style={{
+          backgroundImage: isDarkMode
+            ? `linear-gradient(to top right, black 30%, ${color2} 100%)` // Dark mode gradient
+            : `linear-gradient(to top right, black 30%, ${color2} 100%)`, // Light mode gradient
+        }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <img
+          className="w-8 h-8"
+          src={technology.imageUrl}
+          alt={`${technology.name} image`}
+        />
+        {technology.name}
+      </motion.span>
+    );
+  })}
+</div>
+<div className="flex-col flex items-center justify-center gap-2 my-10">
+  <p className="font-IRANSansXBlack ">درصد تکامل پروژه</p>
+<CompetencyCircle competency={project.competency} filledColor={project.competency>=75?'green':project.competency>=50?'yellow':project.competency>=25?'orange':'red'} unfilledColor="#c7c4c7" size={100} />
+    
+    </div>
+
       </div>
 
-      <div  className="py-20 w-full">
+      <div className="py-20 w-full">
         <h2 className="text-lg font-semibold">Specifications Section</h2>
         <p>Content related to specifications goes here.</p>
       </div>
