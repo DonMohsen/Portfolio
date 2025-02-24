@@ -133,12 +133,12 @@ export const Header = () => {
              
               ))}
             </AnimatePresence>
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
           </div>
 
           {/* Mobile Navigation */}
           <div className="z-50 text-white w-full md:hidden flex items-center gap-3 justify-end -translate-y-1 translate-x-5 ">
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <HamburgerMenu />
           </div>
         </motion.div>
