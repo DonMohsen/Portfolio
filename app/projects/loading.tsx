@@ -11,7 +11,7 @@ export default function Loading() {
   }, []);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-purple-700 w-full">
+    <div className="flex h-screen items-center justify-center bg-transparent w-full">
       <motion.div
         className="relative flex space-x-2"
         initial={{ opacity: 0 }}

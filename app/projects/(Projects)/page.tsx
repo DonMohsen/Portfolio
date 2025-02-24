@@ -1,5 +1,5 @@
+import { getAllProjects } from "@/app/actions/getAllProjects";
 import ProjectCardItem from "@/components/Projects/ProjectCardItem";
-import { getAllProjects } from "../actions/getAllProjects";
 
 interface Props {
   searchParams: Promise<{ order: string ,search:string,type:string}>;

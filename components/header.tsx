@@ -15,13 +15,11 @@ import useHamburgerMenu from "@/store/useHamburgerMenu";
 export const Header = () => {
   const webRoutes = useWebRoutes();
   const { scrollYProgress } = useScroll();
-  const resumeShow = useShowHeader((state) => state.ShowHeaderState);
   const resumeToggle = useShowHeader((state) => state.toggleShowHeaderState);
   const hamburgerMenuState = useHamburgerMenu((state) => state.hamburgerMenuState);
 
   const [visible, setVisible] = useState(true);
   const [hoveredRouteItem, setHoveredRouteItem] = useState<webRoutesType | null>(null);
-  const [showTopZero, setShowTopZero] = useState(false);
 
   // Handle scroll events to show/hide header
   useMotionValueEvent(scrollYProgress, "change", (current) => {
@@ -30,14 +28,11 @@ export const Header = () => {
 
       if (scrollYProgress.get() < 0.05 && !hamburgerMenuState) {
         setVisible(true);
-        setShowTopZero(false);
       } else {
         if (direction < 0 && !hamburgerMenuState) {
           setVisible(true);
-          setShowTopZero(false);
         } else {
           !hamburgerMenuState && setVisible(false);
-          !hamburgerMenuState && setShowTopZero(true);
         }
       }
     }
@@ -52,13 +47,13 @@ export const Header = () => {
   return (
     <div className="font-IRANSansXExtraBold">
       {/* Resume Header */}
-      {resumeShow&&
+      {/* {resumeShow&&
       <div
       className={clsx(
         "fixed dark:bg-[#151515] bg-white  top-0 h-[30px] w-full z-10"
       )}
       ></div>
-    }
+    } */}
 
       {/* Animated Resume Header */}
       <AnimatePresence>

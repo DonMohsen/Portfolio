@@ -20,12 +20,27 @@ const Presentation =async () => {
       برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند
       {/* Lorem ipsum dolor  sit amet consectetur adipisicing <br/> elit dolor Lorem, ipsum.. */}
       </p>
+      <div className="mt-5 flex items-center justify-center gap-3">
+      <Button 
+      className="group rounded-md text-xs md:text-sm border-2 font-IR
+      ANSansXRegular  border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
+    >
+      <Link className="flex items-center justify-center gap-2"
+      href="/projects"
+      >
+<ArrowLeft className="group-hover:-translate-x-1 -translate-y-[1px] translate-x-1 transition-transform duration-300 " />     
+ <p className="font-IRANSansXDemiBold">
+       پروژه ها
+      </p>
+      </Link>
+      </Button>
+      <ResumeDownloadButton/>
+    </div>
       <div className="flex items-center justify-center  w-full gap-3 mt-4 ">
         <Link
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:bg-purple-950 dark:hover:bg-purple-200 w-8 h-8 rounded-full bg-black dark:bg-
-          white flex items-center justify-center relative z-10"
+          className="hover:bg-purple-950 dark:hover:bg-purple-200 w-8 h-8 rounded-full bg-black dark:bg-white flex items-center justify-center relative z-10"
           href="https://github.com/donmohsen"
             aria-label="GitHub Profile"
 
@@ -79,18 +94,7 @@ const Presentation =async () => {
           />
         </Link>
       </div>
-    <div className="mt-5 flex items-center justify-center gap-3">
-      <Button 
-      className="group rounded-md text-xs md:text-sm border-2 font-IR
-      ANSansXRegular  border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
-    >
-<ArrowLeft className="group-hover:-translate-x-1 -translate-y-[1px] translate-x-1 transition-transform duration-300 " />     
- <p className="font-IRANSansXDemiBold">
-       پروژه ها
-      </p>
-      </Button>
-      <ResumeDownloadButton/>
-    </div>
+  
        <div className="mx-auto p-4">
       <div className="max-sm:mt-5">
         <GitHubContributions />
