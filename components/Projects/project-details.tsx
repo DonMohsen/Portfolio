@@ -20,13 +20,12 @@ import CompetencyCircle from "../CompetencyMeter";
 import { LinkPreview } from "../ui/link-preview";
 
 const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
-
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { theme } = useTheme();
-    const isDarkMode = theme === 'dark';
+  const isDarkMode = theme === "dark";
 
   // Refs for different sections (Fixed TypeScript Error)
   const imagesRef = useRef<HTMLDivElement>(null!);
@@ -96,17 +95,19 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
       >
         {/* Skeleton Loader */}
         <div className="z-10 bg-slate-300 animate-pulse absolute w-full h-full rounded-[8px]"></div>
-
-        {/* Clickable Image */}
         <Image
           width={1920}
           height={400}
           src={project.image || "/image-placeholder.webp"}
           alt={`${project.name} image`}
           className="absolute w-full h-full object-cover z-20 rounded-[8px] cursor-pointer"
+          priority // Ensures fast loading for LCP
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1920px"
+          quality={80} // Reduce file size without noticeable quality loss
+          placeholder="blur" // Improves perceived loading speed
+          blurDataURL="/image-placeholder.webp" // Low-res version for smooth transition
           onClick={handleImageOpening}
         />
-
         {/* Back Button */}
         <div
           onClick={() => router.back()}
@@ -203,16 +204,34 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
           <div
             className={clsx(
               `px-3 py-1 rounded-md flex items-center justify-center`,
-              project.projectType === "Practice" ? "bg-blue-300" : project.projectType==="Copy"?'bg-green-300':project.projectType==="Forked"?'bg-purple-300':'bg-red-300'
+              project.projectType === "Practice"
+                ? "bg-blue-300"
+                : project.projectType === "Copy"
+                ? "bg-green-300"
+                : project.projectType === "Forked"
+                ? "bg-purple-300"
+                : "bg-red-300"
             )}
           >
             <p
               className={clsx(
                 `font-IRANSansXMedium text-sm`,
-                project.projectType === "Practice" ? "text-blue-900" :project.projectType==="Copy"?'text-green-900':project.projectType==="Forked"?'text-purple-900':'text-red-900'
+                project.projectType === "Practice"
+                  ? "text-blue-900"
+                  : project.projectType === "Copy"
+                  ? "text-green-900"
+                  : project.projectType === "Forked"
+                  ? "text-purple-900"
+                  : "text-red-900"
               )}
             >
-              {project.projectType === "Practice" ? "تمرین شخصی" :project.projectType==="Copy"?'کپی شده':project.projectType==="Forked"?'فورک شده':'واقعی'}
+              {project.projectType === "Practice"
+                ? "تمرین شخصی"
+                : project.projectType === "Copy"
+                ? "کپی شده"
+                : project.projectType === "Forked"
+                ? "فورک شده"
+                : "واقعی"}
             </p>
           </div>
           {/* //! completed tag */}
@@ -232,82 +251,86 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
         <p className="font-IRANSansXUltraLight">{project.description}</p>
         {/* //! Tech Stack */}
         <div className="flex flex-wrap gap-2 my-4">
-  {project.techStack.map(({ technology }) => {
-    const [color1, color2] = techColors[technology.name]; // Fallback gradient
+          {project.techStack.map(({ technology }) => {
+            const [color1, color2] = techColors[technology.name]; // Fallback gradient
 
-    return (
-      <motion.span
-        key={technology.id}
-        className="px-3 py-1 flex items-center justify-center gap-2 text-white  rounded-lg text-sm font-medium"
-        style={{
-          backgroundImage: isDarkMode
-            ? `linear-gradient(to top right, black 30%, ${color2} 100%)` // Dark mode gradient
-            : `linear-gradient(to top right, black 30%, ${color2} 100%)`, // Light mode gradient
-        }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <img
-          className="w-8 h-8"
-          src={technology.imageUrl}
-          alt={`${technology.name} image`}
-        />
-        {technology.name}
-      </motion.span>
-    );
-  })}
-</div>
-<div className="flex-col flex items-center justify-center gap-2 my-10">
-  <p className="font-IRANSansXBlack ">درصد تکامل پروژه</p>
-<CompetencyCircle competency={project.competency} filledColor={project.competency>=75?'green':project.competency>=50?'yellow':project.competency>=25?'orange':'red'} unfilledColor="#c7c4c7" size={100} />
-    
-    </div>
-
+            return (
+              <motion.span
+                key={technology.id}
+                className="px-3 py-1 flex items-center justify-center gap-2 text-white  rounded-lg text-sm font-medium"
+                style={{
+                  backgroundImage: isDarkMode
+                    ? `linear-gradient(to top right, black 30%, ${color2} 100%)` // Dark mode gradient
+                    : `linear-gradient(to top right, black 30%, ${color2} 100%)`, // Light mode gradient
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <img
+                  className="w-8 h-8"
+                  src={technology.imageUrl}
+                  alt={`${technology.name} image`}
+                />
+                {technology.name}
+              </motion.span>
+            );
+          })}
+        </div>
+        <div className="flex-col flex items-center justify-center gap-2 my-10">
+          <p className="font-IRANSansXBlack ">درصد تکامل پروژه</p>
+          <CompetencyCircle
+            competency={project.competency}
+            filledColor={
+              project.competency >= 75
+                ? "green"
+                : project.competency >= 50
+                ? "yellow"
+                : project.competency >= 25
+                ? "orange"
+                : "red"
+            }
+            unfilledColor="#c7c4c7"
+            size={100}
+          />
+        </div>
       </div>
 
-
       <div ref={linksRef} className="py-20 w-full max-lg:px-4">
-        <h2 className="text-xl font-IRANSansXBlack text-center mb-10">لینک ها</h2>
+        <h2 className="text-xl font-IRANSansXBlack text-center mb-10">
+          لینک ها
+        </h2>
         <div className="flex gap-10 flex-col  items-center justify-center border rounded-md p-5 border-black/[0.2] dark:border-white/[0.2]">
           <div className="flex  max-md:flex-col-reverse gap-2 w-full items-center justify-end">
-        <LinkPreview url={project.liveLink||''} className="text-center font-IRANSansXLight">
-
-        <p className="">
-
-          {project?.liveLink}
-          {!project.liveLink&&'ندارد'}
-        </p>
-        </LinkPreview>
-        <div className="flex gap-2 items-center justify-center">
-
-            <p className="font-IRANSansXBold">
-
-           : لینک لایو وبسایت 
-            </p>
-        <LucideLink/>
-        </div>
+            <LinkPreview
+              url={project.liveLink || ""}
+              className="text-center font-IRANSansXLight"
+            >
+              <p className="">
+                {project?.liveLink}
+                {!project.liveLink && "ندارد"}
+              </p>
+            </LinkPreview>
+            <div className="flex gap-2 items-center justify-center">
+              <p className="font-IRANSansXBold">: لینک لایو وبسایت</p>
+              <LucideLink />
+            </div>
           </div>
           <div className="flex max-md:flex-col-reverse gap-2 w-full items-center justify-end">
-        <LinkPreview url={project.githubLink||''} className="text-center font-IRANSansXLight">
-
-        <p className="">
-
-          {project?.githubLink}
-          {!project.githubLink&&'ندارد'}
-        </p>
-        </LinkPreview>
-        <div className="flex gap-2 items-center justify-center">
-
-
-
-            <p className="font-IRANSansXBold">
-           : (لینک گیت هاب) سورس کد
-            </p>
-        <Github/>
-</div>
+            <LinkPreview
+              url={project.githubLink || ""}
+              className="text-center font-IRANSansXLight"
+            >
+              <p className="">
+                {project?.githubLink}
+                {!project.githubLink && "ندارد"}
+              </p>
+            </LinkPreview>
+            <div className="flex gap-2 items-center justify-center">
+              <p className="font-IRANSansXBold">: (لینک گیت هاب) سورس کد</p>
+              <Github />
+            </div>
           </div>
         </div>
-       
       </div>
     </div>
   );
