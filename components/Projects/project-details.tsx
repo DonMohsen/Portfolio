@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github, LucideLink } from "lucide-react";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import useShowHeader from "@/store/useShowHeader";
 import clsx from "clsx";
@@ -17,6 +17,7 @@ import { Projects } from "@prisma/client";
 import { techColors } from "./client-project-card";
 import { useTheme } from "next-themes";
 import CompetencyCircle from "../CompetencyMeter";
+import { LinkPreview } from "../ui/link-preview";
 
 const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
   console.log(project);
@@ -110,7 +111,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
         {/* Back Button */}
         <div
           onClick={() => router.back()}
-          className="z-20 bg-white absolute top-4 right-4 rounded-md p-2 cursor-pointer bg-opacity-40 lg:hidden"
+          className="z-20 bg-white text-black  absolute top-4 right-4 bg-opacity-80 rounded-md p-2 cursor-pointer  lg:hidden"
         >
           <ArrowRight />
         </div>
@@ -203,16 +204,16 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
           <div
             className={clsx(
               `px-3 py-1 rounded-md flex items-center justify-center`,
-              project.projectType === "Practice" ? "bg-green-400" : ""
+              project.projectType === "Practice" ? "bg-blue-300" : project.projectType==="Copy"?'bg-green-300':project.projectType==="Forked"?'bg-purple-300':'bg-red-300'
             )}
           >
             <p
               className={clsx(
-                `font-bold`,
-                project.projectType === "Practice" ? "text-green-900" : ""
+                `font-IRANSansXMedium text-sm`,
+                project.projectType === "Practice" ? "text-blue-900" :project.projectType==="Copy"?'text-green-900':project.projectType==="Forked"?'text-purple-900':'text-red-900'
               )}
             >
-              {project.projectType}
+              {project.projectType === "Practice" ? "تمرین شخصی" :project.projectType==="Copy"?'کپی شده':project.projectType==="Forked"?'فورک شده':'واقعی'}
             </p>
           </div>
           {/* //! completed tag */}
@@ -265,14 +266,49 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
 
       </div>
 
-      <div className="py-20 w-full">
-        <h2 className="text-lg font-semibold">Specifications Section</h2>
-        <p>Content related to specifications goes here.</p>
-      </div>
 
-      <div ref={linksRef} className="py-20 w-full">
-        <h2 className="text-lg font-semibold">Links Section</h2>
-        <p>Content related to links goes here.</p>
+      <div ref={linksRef} className="py-20 w-full max-lg:px-4">
+        <h2 className="text-xl font-IRANSansXBlack text-center mb-10">لینک ها</h2>
+        <div className="flex gap-10 flex-col  items-center justify-center border rounded-md p-5 border-black/[0.2] dark:border-white/[0.2]">
+          <div className="flex  max-md:flex-col-reverse gap-2 w-full items-center justify-end">
+        <LinkPreview url={project.liveLink||''} className="text-center font-IRANSansXLight">
+
+        <p className="">
+
+          {project?.liveLink}
+          {!project.liveLink&&'ندارد'}
+        </p>
+        </LinkPreview>
+        <div className="flex gap-2 items-center justify-center">
+
+            <p className="font-IRANSansXBold">
+
+           : لینک لایو وبسایت 
+            </p>
+        <LucideLink/>
+        </div>
+          </div>
+          <div className="flex max-md:flex-col-reverse gap-2 w-full items-center justify-end">
+        <LinkPreview url={project.githubLink||''} className="text-center font-IRANSansXLight">
+
+        <p className="">
+
+          {project?.githubLink}
+          {!project.githubLink&&'ندارد'}
+        </p>
+        </LinkPreview>
+        <div className="flex gap-2 items-center justify-center">
+
+
+
+            <p className="font-IRANSansXBold">
+           : (لینک گیت هاب) سورس کد
+            </p>
+        <Github/>
+</div>
+          </div>
+        </div>
+       
       </div>
     </div>
   );

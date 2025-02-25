@@ -56,15 +56,7 @@ export const Header = () => {
     } */}
 
       {/* Animated Resume Header */}
-      <AnimatePresence>
-      <AnimatePresence>
-     
-
-
-</AnimatePresence>
-
-
-      </AnimatePresence>
+    
 
       {/* Main Header */}
       <AnimatePresence mode="wait">
