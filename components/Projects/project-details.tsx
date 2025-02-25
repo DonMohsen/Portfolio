@@ -146,12 +146,19 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
 
               {/* Full-size Image */}
               <Image
-                width={1920}
-                height={1080}
-                src={project.image || "/image-placeholder.webp"}
-                alt={`${project.name} full-size image`}
-                className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
-              />
+          width={1920}
+          height={1080}
+          src={project.image || "/image-placeholder.webp"}
+          alt={`${project.name} image`}
+          className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
+          priority // Ensures fast loading for LCP
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1920px"
+          quality={80} // Reduce file size without noticeable quality loss
+          placeholder="blur" // Improves perceived loading speed
+          blurDataURL="/image-placeholder.webp" // Low-res version for smooth transition
+          onClick={handleImageOpening}
+        />
+            
             </motion.div>
           </motion.div>
         )}

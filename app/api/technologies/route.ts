@@ -4,6 +4,7 @@ import {
   Technology,
 } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { revalidateTag } from "next/cache";
 export async function POST(request: Request) {
   try {
     const body: Prisma.TechnologyCreateInput = await request.json();
@@ -16,7 +17,9 @@ export async function POST(request: Request) {
     const newTechnology: Technology = await prisma.technology.create({
       data: body,
     });
+    revalidateTag("project");
     return NextResponse.json(newTechnology, { status: 201 });
+    
   } catch (error) {
     console.error("Error creating technology:", error);
     return NextResponse.json(

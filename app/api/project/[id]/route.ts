@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { revalidateTag } from "next/cache";
 
 export async function GET(
   request: NextRequest,
@@ -98,6 +99,7 @@ export async function PUT(
       },
       include: { techStack: { include: { technology: true } } }, 
     });
+    revalidateTag("project");
 
     return NextResponse.json(updatedProject, { status: 200 });
   } catch (error: any) {
@@ -129,6 +131,7 @@ export async function PUT(
           id: numberId,
         },
       });
+      revalidateTag("project");
   
       return NextResponse.json({ message: `Project with ID ${numberId} deleted successfully` ,deleted}, { status: 200 });
     } catch (error) {

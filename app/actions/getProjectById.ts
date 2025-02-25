@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { cache } from "react"; // Import cache function
 
-// Define the return type for the function
 export type ProjectWithTechsType = Prisma.ProjectsGetPayload<{
   include: {
     techStack: {
@@ -12,24 +12,25 @@ export type ProjectWithTechsType = Prisma.ProjectsGetPayload<{
     _count: true;
   };
 }>;
-export const getProjectById = async (id: number): Promise<ProjectWithTechsType | null> => {
-    try {
-      const project = await prisma.projects.findUnique({
-        where: { id },
-        include: {
-          techStack: {
-            include: {
-              technology: true,
-            },
+
+// Cache the function result
+export const getProjectById = cache(async (id: number): Promise<ProjectWithTechsType | null> => {
+  try {
+    const project = await prisma.projects.findUnique({
+      where: { id },
+      include: {
+        techStack: {
+          include: {
+            technology: true,
           },
-          _count: true,
         },
-      });
-  
-      return project;
-    } catch (error) {
-      console.error("Error fetching project by ID:", error);
-      return null;
-    }
-  };
-  
+        _count: true,
+      },
+    });
+
+    return project;
+  } catch (error) {
+    console.error("Error fetching project by ID:", error);
+    return null;
+  }
+});
