@@ -3,7 +3,7 @@ import { InfiniteMovingCards } from "./Infinite-cards";
 
 export function InfiniteScrolling() {
   return (
-    <div className=" absolute w-full h-full rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-end  overflow-hidden">
+      <div className=" absolute w-full h-full rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] max-md:pb-[50px] items-center justify-end   overflow-hidden">
       <InfiniteMovingCards
         items={logos.filter((item)=>item.id<=6)}
         direction="right"

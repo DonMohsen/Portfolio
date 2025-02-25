@@ -28,7 +28,7 @@ const Presentation =async () => {
       <Link className="flex items-center justify-center gap-2"
       href="/projects"
       >
-<ArrowLeft className="group-hover:-translate-x-1 -translate-y-[1px] translate-x-1 transition-transform duration-300 " />     
+<ArrowLeft className="md:group-hover:-translate-x-1 max-md:-translate-x-1 -translate-y-[1px] translate-x-1 transition-transform duration-300 " />     
  <p className="font-IRANSansXDemiBold">
        پروژه ها
       </p>

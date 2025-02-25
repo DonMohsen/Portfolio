@@ -80,7 +80,7 @@ export const InfiniteMovingCards = ({
       <ul
         ref={scrollerRef}
         className={cn(
-          " flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
+          " flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap ",
           start && "animate-scroll ",
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
@@ -98,7 +98,7 @@ export const InfiniteMovingCards = ({
             // }}
             key={item.id}
           >
-            <div className="flex flex-col items-center justify-center py-5 max-md:py-2">
+            <div className="flex flex-col items-center  justify-center py-5 max-md:py-2">
               
                   <Image 
                   className="w-12 h-12 max-md:w-8 max-md:h-8"

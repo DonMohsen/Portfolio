@@ -20,7 +20,6 @@ import CompetencyCircle from "../CompetencyMeter";
 import { LinkPreview } from "../ui/link-preview";
 
 const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
-  console.log(project);
 
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true);
@@ -89,7 +88,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
     setIsModalOpen(true);
   };
   return (
-    <div className="min-h-[400dvh] mt-[70px] max-w-4xl flex flex-col items-center w-full">
+    <div className=" mt-[70px] max-w-4xl flex flex-col items-center w-full">
       {/* Image Container */}
       <div
         ref={imagesRef}
@@ -167,7 +166,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
         <div className="w-full flex justify-around items-center gap-4   font-IRANSansXDemiBold">
           <Button
             className={clsx(
-              " bg-white dark:bg-[#362144] px-5",
+              " bg-white dark:bg-[#362144] px-5 hover:bg-slate-200 dark:hover:bg-[#4f3362]",
               activeSection === "images" && "bg-[#ac83c8] dark:bg-[#ac83c8]"
             )}
             onClick={() => scrollToSection(imagesRef)}
@@ -176,7 +175,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
           </Button>
           <Button
             className={clsx(
-              " bg-white dark:bg-[#362144] px-5",
+              " bg-white dark:bg-[#362144] px-5 hover:bg-slate-200 dark:hover:bg-[#4f3362]",
               activeSection === "specifications" &&
                 "bg-[#ac83c8] dark:bg-[#ac83c8]"
             )}
@@ -186,7 +185,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
           </Button>
           <Button
             className={clsx(
-              " bg-white dark:bg-[#362144] px-5",
+              " bg-white dark:bg-[#362144] px-5 hover:bg-slate-200 dark:hover:bg-[#4f3362]",
               activeSection === "links" && "bg-[#ac83c8] dark:bg-[#ac83c8]"
             )}
             onClick={() => scrollToSection(linksRef)}

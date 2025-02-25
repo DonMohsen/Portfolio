@@ -35,8 +35,7 @@ const ResumeDownloadButton = () => {
       </div>
     ) : (
       <div className="flex flex-col items-center justify-center">
-        {/* ✅ Add transition here to fix animation issue */}
-        <ArrowDown className="w-8 h-8 group-hover:translate-y-[6px] max-sm:translate-y-[6px] transition-transform duration-300" />
+        <ArrowDown className="w-8 h-8 group-hover:translate-y-[6px] max-md:translate-y-[6px] transition-transform duration-300" />
         <Space className="w-8 h-8 -translate-y-1" />
       </div>
     )}
