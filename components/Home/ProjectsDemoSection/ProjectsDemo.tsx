@@ -20,7 +20,7 @@ const ProjectsDemo = async({projects}:{projects:ProjectsWithTechsType[]}) => {
     </div>
     <div className="w-full h-full  grid grid-cols-2 rounded-[15px] max-lg:grid-cols-1 gap-4 p-4">
       {projects.map((project)=>
-    <ProjectCardItem project={project}/>
+    <ProjectCardItem project={project} key={project.id}/>
       )}
      
     </div>
