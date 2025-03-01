@@ -19,7 +19,7 @@ const childVariants = {
 };
 
 const RoutesItem = ({ webRoute, className }: { webRoute: webRoutesType; className?: string }) => {
-  const { routesChildren, route, isActive, text, filledIcon, emptyIcon } = webRoute;
+  const { routesChildren, route, isActive, text,isAChild } = webRoute;
   const [openChildren, setOpenChildren] = useState(false);
   const hamburgerState = useHamburgerMenu((state) => state.hamburgerMenuState);
   const hamburgerToggle = useHamburgerMenu((state) => state.toggleHamburgerMenuState);
@@ -58,7 +58,7 @@ className="p-1 w-[50%] flex items-center justify-center bg-slate-300 dark:bg-sla
         className="flex items-center space-x-3 w-full"
       >
         <span
-          className="text-lg font-medium text-right"
+          className={clsx(`text-right`,isAChild?"text-[16px] font-IRANSansXDemiBold":"text-lg font-IRANSansXBlack")}
           style={{ flex: 1, wordWrap: "break-word" }} // This allows the text to wrap
           >
           {text}

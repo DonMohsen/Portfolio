@@ -20,7 +20,8 @@ const useWebRoutes = () => {
         emptyIcon:IoHomeOutline,
         filledIcon:IoHome,
         isActive:pathName==="/",
-        id:1
+        id:1,
+        isAChild:false
 
     },
     {
@@ -30,6 +31,8 @@ const useWebRoutes = () => {
         filledIcon:PiNewspaperClippingFill,
         isActive:pathName.includes("/projects"),
         id:2,
+        
+        isAChild:false,
         routesChildren:[
             {
                 text:"پروژه های کپی شده",
@@ -37,7 +40,8 @@ const useWebRoutes = () => {
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
                 isActive:pathName==="/projects?type=Copy",
-                id:3
+                id:3,
+                isAChild:true
             },
             {
                 text:"پروژه های تمرینی",
@@ -45,7 +49,8 @@ const useWebRoutes = () => {
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
                 isActive:pathName==="/projects?type=Practice",
-                id:4
+                id:4,
+                isAChild:true
             },
             {
                 text:"کاستوم کامپوننت",
@@ -54,6 +59,7 @@ const useWebRoutes = () => {
                 filledIcon:PiNewspaperClippingFill,
                 isActive:pathName==="/projects?type=Component",
                 id:44,
+                isAChild:true
                 
             }
         ]
@@ -65,6 +71,7 @@ const useWebRoutes = () => {
         filledIcon:CgWebsite,
         isActive:pathName.includes('/blogs'),
         id:5,
+        isAChild:false,
         routesChildren:[
             {
                 text:"بلاگ های شخصی",
@@ -73,6 +80,7 @@ const useWebRoutes = () => {
                 filledIcon:GrLinkedinOption,
                 isActive:pathName==="/blogs?type=Personal",
                 id:6,
+                isAChild:true
                
             },
             {
@@ -82,7 +90,8 @@ const useWebRoutes = () => {
                 emptyIcon:MdOutlineMail,
                 filledIcon:MdEmail ,
                 isActive:pathName==="/blogs?type=Tech",
-                id:9
+                id:9,
+                isAChild:true
             },
             {
                 text:"بلاگ های متفرقه",
@@ -92,7 +101,8 @@ const useWebRoutes = () => {
                 filledIcon:MdEmail,
                 isActive:pathName==="/blogs?type=Others",
 
-                id:10
+                id:10,
+                isAChild:true
             }
         ]
     }

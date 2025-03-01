@@ -7,5 +7,6 @@ export type webRoutesType={
     isActive:boolean,
     route:string,
     routesChildren?:webRoutesType[],
-    id:number
+    id:number,
+    isAChild:boolean
 }

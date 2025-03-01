@@ -23,7 +23,7 @@ const Presentation =async () => {
         <ResumeDownloadButton/>
       <Button 
       className="group rounded-md text-xs md:text-sm border-2 font-IR   
-      ANSansXRegular  border-black dark:border-white shadow-none w-full  hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
+      ANSansXRegular  border-black py-5 dark:border-white shadow-none w-full  hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
   >                                 
       <Link className="flex items-center justify-center gap-2"
       href="/projects"
