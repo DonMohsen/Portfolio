@@ -6,14 +6,14 @@ import AboutMe from "@/components/Home/AboutMe";
 //! 10jan : build backend and create projects and routes tables, fetch them cliently
 //!
 //! the problem with mobile ham icon is that the animation of navbar, starts from right and make the width of all page twice as much fix this
-export const revalidate = 0;
 export default async function Home() {
-const allProjects=await getTwoLatestProjects();
+  const allProjects=await getTwoLatestProjects();
   return (
-   <div className="  ">
+    <div className="  ">
    <Hero/>
    <AboutMe/>
    <ProjectsDemo projects={allProjects}/>
    </div>
   );
 }
+export const revalidate = 600;

@@ -8,7 +8,9 @@ type Props = {
   params: Promise<{ id: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
- 
+export const revalidate = 600
+export const dynamicParams = true // or false, to 404 on unknown paths
+
 // Generate metadata dynamically (SEO)
 export async function generateMetadata(
   { params, searchParams }: Props,
