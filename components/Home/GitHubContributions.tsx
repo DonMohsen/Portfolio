@@ -74,7 +74,7 @@ export default function GitHubWeekGrid() {
           </h2>
           <div className="grid grid-cols-7 gap-2 text-center">
             {data.map((day, index) => (
-              <div key={index} className="flex flex-col items-center">
+              <div key={index} className="flex flex-col items-center justify-center">
                 <span className="text-xs text-gray-400">{day.day}</span>
                 <div
                   className="w-6 h-6 rounded-md border border-gray-700 flex items-center justify-center text-xs font-medium"
@@ -89,7 +89,7 @@ export default function GitHubWeekGrid() {
                   }}
                   title={`${day.contributionCount} contributions on ${day.date}`}
                 >
-                  {day.contributionCount > 0 ? day.contributionCount : ""}
+                  {/* {day.contributionCount > 0 ? day.contributionCount : ""} */}
                 </div>
               </div>
             ))}

@@ -27,7 +27,7 @@ const ResumeDownloadButton = () => {
     <Button
     onClick={handleDownload}
     disabled={downloadLoading}
-    className="group rounded-md text-xs md:text-sm border-2 font-IRANSansXDemiBold  border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
+    className="group rounded-md text-xs md:text-sm border-2 font-IRANSansXDemiBold w-full border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
   >
     {downloadLoading ? (
       <div className="flex items-center justify-center gap-2">

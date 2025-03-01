@@ -10,7 +10,7 @@ import { ArrowLeft } from "lucide-react";
 export const revalidate = 600
 const Presentation =async () => {
   return (
-    <div className="absolute w-full  z-[60]  h-full flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl -translate-y-[10%]">
+    <div className="absolute w-full z-[60]  h-full flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl -translate-y-[10%]">
       <h1 className="text-6xl max-md:text-5xl max-sm:text-3xl mb-3 font-IRANSansXBlack ">
         محسن خجسته نژاد
       {/* Lorem, ipsum dolor. */}
@@ -19,11 +19,12 @@ const Presentation =async () => {
       برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند
       {/* Lorem ipsum dolor  sit amet consectetur adipisicing <br/> elit dolor Lorem, ipsum.. */}
       </p>
-      <div className="mt-5 flex items-center justify-center gap-3">
+      <div className="mt-5 flex flex-col items-center justify-center gap-3 w-full max-w-[200px]">
+        <ResumeDownloadButton/>
       <Button 
-      className="group rounded-md text-xs md:text-sm border-2 font-IR
-      ANSansXRegular  border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
-    >
+      className="group rounded-md text-xs md:text-sm border-2 font-IR   
+      ANSansXRegular  border-black dark:border-white shadow-none w-full  hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
+  >                                 
       <Link className="flex items-center justify-center gap-2"
       href="/projects"
       >
@@ -33,7 +34,6 @@ const Presentation =async () => {
       </p>
       </Link>
       </Button>
-      <ResumeDownloadButton/>
     </div>
       <div className="flex items-center justify-center  w-full gap-3 mt-4 ">
         <Link
