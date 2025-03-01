@@ -8,7 +8,7 @@ import { InfiniteScrollingForCard } from './Home/Hero/infinite-scrolling-for-car
 
 const PersonalCard = () => {
   return (
-    <div className='relative'>
+    <div className='relative h-[100vh] '>
             {/* //!Top SECTION */}
             <div className="bg-[#353535] h-[300px] relative flex justify-center">
   <Image
@@ -43,7 +43,10 @@ const PersonalCard = () => {
         </div>
   
 </div>
+<div className='absolute bottom-0 w-full h-auto'>
+
 <InfiniteScrollingForCard/>
+</div>
     </div>
   )
 }

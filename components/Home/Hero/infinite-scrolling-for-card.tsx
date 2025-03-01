@@ -4,7 +4,7 @@ import { InfiniteMovingCardsForCard } from './infinite-cards-for-card';
 
 export const InfiniteScrollingForCard = () => {
    return (
-       <div className="absolute -translate-y-[200px] lg:-translate-y-[200px] w-full h-full rounded-md flex flex-col antialiased bg-transparent dark:bg-transparent dark:bg-grid-white/[0.05]  items-center justify-end   overflow-hidden">
+       <div className=" w-full h-full rounded-md flex flex-col antialiased bg-transparent dark:bg-transparent dark:bg-grid-white/[0.05]  items-center justify-end   overflow-hidden">
        <InfiniteMovingCardsForCard
          items={logos.filter((item)=>item.id<=6)}
          direction="right"
