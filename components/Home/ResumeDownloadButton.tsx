@@ -27,14 +27,14 @@ const ResumeDownloadButton = () => {
     <Button
     onClick={handleDownload}
     disabled={downloadLoading}
-    className="group rounded-md py-5 text-xs md:text-sm border-2 font-IRANSansXDemiBold w-full border-black dark:border-white shadow-none hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
+    className="group rounded-full p-5 text-xs hover:brightness-75 z-50 md:text-sm border-none font-IRANSansXDemiBold w-full  shadow-none bg-slate-200 dark:bg-[#362144] flex items-center justify-center"
   >
     {downloadLoading ? (
       <div className="flex items-center justify-center gap-2">
         <div className="w-5 h-5 border-2 border-gray-300 border-t-black dark:border-t-white rounded-full animate-spin"></div>
       </div>
     ) : (
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center -translate-y-1">
         <ArrowDown className="w-8 h-8 group-hover:translate-y-[6px] max-md:translate-y-[6px] transition-transform duration-300" />
         <Space className="w-8 h-8 -translate-y-1" />
       </div>

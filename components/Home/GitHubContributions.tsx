@@ -81,7 +81,7 @@ export default function GitHubWeekGrid() {
                   style={{
                     backgroundColor:
                       day.contributionCount > 0
-                        ? `rgba(34, 197, 94, ${
+                        ? `rgba(45, 180, 88, ${
                             0.2 + day.contributionCount * 0.1
                           })`
                         : "transparent",

@@ -7,33 +7,25 @@ import { SlSocialLinkedin } from "react-icons/sl";
 import GitHubContributions from "./GitHubContributions";
 import ResumeDownloadButton from "./ResumeDownloadButton";
 import { ArrowLeft } from "lucide-react";
+import ProjectsScoutButton from "../projects-scout-button";
 export const revalidate = 600
 const Presentation =async () => {
   return (
     <div className="absolute w-full z-[60]  h-full flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl -translate-y-[10%]">
       <h1 className="text-6xl max-md:text-5xl max-sm:text-3xl mb-3 font-IRANSansXBlack ">
-        محسن خجسته نژاد
-      {/* Lorem, ipsum dolor. */}
+        {/* محسن خجسته نژاد */}
+      Lorem, ipsum dolor.
         </h1>
       <p className="text-[20px] max-sm:text-[15px] font-IRANSansXLight "> 
-      برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند
-      {/* Lorem ipsum dolor  sit amet consectetur adipisicing <br/> elit dolor Lorem, ipsum.. */}
+      {/* برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند */}
+      Lorem ipsum dolor  sit amet consectetur adipisicing <br/> elit dolor Lorem, ipsum..
       </p>
       <div className="mt-5 flex flex-col items-center justify-center gap-3 w-full max-w-[200px]">
         <ResumeDownloadButton/>
-      <Button 
-      className="group rounded-md text-xs md:text-sm border-2 font-IR   
-      ANSansXRegular  border-black py-5 dark:border-white shadow-none w-full  hover:bg-slate-200 dark:hover:bg-[#362144] flex items-center justify-center"
-  >                                 
-      <Link className="flex items-center justify-center gap-2"
-      href="/projects"
-      >
-<ArrowLeft className="md:group-hover:-translate-x-1 max-md:-translate-x-1 -translate-y-[1px] translate-x-1 transition-transform duration-300 " />     
- <p className="font-IRANSansXDemiBold">
-       پروژه ها
-      </p>
+        <ProjectsScoutButton/>
+      <Link href="/tempHome">
+      Temp
       </Link>
-      </Button>
     </div>
       <div className="flex items-center justify-center  w-full gap-3 mt-4 ">
         <Link
