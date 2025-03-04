@@ -9,10 +9,11 @@ import { Toaster } from "@/components/ui/toaster";
 import Head from "next/head";
 import Script from "next/script";
 import NextLocalizationProvider from "./providers/next-localization-provider";
+import PersonalCard from "@/components/personal-card";
 
 export const metadata: Metadata = {
   title: "محسن خجسته نژاد",
-  description: "پورتفولیو ی محسن خجسته نژاد برنامه نویس تحت وب",
+  description: "پورتفولیوی محسن خجسته نژاد برنامه نویس تحت وب",
   robots: "index, follow", 
 
 };
@@ -52,11 +53,17 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark">
 
           <Header />
-          <div className="overflow-hidden">
+          <div className="flex w-full h-full max-md:flex-col">
+  {/* Left Section - Sticky on large screens, normal on small screens */}
+  <div className="md:w-[40%] h-[100vh] max-md:hidden lg:w-[40%] xl:w-[30%] md:h-screen max-md:h-[100vh] md:sticky max-md:relative top-0 shadow-lg">
+    <PersonalCard />
+  </div>
 
-            <Navbar/>
-          </div>
-          {children}
+  {/* Right Section - Takes Remaining Space */}
+  <div className="flex-1 p-4">
+    {children}
+  </div>
+</div>
           <Toaster/>
         </ThemeProvider>
     

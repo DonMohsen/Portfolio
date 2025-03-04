@@ -4,18 +4,28 @@ import { InfiniteMovingCardsForCard } from './infinite-cards-for-card';
 
 export const InfiniteScrollingForCard = () => {
    return (
-       <div className=" w-full h-full rounded-md flex flex-col antialiased bg-transparent dark:bg-transparent dark:bg-grid-white/[0.05]  items-center justify-end   overflow-hidden">
-       <InfiniteMovingCardsForCard
-         items={logos.filter((item)=>item.id<=6)}
-         direction="right"
-         speed="fast"
-       />
-       <InfiniteMovingCardsForCard
-         items={logos.filter((item)=>item.id>6)}
-         direction="left"
-         speed="fast"
-       />
-     </div>
+    <div
+  className="relative w-full h-[200px] max-md:-translate-y-[50px] rounded-md flex flex-col antialiased bg-transparent dark:bg-transparent dark:bg-grid-white/[0.05] items-center justify-end overflow-hidden"
+>
+  <div
+    className="absolute bottom-0 w-full h-full"  // Ensure the container has full height
+    style={{
+      maskImage: 'linear-gradient(to right, transparent, white 20%, white 80%, transparent)',  // Applied mask
+    }}
+  >
+    <InfiniteMovingCardsForCard
+      items={logos.filter((item) => item.id <= 6)}
+      direction="right"
+      speed="fast"
+    />
+    <InfiniteMovingCardsForCard
+      items={logos.filter((item) => item.id > 6)}
+      direction="left"
+      speed="fast"
+    />
+  </div>
+</div>
+
    );
  }
  

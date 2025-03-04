@@ -5,12 +5,14 @@ import SocialLinks from './social-links'
 import ResumeDownloadButton from './Home/ResumeDownloadButton'
 import ProjectsScoutButton from './projects-scout-button'
 import { InfiniteScrollingForCard } from './Home/Hero/infinite-scrolling-for-card'
+import GitHubWeekGrid from './Home/GitHubContributions'
+import { IoLocationOutline } from 'react-icons/io5'
 
 const PersonalCard = () => {
   return (
     <div className='relative h-[100vh] '>
             {/* //!Top SECTION */}
-            <div className="bg-[#353535] h-[300px] relative flex justify-center">
+            <div className="bg-[#353535] h-[300px] max-sm:h-[200px] relative flex justify-center">
   <Image
     className="rounded-full absolute bottom-[-25px] left-1/2 transform -translate-x-1/2 w-[100px] h-[100px]"
     alt="Profile-pic"
@@ -22,13 +24,20 @@ const PersonalCard = () => {
 <div className='w-full flex items-center justify-center flex-col mt-10 px-[5%]'>
 
 <h1 className='text-center font-IRANSansXBlack text-xl'>
-    لورم اخیرسوم 
+    {/* لورم اخیرسوم  */}
+    محسن خجسته نژاد
 </h1>
 <h2 className='text-center mt-2 font-IRANSansXRegular'>
-توسعه دهنده وب متمرکز فرانت اند
+  {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, qui. */}
+برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند
 </h2>
-<h3 className='mt-2'>
-    location of unknown
+<h3 className='mt-2 flex items-center justify-center gap-2 text-center'>
+
+  <p className='font-IRANSansXLight'>
+{/* Lorem ipsum dolor sit. */}
+    تهران منطقه۹
+  </p>
+  <IoLocationOutline/>
 </h3>
 <div className='mt-10'>
 
@@ -40,6 +49,10 @@ const PersonalCard = () => {
         <ProjectsScoutButton/>
         <ResumeDownloadButton/>
 
+        </div>
+        <div className='mt-5 max-sm:hidden'>
+
+        <GitHubWeekGrid/>
         </div>
   
 </div>

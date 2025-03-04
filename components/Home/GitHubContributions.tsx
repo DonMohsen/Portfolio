@@ -68,8 +68,8 @@ export default function GitHubWeekGrid() {
           </div>
         </div>
       ) : (
-        <div className="p-4 bg-gray-900 rounded-xl shadow-lg text-white w-fit mx-auto">
-          <h2 className="text-lg font-IRANSansXDemiBold text-center mb-4">
+        <div className="p-4  rounded-xl  text-white w-fit mx-auto border">
+          <h2 className="text-lg font-IRANSansXDemiBold text-center mb-4 text-black dark:text-white">
             فعالیت گیت هاب هفته اخیر
           </h2>
           <div className="grid grid-cols-7 gap-2 text-center">
