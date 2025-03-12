@@ -92,8 +92,8 @@ export const Header = () => {
       initial={{ scaleY: 0, opacity: 0 }}
       animate={{ scaleY: 1, opacity: 1 }}
       exit={{ scaleY: 0, opacity: 0 }}
-      transition={{ ease: "easeInOut", duration: 0.3 }}
-      className="absolute left-0 top-full w-[250px] dark:bg-[#1a0a1b] bg-white  origin-top shadow-lg rounded-md border border-gray-700"
+      transition={{ ease: "easeInOut", duration: 0.2 }}
+      className="absolute left-0 top-full w-[250px] dark:bg-[#1a0a1b] bg-white  origin-top shadow-lg rounded-md border dark:border-white/[0.1] border-black/[0.1]"
     >
       <div className="p-4">
         {item.routesChildren.map((child) => (

@@ -84,7 +84,7 @@ const useWebRoutes = () => {
                
             },
             {
-                text:"بلاگ های فنی",
+                text:"بلاگ های تکنولوژی",
 
                 route:"/blogs?type=Tech",
                 emptyIcon:MdOutlineMail,

@@ -10,9 +10,9 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const PersonalCard = () => {
   return (
-    <div className="relative h-[100vh] ">
+    <div className="relative h-[100vh] min-h-[700px] ">
       {/* //!Top SECTION */}
-      <div className="bg-[#353535] h-[150px] max-sm:h-[200px] relative flex justify-center">
+      <div className="bg-[#353535] h-[200px]  relative flex justify-center">
         <Image
           className="rounded-full absolute bottom-[-25px] left-1/2 transform -translate-x-1/2 w-[100px] h-[100px]"
           alt="Profile-pic"
@@ -48,7 +48,7 @@ const PersonalCard = () => {
           <GitHubWeekGrid />
         </div> */}
       </div>
-      <div className="absolute bottom-0 w-full h-auto">
+      <div className="absolute bottom-0 w-full h-auto ">
         <InfiniteScrollingForCard />
       </div>
     </div>
