@@ -1,4 +1,3 @@
-import Hero from "@/components/Home/Hero/hero";
 import { getTwoLatestProjects } from "./actions/getTwoLatestProjects";
 import ProjectsDemo from "@/components/Home/ProjectsDemoSection/ProjectsDemo";
 import AboutMe from "@/components/Home/AboutMe";
