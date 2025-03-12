@@ -13,12 +13,12 @@ const Presentation =async () => {
   return (
     <div className="absolute w-full z-[60]  h-full flex flex-col text-black  dark:text-white items-center justify-center  bg-opacity-40 py-2 px-6 text-center rounded-xl -translate-y-[10%]">
       <h1 className="text-6xl max-md:text-5xl max-sm:text-3xl mb-3 font-IRANSansXBlack ">
-        محسن خجسته نژاد
-      {/* Lorem, ipsum dolor. */}
+        {/* محسن خجسته نژاد */}
+      Lorem, ipsum dolor.
         </h1>
       <p className="text-[20px] max-sm:text-[15px] font-IRANSansXLight "> 
-      برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند
-      {/* Lorem ipsum dolor  sit amet consectetur adipisicing <br/> elit dolor Lorem, ipsum.. */}
+      {/* برنامه نویس اپلیکیشن های تحت وب <br/> متمرکز روی فرانت اند */}
+      Lorem ipsum dolor  sit amet consectetur adipisicing <br/> elit dolor Lorem, ipsum..
       </p>
       <div className="mt-5 flex flex-col items-center justify-center gap-3 w-full max-w-[200px]">
         <ResumeDownloadButton/>

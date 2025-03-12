@@ -1,6 +1,6 @@
 "use client";
 import { AllTechstackType } from "@/app/Types/AllTechstackTypes";
-import NextjsIcon from "../public/icons8-nextjs-144.png"
+import NextjsIcon from "../public/icons8-nextjs-144.png";
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -13,7 +13,7 @@ export const InfiniteMovingCardsForCard = ({
   pauseOnHover = false,
   className,
 }: {
-  items: AllTechstackType[]
+  items: AllTechstackType[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
   pauseOnHover?: boolean;
@@ -24,7 +24,6 @@ export const InfiniteMovingCardsForCard = ({
 
   useEffect(() => {
     addAnimation();
-
   }, []);
   const [start, setStart] = useState(false);
   function addAnimation() {
@@ -73,8 +72,7 @@ export const InfiniteMovingCardsForCard = ({
     <div
       ref={containerRef}
       className={cn(
-        "scroller bg-transparent z-[51] relative   max-w-7xl overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
-        
+        "scroller bg-transparent z-[60] relative max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]"
       )}
     >
       <ul
@@ -85,37 +83,30 @@ export const InfiniteMovingCardsForCard = ({
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
-        {items.map((item) =>
-        {
-
-
-            return (
-              <li
-                 className=" bg-slate-100 border-none text-xs  relative rounded-2xl border dark:bg-gradient-to-b from-slate-800 to-slate-600   flex-shrink-0  flex items-center justify-center w-[150px] "
-            // style={{
-            //   background:
-            //     "linear-gradient(180deg, var(--slate-600), var(--slate-900)",
-            // }}
-            key={item.id}
-          >
-            <div className="flex flex-col items-center  justify-center  py-2">
-              
-                  <Image 
+        {items.map((item) => {
+          return (
+            <li
+              className=" bg-slate-100 border-none text-xs relative rounded-2xl border dark:bg-gradient-to-b from-slate-800 to-slate-600 flex-shrink-0 flex items-center justify-center w-[150px] "
+              // style={{
+              // background:
+              // "linear-gradient(180deg, var(--slate-600), var(--slate-900)",
+              // }}
+              key={item.id}
+            >
+              <div className="flex flex-col items-center justify-center py-2">
+                <Image
                   className=" w-8 h-8"
-                  alt="nextjs-icon" src={item.src} width={70} height={70}/>
-                    <p className="text-black">
-                        {item.name}
-                    </p>
-             
-            </div>
-              </li>
-            )
-        }
-    )
-        }
-            
+                  alt="nextjs-icon"
+                  src={item.src}
+                  width={70}
+                  height={70}
+                />
+                <p className="text-black">{item.name}</p>
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
 };
-
