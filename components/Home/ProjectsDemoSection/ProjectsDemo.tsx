@@ -12,19 +12,25 @@ import { FaArrowRight } from "react-icons/fa"
 const ProjectsDemo = async({projects}:{projects:ProjectsWithTechsType[]}) => {
   const {projectCount,technologyCount}=await getAllProjectsCount()
   return (
-    <div className=" w-full h-full relative flex flex-col items-center justify-center bg-white dark:bg-black px-[20%] max-sm:px-[10%]">
-    <div className="w-full h-full flex flex-col items-center justify-center text-center">
-      <div className=" text-[40px]  font-IRANSansXExtraBold">پروژه ها</div>
-      <p className="pt-10 font-IRANSansXUltraLight">
+    <div className=" w-full h-full relative flex flex-col items-center justify-center bg-white dark:bg-black">
+    <div className="w-full h-full flex flex-col  text-center">
+    <div className=" flex items-center justify-end  px-4 py-2">
+        <div className="relative">
+          <p className="font-IRANSansXExtraBold text-[40px] text-right">
+                      پروژه ها
+          </p>
+          <div className="w-[70%] h-[3px] absolute bottom-0 translate-y-2 right-0 bg-[#5c416e] rounded-full"></div>
+        </div>
+      </div>      <p className="pt-10 px-10 max-md:p-5 font-IRANSansXUltraLight">
 در این قسمت بخشی از پروژه های من رو میتونید ببینید. برای مشاهده همه پروژه ها روی دکمه ی پایین کلیک کنین. اکثر پروژه ها بصورت عمومی در گیت هاب موجود هستن، اگه خوشتون اومد لطفا ستاره یادتون نره     </p>
     </div>
-    <div className="w-full h-full  grid grid-cols-2 rounded-[15px] max-lg:grid-cols-1 gap-4 p-4">
+    <div className="w-full h-full mt-5 grid grid-cols-2 rounded-[15px] max-lg:grid-cols-1 gap-4">
       {projects.map((project)=>
     <ProjectCardItem project={project} key={project.id}/>
       )}
      
     </div>
-    <Link href="/projects" className="font-IRANSansXExtraBold" >
+    <Link href="/projects" className="font-IRANSansXExtraBold mt-5" >
     <MagicButton 
               title={` هر ${toPersianDigits( projectCount)}  پروژه را ببینید `}
               icon={<FaArrowRight  />}

@@ -59,7 +59,7 @@ const AboutMe = () => {
 
         <div className="relative mt-2">
           {/* //! Line of right of text */}
-          <div className="absolute top-0 right-[1.25rem] w-[2px] bg-black/30 dark:bg-white/30 bottom-0"></div>
+          <div className="absolute top-0 right-[1.25rem] w-[2px] rounded-full bg-black/30 dark:bg-white/30 bottom-0"></div>
 
           <div className="pr-[50px] pl-[8px] font-IRANSansXLight">
             {/* لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
@@ -77,7 +77,7 @@ const AboutMe = () => {
             <div className="mt-5 flex items-start justify-center flex-col gap-1 ">
               <p className="font-IRANSansXMedium text-[16px]">دانشگاه ملی مهارت شهید بابایی قزوین</p>
               <p className="text-[14px] font-IRANSansXRegular">کارشناسی ناپیوسته مهندسی حرفه ای نرم افزار کامپیوتر</p>
-              <p className="text-[12px] font-IRANSansXUltraLight">1399-1402</p>
+              <p className="text-[12px] font-IRANSansXUltraLight">1402-1404</p>
             </div>
           </div>
         </div>

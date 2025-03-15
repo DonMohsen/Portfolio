@@ -17,7 +17,7 @@ export default async function Home() {
         </div>
 
         {/* Right Section - Takes Remaining Space */}
-        <div className="flex-1  p-4">
+        <div className="flex-1  p-10 max-md:p-3">
           <div className="  ">
             {/* <Hero /> */}
             <AboutMe/>
