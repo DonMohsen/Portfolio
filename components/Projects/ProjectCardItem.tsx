@@ -12,11 +12,11 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
     <>
   <Link
   href={`/projects/${project.id}`}
-    className="bg-[#f6f6f6] p-[12px] border-black/[0.1] dark:border-white/[0.4] border  dark:bg-black text-white flex flex-col  rounded-[20px]   duration-300"
+    className="bg-[#f6f6f6]  p-[12px] group border-black/[0.1] dark:border-white/[0.4] border  dark:bg-black text-white flex flex-col  rounded-[20px]   duration-300"
   >
     {/* Image Container */}
     {project.image && (
-        <div className=" relative    min-h-[200px] h-[200px]  rounded-[10px]">
+        <div className=" relative overflow-hidden    min-h-[200px] h-[200px]  rounded-[10px]">
         <Image
           src={project.image}
           alt={`${project.name} image`}
@@ -24,7 +24,7 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
   height={720}
           quality={100}
           priority={true}
-          className="border-none w-full h-full object-cover transition-transform duration-500 rounded-xl "
+          className="border-none group-hover:scale-110 w-full h-full object-cover transition-transform duration-500 rounded-xl "
         />
         
       <div className="transition-all duration-500 absolute w-full h-full z-50 bg-black top-0 right-0 rounded-[10px] dark:bg-opacity-20 bg-opacity-0">

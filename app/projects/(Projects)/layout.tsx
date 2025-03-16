@@ -6,23 +6,18 @@ export const metadata: Metadata = {
   description: "پروژه های تمرینی و واقعی محسن خجسته نژاد",
 };
 
-export default async function ProjectsLayout({
+export default function ProjectsLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
     <div className="flex flex-row items-start justify-center px-5">
-    <div className="flex-1 flex-shrink-0">
-    <ProjectsHeader/>
-      {children}
+      <div className="flex-1 flex-shrink-0">
+        <ProjectsHeader />
+        {children}
+      </div>
+      <div className="flex-1 flex-shrink-0 max-w-[275px] mt-[150px] max-lg:hidden">
+        <ProjectsFilterNav />
+      </div>
     </div>
-    <div className="flex-1 flex-shrink-0 max-w-[275px] mt-[150px] max-lg:hidden">
-      <ProjectsFilterNav />
-    </div>
-  </div>
-    </>
   );
 }
