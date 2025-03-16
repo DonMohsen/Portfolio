@@ -11,8 +11,10 @@ import useShowHeader from "@/store/useShowHeader";
 import useWebRoutes from "@/app/utils/useWebRoutes";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
+  const router=useRouter()
   const webRoutes = useWebRoutes();
   const { scrollYProgress } = useScroll();
   const resumeToggle = useShowHeader((state) => state.toggleShowHeaderState);
@@ -97,9 +99,9 @@ export const Header = () => {
     >
       <div className="p-4">
         {item.routesChildren.map((child) => (
-          <Link
+          <div
+          onClick={()=>router.push(child.route)}
             key={child.id}
-            href={child.route}
             className="block py-2 px-4 text-black dark:text-white text-right hover:bg-gray-800 hover:rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all"
             aria-label={child.text} // For accessibility
           >
@@ -109,7 +111,7 @@ export const Header = () => {
             <child.emptyIcon className="w-7 h-7"/>
             </div>
             
-          </Link>
+          </div>
         ))}
       </div>
     </motion.div>

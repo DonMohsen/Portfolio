@@ -37,7 +37,10 @@ export default function ProjectsPage() {
         });
     });
   }, [search, order, type]);
-
+  useEffect(() => {
+  setSearchInput(search||"")
+  }, [searchParams])
+  
   // Handle search input change
 
 
@@ -89,7 +92,7 @@ export default function ProjectsPage() {
           <input
             type="text"
             placeholder="Search projects..."
-            value={searchInput}
+            value={searchInput||''}
             onChange={(e) => setSearchInput(e.target.value)} // Store input locally
             className="p-2 border border-gray-300 dark:border-gray-600 rounded w-full"
           />
