@@ -5,6 +5,7 @@ import { useEffect, useState, useTransition } from "react";
 import ProjectCardItem from "@/components/Projects/ProjectCardItem";
 import Head from "next/head";
 import { ProjectSkeleton } from "@/components/Loadings/ProjectSkeleton";
+import { Button } from "@/components/ui/button";
 
 export default function ProjectsPage() {
   const searchParams = useSearchParams();
@@ -14,6 +15,7 @@ export default function ProjectsPage() {
   const order = searchParams.get("order") || "desc";
   const search = searchParams.get("search") || "";
   const type = searchParams.get("type") || "";
+  const [searchInput, setSearchInput] = useState(search); // Local input state
 
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,10 +39,7 @@ export default function ProjectsPage() {
   }, [search, order, type]);
 
   // Handle search input change
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newSearch = e.target.value;
-    updateFilters({ search: newSearch });
-  };
+
 
   // Handle order change
   const handleOrderChange = (newOrder: string) => {
@@ -48,7 +47,9 @@ export default function ProjectsPage() {
   };
 
   // Update URL and filters
-  const updateFilters = (newFilters: Partial<{ type: string; order: string; search: string }>) => {
+  const updateFilters = (
+    newFilters: Partial<{ type: string; order: string; search: string }>
+  ) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(newFilters).forEach(([key, value]) => {
       if (value) params.set(key, value);
@@ -61,10 +62,16 @@ export default function ProjectsPage() {
     <div className="bg-white dark:bg-black flex flex-col gap-6">
       <Head>
         <title>Projects - My Portfolio</title>
-        <meta name="description" content="Browse projects in different categories like Practice and Copy." />
+        <meta
+          name="description"
+          content="Browse projects in different categories like Practice and Copy."
+        />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Projects - My Portfolio" />
-        <meta property="og:description" content="Explore a variety of projects including Practice and Copy categories." />
+        <meta
+          property="og:description"
+          content="Explore a variety of projects including Practice and Copy categories."
+        />
         <meta property="og:url" content="https://yourwebsite.com/projects" />
         <meta property="og:type" content="website" />
       </Head>
@@ -72,14 +79,26 @@ export default function ProjectsPage() {
       {/* Filters UI */}
       <div className="flex flex-col sm:flex-row gap-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
         {/* Search Input */}
-        <input
-          type="text"
-          placeholder="Search projects..."
-          value={search}
-          onChange={handleSearchChange}
-          className="p-2 border border-gray-300 dark:border-gray-600 rounded w-full sm:w-1/3"
-        />
-
+        <form
+          className="flex items-center justify-center gap-4"
+          onSubmit={(e) => {
+            e.preventDefault(); // Prevents page refresh
+            updateFilters({ search: searchInput }); // Updates search only on button click
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Search projects..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)} // Store input locally
+            className="p-2 border border-gray-300 dark:border-gray-600 rounded w-full"
+          />
+          <Button
+            type="submit"
+            className="font-IRANSansXRegular border rounded-xl"
+          >
+            جستجو
+          </Button>
         {/* Order Dropdown */}
         <select
           value={order}
@@ -89,13 +108,17 @@ export default function ProjectsPage() {
           <option value="desc">Newest</option>
           <option value="asc">Oldest</option>
         </select>
+        </form>
+
       </div>
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 flex-1">
         {loading || isPending
           ? [...Array(8)].map((_, i) => <ProjectSkeleton key={i} />)
-          : projects.map((project) => <ProjectCardItem project={project} key={project.id} />)}
+          : projects.map((project) => (
+              <ProjectCardItem project={project} key={project.id} />
+            ))}
       </div>
     </div>
   );
