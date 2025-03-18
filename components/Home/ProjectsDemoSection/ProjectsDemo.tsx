@@ -22,7 +22,8 @@ const ProjectsDemo = async({projects}:{projects:ProjectsWithTechsType[]}) => {
           <div className="w-[70%] h-[3px] absolute bottom-0 translate-y-2 right-0 bg-[#5c416e] rounded-full"></div>
         </div>
       </div>      <p className="pt-10 px-10 max-md:p-5 font-IRANSansXUltraLight">
-در این قسمت بخشی از پروژه های من رو میتونید ببینید. برای مشاهده همه پروژه ها روی دکمه ی پایین کلیک کنین. اکثر پروژه ها بصورت عمومی در گیت هاب موجود هستن، اگه خوشتون اومد لطفا ستاره یادتون نره     </p>
+        در این بخش پروژه های تمرینی، کپی شده و حتی واقعی من را میتونید مشاهده کنید که اکثرا اوپن سورس و لایو هستند
+        </p>
     </div>
     <div className="w-full h-full mt-5 grid grid-cols-2 rounded-[15px] max-lg:grid-cols-1 gap-4">
       {projects.map((project)=>

@@ -6,6 +6,7 @@ import ProjectCardItem from "@/components/Projects/ProjectCardItem";
 import Head from "next/head";
 import { ProjectSkeleton } from "@/components/Loadings/ProjectSkeleton";
 import { Button } from "@/components/ui/button";
+import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 
 export default function ProjectsPage() {
   const searchParams = useSearchParams();
@@ -17,7 +18,7 @@ export default function ProjectsPage() {
   const type = searchParams.get("type") || "";
   const [searchInput, setSearchInput] = useState(search); // Local input state
 
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<ProjectsWithTechsType[]>([]);
   const [loading, setLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
 
@@ -112,6 +113,8 @@ export default function ProjectsPage() {
           <option value="asc">Oldest</option>
         </select>
         </form>
+       
+       
 
       </div>
 

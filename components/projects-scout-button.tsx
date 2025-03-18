@@ -6,20 +6,20 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const ProjectsScoutButton = () => {
-  const router = useRouter(); // Initialize the router
+  const router = useRouter(); 
 
   const handleClick = () => {
-    router.push("/projects"); // Programmatically navigate on click
+    router.push("/projects"); 
   };
   return (
     <Button
       onClick={handleClick}
       className="group rounded-full text-xs md:text-sm border-none font-IRANSansXRegular  z-[50] p-5  shadow-none w-full hover:brightness-75 bg-slate-200 dark:bg-[#362144] flex items-center justify-center"
     >
-      <Link className="flex items-center justify-center gap-2" href="/projects">
+      <div className="flex items-center justify-center gap-2">
         <ArrowLeft className="md:group-hover:-translate-x-2 -translate-x-1 -translate-y-[1px]  transition-transform duration-300 " />
         <p className="font-IRANSansXDemiBold">پروژه ها</p>
-      </Link>
+      </div>
     </Button>
   );
 };
