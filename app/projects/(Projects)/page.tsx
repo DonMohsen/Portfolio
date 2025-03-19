@@ -7,6 +7,8 @@ import Head from "next/head";
 import { ProjectSkeleton } from "@/components/Loadings/ProjectSkeleton";
 import { Button } from "@/components/ui/button";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
+import { Search, SlidersHorizontal } from "lucide-react";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function ProjectsPage() {
   const searchParams = useSearchParams();
@@ -42,8 +44,6 @@ export default function ProjectsPage() {
   setSearchInput(search||"")
   }, [searchParams])
   
-  // Handle search input change
-
 
   // Handle order change
   const handleOrderChange = (newOrder: string) => {
@@ -63,7 +63,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="bg-white dark:bg-black flex flex-col gap-6">
+    <div className="bg-white dark:bg-black flex flex-col  ">
       <Head>
         <title>Projects - My Portfolio</title>
         <meta
@@ -81,8 +81,49 @@ export default function ProjectsPage() {
       </Head>
 
       {/* Filters UI */}
-      <div className="flex flex-col sm:flex-row gap-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
-        {/* Search Input */}
+      <div className="w-full  flex flex-col justify-center items-center">
+      <div className="w-full flex items-center justify-between">
+      <div className="flex items-center border border-gray-400 py-2 rounded-full px-2 my-4">
+        <Search className="w-5 h-5 text-gray-500" />
+        <input
+          type="text"
+          placeholder="Search..."
+          className="flex-1 bg-transparent border-none outline-none px-2 "
+        />
+      </div>
+    
+      <SlidersHorizontal className="cursor-pointer hover:scale-125 transition-all duration-300 lg:hidden" />
+    </div>
+    <form
+          className="flex items-center justify-start w-full"
+          onSubmit={(e) => {
+            e.preventDefault(); // Prevents page refresh
+            updateFilters({ search: searchInput }); // Updates search only on button click
+          }}
+        >
+        
+    
+        </form>
+        <div className="flex gap-2 items-center justify-start w-full">
+      <button
+        onClick={() => handleOrderChange("desc")}
+        className={`p-2 rounded font-IRANSansXDemiBold transition-colors ${
+          order === "desc" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"
+        }`}
+      >
+        جدید ترین
+      </button>
+      <button
+        onClick={() => handleOrderChange("asc")}
+        className={`p-2 rounded font-IRANSansXDemiBold transition-colors ${
+          order === "asc" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"
+        }`}
+      >
+        قدیمی ترین
+      </button>
+    </div>
+      </div>
+      {/* <div className="flex flex-col sm:flex-row gap-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
         <form
           className="flex items-center justify-center gap-4"
           onSubmit={(e) => {
@@ -103,7 +144,6 @@ export default function ProjectsPage() {
           >
             جستجو
           </Button>
-        {/* Order Dropdown */}
         <select
           value={order}
           onChange={(e) => handleOrderChange(e.target.value)}
@@ -116,10 +156,10 @@ export default function ProjectsPage() {
        
        
 
-      </div>
+      </div> */}
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 flex-1 mt-5">
         {loading || isPending
           ? [...Array(8)].map((_, i) => <ProjectSkeleton key={i} />)
           : projects.map((project) => (
