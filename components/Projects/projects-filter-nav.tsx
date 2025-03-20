@@ -8,6 +8,7 @@ const ProjectsFilterNav = () => {
 
   const handleFilterClick = (type: string) => {
     const params = new URLSearchParams(searchParams.toString());
+    searchParams.get("type") === type?params.delete("type",type):
     params.set("type", type);
     router.push(`/projects?${params.toString()}`);
   };
