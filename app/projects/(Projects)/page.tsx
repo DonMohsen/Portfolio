@@ -7,8 +7,17 @@ import Head from "next/head";
 import { ProjectSkeleton } from "@/components/Loadings/ProjectSkeleton";
 import { Button } from "@/components/ui/button";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
-import { Search, SlidersHorizontal } from "lucide-react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Layers, Search, SlidersHorizontal } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { getPersianNumbers } from "@/utils/numbers";
 
 export default function ProjectsPage() {
   const searchParams = useSearchParams();
@@ -41,9 +50,8 @@ export default function ProjectsPage() {
     });
   }, [search, order, type]);
   useEffect(() => {
-  setSearchInput(search||"")
-  }, [searchParams])
-  
+    setSearchInput(search || "");
+  }, [searchParams]);
 
   // Handle order change
   const handleOrderChange = (newOrder: string) => {
@@ -82,82 +90,86 @@ export default function ProjectsPage() {
 
       {/* Filters UI */}
       <div className="w-full  flex flex-col justify-center items-center">
-      <div className="w-full flex items-center justify-between">
-      <div className="flex items-center border border-gray-400 py-2 rounded-full px-2 my-4">
-        <Search className="w-5 h-5 text-gray-500" />
-        <input
-          type="text"
-          placeholder="Search..."
-          className="flex-1 bg-transparent border-none outline-none px-2 "
-        />
-      </div>
-    
-      <SlidersHorizontal className="cursor-pointer hover:scale-125 transition-all duration-300 lg:hidden" />
-    </div>
-    <form
-          className="flex items-center justify-start w-full"
-          onSubmit={(e) => {
-            e.preventDefault(); // Prevents page refresh
-            updateFilters({ search: searchInput }); // Updates search only on button click
-          }}
-        >
-        
-    
-        </form>
-        <div className="flex gap-2 items-center justify-start w-full">
-      <button
-        onClick={() => handleOrderChange("desc")}
-        className={`p-2 rounded font-IRANSansXDemiBold transition-colors ${
-          order === "desc" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"
-        }`}
-      >
-        جدید ترین
-      </button>
-      <button
-        onClick={() => handleOrderChange("asc")}
-        className={`p-2 rounded font-IRANSansXDemiBold transition-colors ${
-          order === "asc" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"
-        }`}
-      >
-        قدیمی ترین
-      </button>
-    </div>
-      </div>
-      {/* <div className="flex flex-col sm:flex-row gap-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
         <form
-          className="flex items-center justify-center gap-4"
+          className="w-full flex items-center justify-end"
           onSubmit={(e) => {
             e.preventDefault(); // Prevents page refresh
             updateFilters({ search: searchInput }); // Updates search only on button click
           }}
         >
-          <input
-            type="text"
-            placeholder="Search projects..."
-            value={searchInput||''}
-            onChange={(e) => setSearchInput(e.target.value)} // Store input locally
-            className="p-2 border border-gray-300 dark:border-gray-600 rounded w-full"
-          />
-          <Button
-            type="submit"
-            className="font-IRANSansXRegular border rounded-xl"
-          >
-            جستجو
-          </Button>
-        <select
-          value={order}
-          onChange={(e) => handleOrderChange(e.target.value)}
-          className="p-2 border border-gray-300 dark:border-gray-600 rounded"
-        >
-          <option value="desc">Newest</option>
-          <option value="asc">Oldest</option>
-        </select>
+          <div className="flex items-center border border-gray-400 rounded-full my-4  overflow-hidden">
+            {/* Button without padding, fully fitting inside */}
+            <button
+              type="submit"
+              className="flex group items-center justify-center w-[80px] h-10 bg-gray-200 dark:bg-slate-900 dark:hover:bg-slate-800 hover:bg-gray-300  transition-all rounded-full"
+            >
+              <Search className="w-5 h-5 group-hover:w-7 group-hover:h-7 transition-all duration-300 text-gray-600" />
+            </button>
+
+            <input
+              value={searchInput || ""}
+              onChange={(e) => setSearchInput(e.target.value)} // Store input locally
+              type="text"
+              placeholder="جستجو در پروژه ها"
+              className="flex-1 bg-transparent border-none outline-none px-2 text-right placeholder:font-IRANSansXUltraLight font-IRANSansXRegular"
+            />
+          </div>
+
         </form>
-       
-       
+            {/* //!The filter header............. */}
+        <div className="flex gap-4 items-center justify-between w-full bg-slate-200 dark:bg-slate-900 p-3 max-lg:p-[6px] rounded-xl text-[12px]  font-IRANSansXLight font-medium">
+          <div className="w-full pl-2  max-lg:hidden">
+            {loading || isPending ? (
+              <div className="animate-pulse bg-slate-100 dark:bg-gray-700 h-5 w-10 rounded-md"></div>
+            ) : (
+              <div>
+                {`نتیجه \u200E${getPersianNumbers(projects.length.toString())}`}
+              </div>
+            )}
+          </div>
+         
 
-      </div> */}
+          <div className="flex gap-4 items-center justify-end w-full">
+          <SlidersHorizontal className="cursor-pointer hover:scale-125 transition-all duration-300 lg:hidden" />
 
+            <button
+              onClick={() => handleOrderChange("asc")}
+              className={`p-2 rounded transition-colors ${
+                order === "asc"
+                  ? "text-teal-900 font-IRANSansXRegular font-bold"
+                  : " text-black dark:text-white"
+              }`}
+            >
+              قدیمی ترین
+            </button>
+            <button
+              onClick={() => handleOrderChange("desc")}
+              className={`p-2 rounded transition-colors ${
+                order === "desc"
+                  ? " text-[#285665] font-IRANSansXRegular font-bold"
+                  : " text-black dark:text-white"
+              }`}
+            >
+              جدید ترین
+            </button>
+
+            <div className="flex items-center justify-center gap-3">
+              <p className="font-IRANSansXMedium font-bold">:ترتیب</p>
+              <Layers />
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div className="w-full   lg:hidden text-[12px] mt-5 text-right">
+            {loading || isPending ? (
+              <div className="animate-pulse bg-slate-100 dark:bg-gray-700 h-5 w-10 rounded-md"></div>
+            ) : (
+              <div>
+                {`نتیجه \u200E${getPersianNumbers(projects.length.toString())}`}
+              </div>
+            )}
+          </div>
       {/* Projects Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 flex-1 mt-5">
         {loading || isPending
