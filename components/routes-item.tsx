@@ -6,6 +6,7 @@ import useHamburgerMenu from "@/store/useHamburgerMenu";
 import Link from "next/link";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
 import clsx from "clsx";
+import { useSearchParams } from "next/navigation";
 
 const itemVariants = {
   hidden: { opacity: 0, x: -20 },
@@ -18,11 +19,12 @@ const childVariants = {
   exit: { opacity: 0, height: 0, transition: { duration: 0.3, ease: "easeInOut" } },
 };
 
-const RoutesItem = ({ webRoute, className }: { webRoute: webRoutesType; className?: string }) => {
+const RoutesItem = ({ webRoute, className,childIsActive }: { webRoute: webRoutesType; className?: string; childIsActive?:boolean }) => {
   const { routesChildren, route, isActive, text,isAChild } = webRoute;
   const [openChildren, setOpenChildren] = useState(false);
   const hamburgerState = useHamburgerMenu((state) => state.hamburgerMenuState);
   const hamburgerToggle = useHamburgerMenu((state) => state.toggleHamburgerMenuState);
+    const searchParams = useSearchParams();
 
   useEffect(() => {
     if (!hamburgerState) setOpenChildren(false);
@@ -63,7 +65,7 @@ className="p-1 w-[50%] flex items-center justify-center bg-slate-300 dark:bg-sla
           >
           {text}
         </span>
-          {isActive ? (
+          {isActive ||childIsActive? (
             <webRoute.filledIcon className="w-6 h-6 text-blue-500" />
           ) : (
             <webRoute.emptyIcon className="w-6 h-6 text-gray-500" />
@@ -92,7 +94,7 @@ className="p-1 w-[50%] flex items-center justify-center bg-slate-300 dark:bg-sla
                 exit="hidden"
                 transition={{ delay: index * 0.5 }} // Stagger effect
               >
-                <RoutesItem webRoute={child} className="pl-1" />
+                <RoutesItem webRoute={child} className="pl-1" childIsActive={searchParams.toString().includes(`${child.filteredType}`)} />
               </motion.div>
             ))}
           </motion.div>

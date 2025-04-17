@@ -1,4 +1,7 @@
+"use client"
 import ProjectsList from "@/components/project-list";
+
+
 import { getProjects } from "@/lib/getProjects";
 import { Suspense } from "react";
 interface Props {

@@ -11,6 +11,7 @@ import useShowHeader from "@/store/useShowHeader";
 import useWebRoutes from "@/app/utils/useWebRoutes";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
+import { useSearchParams } from "next/navigation";
 
 export const Header = () => {
   const webRoutes = useWebRoutes();
@@ -20,6 +21,7 @@ export const Header = () => {
 
   const [visible, setVisible] = useState(true);
   const [hoveredRouteItem, setHoveredRouteItem] = useState<webRoutesType | null>(null);
+    const searchParams = useSearchParams();
 
   // Handle scroll events to show/hide header
   useMotionValueEvent(scrollYProgress, "change", (current) => {

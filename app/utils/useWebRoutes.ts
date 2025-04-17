@@ -11,7 +11,6 @@ import { CgWebsite } from "react-icons/cg";
 
 const useWebRoutes = () => {
     const pathName = usePathname();
-    const searchParams = useSearchParams();
 
  const webRoutes = useMemo<webRoutesType[]>(
     () => [
@@ -32,42 +31,45 @@ const useWebRoutes = () => {
         filledIcon:PiNewspaperClippingFill,
         isActive:pathName.includes("/projects"),
         id:2,
-        
         isAChild:false,
         routesChildren:[
             {
                 text:"پروژه های کپی شده",
                 route:"/projects?type=Copy",
+                filteredType:"Copy",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-               isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Copy'),           
+            //    isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Copy'),           
                id:3,
                 isAChild:true
             },
             {
                 text:"پروژه های تمرینی",
                 route:"/projects?type=Practice",
+                filteredType:"Practice",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-                isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Practice'),           
+                // isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Practice'),           
                 id:4,
                 isAChild:true
             },
             {
                 text:"پروژه های فورک شده",
                 route:"/projects?type=Forked",
+                filteredType:"Forked",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-               isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Forked'),           
+            //    isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Forked'),           
                id:11,
                 isAChild:true
             },  
              {
                 text:"پروژه های واقعی",
                 route:"/projects?type=Real",
+                filteredType:"Real",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-               isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Real'),           
+            //    isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Real'),           
                id:12,
                 isAChild:true
             },
@@ -126,7 +128,7 @@ const useWebRoutes = () => {
             }
         ]
     }
-],[pathName,searchParams])
+],[pathName])
 return webRoutes
 }
 export default useWebRoutes;
