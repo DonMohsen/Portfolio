@@ -97,21 +97,22 @@ export default function ProjectsPage() {
             updateFilters({ search: searchInput }); // Updates search only on button click
           }}
         >
-          <div className="flex items-center border border-gray-400 rounded-full my-4  overflow-hidden">
+          <div className="flex items-center border border-black/[0.1] dark:border-white/[0.1] rounded-md my-4  overflow-hidden">
             {/* Button without padding, fully fitting inside */}
             <button
               type="submit"
-              className="flex group items-center justify-center w-[80px] h-10 bg-gray-200 dark:bg-slate-900 dark:hover:bg-slate-800 hover:bg-gray-300  transition-all rounded-full"
+              className="flex group items-center justify-center w-[80px] h-10 bg-gray-200 dark:bg-slate-900 dark:hover:bg-slate-800 hover:bg-gray-300  transition-all rounded-md"
             >
               <Search className="w-5 h-5 group-hover:w-7 group-hover:h-7 transition-all duration-300 text-gray-600" />
             </button>
 
             <input
+            
               value={searchInput || ""}
               onChange={(e) => setSearchInput(e.target.value)} // Store input locally
               type="text"
               placeholder="جستجو در پروژه ها"
-              className="flex-1 bg-transparent border-none outline-none px-2 text-right placeholder:font-IRANSansXUltraLight font-IRANSansXRegular"
+              className="flex-1 bg-transparent dark:placeholder:text-white/[0.3] border-none outline-none px-2 text-right placeholder:font-IRANSansXUltraLight font-IRANSansXRegular"
             />
           </div>
 
@@ -136,7 +137,7 @@ export default function ProjectsPage() {
               onClick={() => handleOrderChange("asc")}
               className={`p-2 rounded transition-colors ${
                 order === "asc"
-                  ? "text-teal-900 font-IRANSansXRegular font-bold"
+                  ? "text-teal-600 font-IRANSansXRegular font-bold"
                   : " text-black dark:text-white"
               }`}
             >
@@ -146,26 +147,26 @@ export default function ProjectsPage() {
               onClick={() => handleOrderChange("desc")}
               className={`p-2 rounded transition-colors ${
                 order === "desc"
-                  ? " text-[#285665] font-IRANSansXRegular font-bold"
-                  : " text-black dark:text-white"
+                ? "text-teal-600 font-IRANSansXRegular font-bold"
+                : " text-black dark:text-white"
               }`}
             >
               جدید ترین
             </button>
 
             <div className="flex items-center justify-center gap-3">
-              <p className="font-IRANSansXMedium font-bold">:ترتیب</p>
+              <p className=" font-IRANSansXMedium">:ترتیب</p>
               <Layers />
             </div>
 
           </div>
         </div>
       </div>
-      <div className="w-full   lg:hidden text-[12px] mt-5 text-right">
+      <div className="w-full   lg:hidden text-[12px] mt-5 text-right  flex items-center justify-end pr-1">
             {loading || isPending ? (
-              <div className="animate-pulse bg-slate-100 dark:bg-gray-700 h-5 w-10 rounded-md"></div>
+              <div className="animate-pulse bg-slate-100 dark:bg-gray-700 h-5 w-[50px] rounded-md right-0"></div>
             ) : (
-              <div>
+              <div className="font-IRANSansXLight">
                 {`نتیجه \u200E${getPersianNumbers(projects.length.toString())}`}
               </div>
             )}

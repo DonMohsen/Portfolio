@@ -6,11 +6,12 @@ import { SlSocialLinkedin } from "react-icons/sl";
 import { GrLinkedinOption } from "react-icons/gr";
 import { MdEmail, MdOutlineMail } from "react-icons/md";
 import { useMemo } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { CgWebsite } from "react-icons/cg";
 
 const useWebRoutes = () => {
     const pathName = usePathname();
+    const searchParams = useSearchParams();
 
  const webRoutes = useMemo<webRoutesType[]>(
     () => [
@@ -39,8 +40,8 @@ const useWebRoutes = () => {
                 route:"/projects?type=Copy",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-                isActive:pathName==="/projects?type=Copy",
-                id:3,
+               isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Copy'),           
+               id:3,
                 isAChild:true
             },
             {
@@ -48,20 +49,39 @@ const useWebRoutes = () => {
                 route:"/projects?type=Practice",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-                isActive:pathName==="/projects?type=Practice",
+                isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Practice'),           
                 id:4,
                 isAChild:true
             },
             {
-                text:"کاستوم کامپوننت",
-                route:"/projects?type=Component",
+                text:"پروژه های فورک شده",
+                route:"/projects?type=Forked",
                 emptyIcon:PiNewspaperClipping,
                 filledIcon:PiNewspaperClippingFill,
-                isActive:pathName==="/projects?type=Component",
-                id:44,
+               isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Forked'),           
+               id:11,
                 isAChild:true
+            },  
+             {
+                text:"پروژه های واقعی",
+                route:"/projects?type=Real",
+                emptyIcon:PiNewspaperClipping,
+                filledIcon:PiNewspaperClippingFill,
+               isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Real'),           
+               id:12,
+                isAChild:true
+            },
+            // {
+            //     text:"کاستوم کامپوننت",
+            //     route:"/projects?type=Component",
+            //     emptyIcon:PiNewspaperClipping,
+            //     filledIcon:PiNewspaperClippingFill,
+            //     isActive:pathName==="/projects?type=Component",
+            //     id:44,
+            //     isAChild:true
                 
-            }
+            // },
+
         ]
     },
     {
@@ -106,7 +126,7 @@ const useWebRoutes = () => {
             }
         ]
     }
-],[pathName])
+],[pathName,searchParams])
 return webRoutes
 }
 export default useWebRoutes;
