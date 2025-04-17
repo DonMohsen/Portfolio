@@ -6,7 +6,7 @@ import { SlSocialLinkedin } from "react-icons/sl";
 import { GrLinkedinOption } from "react-icons/gr";
 import { MdEmail, MdOutlineMail } from "react-icons/md";
 import { useMemo } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { CgWebsite } from "react-icons/cg";
 
 const useWebRoutes = () => {
