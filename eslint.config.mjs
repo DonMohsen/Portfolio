@@ -23,7 +23,7 @@ export default  [
   {
     rules:{
           "no-unused-vars":"off",
-          "react/jsx-key":"of f"
+          "react/jsx-key":"off"
         }
   }
 ];;
