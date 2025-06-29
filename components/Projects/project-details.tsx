@@ -255,7 +255,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
             <p className="text-yellow-950 font-bold">Completed</p>
           </div>
         </div>
-        <p className="font-IRANSansXUltraLight">{project.description}</p>
+        <p className="font-IRANSansXUltraLight " dir="rtl">{project.description}</p>
         {/* //! Tech Stack */}
         <div className="flex flex-wrap gap-2 my-4">
           {project.techStack.map(({ technology }) => {
