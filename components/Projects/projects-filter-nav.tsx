@@ -2,6 +2,7 @@
 
 import { Square, SquareCheckBig } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { startTransition } from "react";
 
 const ProjectsFilterNav = () => {
   const router = useRouter();
@@ -12,7 +13,9 @@ const ProjectsFilterNav = () => {
     searchParams.get("type") === type
       ? params.delete("type", type)
       : params.set("type", type);
+       startTransition(() => {
     router.replace(`/projects?${params.toString()}`);
+  });
   };
 
   return (

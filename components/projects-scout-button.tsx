@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { startTransition } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -9,7 +9,9 @@ const ProjectsScoutButton = () => {
   const router = useRouter(); 
 
   const handleClick = () => {
+     startTransition(() => {
     router.replace("/projects"); 
+  });
   };
   return (
     <Button
