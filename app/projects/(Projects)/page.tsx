@@ -67,7 +67,7 @@ export default function ProjectsPage() {
       if (value) params.set(key, value);
       else params.delete(key);
     });
-    router.push(`/projects?${params.toString()}`);
+    router.replace(`/projects?${params.toString()}`);
   };
 
   return (

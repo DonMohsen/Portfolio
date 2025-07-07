@@ -9,7 +9,7 @@ const ProjectsScoutButton = () => {
   const router = useRouter(); 
 
   const handleClick = () => {
-    router.push("/projects"); 
+    router.replace("/projects"); 
   };
   return (
     <Button

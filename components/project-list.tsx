@@ -23,7 +23,7 @@ export default function ProjectsList({ initialProjects }: { initialProjects: { i
 
   const handleSearch = async () => {
     const query = new URLSearchParams({ order, search }).toString();
-    router.push(`/projects?${query}`);
+    router.replace(`/projects?${query}`);
 
     startTransition(async () => {
       const res = await fetch(`/api/projects?${query}`);

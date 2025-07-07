@@ -12,7 +12,7 @@ const ProjectsFilterNav = () => {
     searchParams.get("type") === type
       ? params.delete("type", type)
       : params.set("type", type);
-    router.push(`/projects?${params.toString()}`);
+    router.replace(`/projects?${params.toString()}`);
   };
 
   return (
