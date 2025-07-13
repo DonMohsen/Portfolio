@@ -9,9 +9,7 @@ const ProjectsScoutButton = () => {
   const router = useRouter(); 
 
   const handleClick = () => {
-     startTransition(() => {
     router.replace("/projects"); 
-  });
   };
   return (
     <Button

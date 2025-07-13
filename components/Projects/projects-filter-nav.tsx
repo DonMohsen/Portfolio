@@ -13,9 +13,7 @@ const ProjectsFilterNav = () => {
     searchParams.get("type") === type
       ? params.delete("type", type)
       : params.set("type", type);
-       startTransition(() => {
     router.replace(`/projects?${params.toString()}`);
-  });
   };
 
   return (

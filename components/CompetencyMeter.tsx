@@ -7,13 +7,15 @@ interface CompetencyCircleProps {
   filledColor?: string; // Color for the filled part
   unfilledColor?: string; // Color for the unfilled part
   size?: number; // Size of the SVG (width & height)
+  strokeWidth?:number
 }
 
 const CompetencyCircle: React.FC<CompetencyCircleProps> = ({
   competency,
   filledColor = "purple", // Default filled color
   unfilledColor = "#E5E7EB", // Default unfilled color
-  size = 150, // Default size
+  size = 150,
+  strokeWidth='10' // Default size
 }) => {
   const radius = size / 2 - 10; // Adjust radius dynamically
   const circumference = 2 * Math.PI * radius; // Calculate circumference
@@ -28,7 +30,8 @@ const CompetencyCircle: React.FC<CompetencyCircleProps> = ({
         r={radius}
         fill="none"
         stroke={unfilledColor}
-        strokeWidth="10"
+        strokeWidth={strokeWidth}
+        strokeOpacity="50%"
       />
 
       {/* Progress Circle */}
@@ -38,7 +41,7 @@ const CompetencyCircle: React.FC<CompetencyCircleProps> = ({
         r={radius}
         fill="none"
         stroke={filledColor}
-        strokeWidth="10"
+        strokeWidth={strokeWidth}
         strokeDasharray={circumference}
         strokeDashoffset={circumference - progress}
         strokeLinecap="round"
@@ -49,11 +52,11 @@ const CompetencyCircle: React.FC<CompetencyCircleProps> = ({
       {/* Percentage Text */}
       <text
         x={size / 2}
-        y={size / 2 + 5}
+        y={size / 2 + 4}
         textAnchor="middle"
-        fontSize={size * 0.12} // Scale font size relative to size
+        fontSize={size * 0.18} // Scale font size relative to size
         fontWeight="bold"
-        fill={filledColor}
+        fill="BLACK"
       >
         {competency}%
       </text>

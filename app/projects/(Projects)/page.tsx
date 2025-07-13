@@ -67,9 +67,7 @@ export default function ProjectsPage() {
       if (value) params.set(key, value);
       else params.delete(key);
     });
-     startTransition(() => {
     router.replace(`/projects?${params.toString()}`);
-  });
   };
 
   return (
@@ -86,7 +84,7 @@ export default function ProjectsPage() {
           property="og:description"
           content="Explore a variety of projects including Practice and Copy categories."
         />
-        <meta property="og:url" content="https://yourwebsite.com/projects" />
+        <meta property="og:url" content="https://donmohsen.ir/projects" />
         <meta property="og:type" content="website" />
       </Head>
 
@@ -113,6 +111,7 @@ export default function ProjectsPage() {
               value={searchInput || ""}
               onChange={(e) => setSearchInput(e.target.value)} // Store input locally
               type="text"
+              dir="rtl"
               placeholder="جستجو در پروژه ها"
               className="flex-1 bg-transparent dark:placeholder:text-white/[0.3] border-none outline-none px-2 text-right placeholder:font-IRANSansXUltraLight font-IRANSansXRegular"
             />

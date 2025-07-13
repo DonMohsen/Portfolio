@@ -18,6 +18,7 @@ import { techColors } from "./client-project-card";
 import { useTheme } from "next-themes";
 import CompetencyCircle from "../CompetencyMeter";
 import { LinkPreview } from "../ui/link-preview";
+import { getProjectCompetencyColor } from "@/lib/getProjectCompetencyColor";
 
 const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
   const { scrollYProgress } = useScroll();
@@ -287,16 +288,8 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
           <p className="font-IRANSansXBlack ">درصد تکامل پروژه</p>
           <CompetencyCircle
             competency={project.competency}
-            filledColor={
-              project.competency >= 75
-                ? "green"
-                : project.competency >= 50
-                ? "yellow"
-                : project.competency >= 25
-                ? "orange"
-                : "red"
-            }
-            unfilledColor="#c7c4c7"
+            filledColor={getProjectCompetencyColor(project.competency)}
+            unfilledColor="#edebed"
             size={100}
           />
         </div>
