@@ -25,7 +25,7 @@ const ProjectsDemo = async({projects}:{projects:ProjectsWithTechsType[]}) => {
         در این بخش پروژه های تمرینی، کپی شده و حتی واقعی من را میتونید مشاهده کنید که اکثرا اوپن سورس و لایو هستند
         </p>
     </div>
-    <div className="w-full h-full mt-5 grid grid-cols-2 rounded-[15px] max-lg:grid-cols-1 gap-4">
+    <div className="w-full h-full mt-5 grid grid-cols-2 rounded-[15px] max-lg:grid-cols-1 gap-4" dir="rtl">
       {projects.map((project)=>
     <ProjectCardItem project={project} key={project.id}/>
       )}

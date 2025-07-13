@@ -56,7 +56,7 @@ const CompetencyCircle: React.FC<CompetencyCircleProps> = ({
         textAnchor="middle"
         fontSize={size * 0.18} // Scale font size relative to size
         fontWeight="bold"
-        fill="BLACK"
+        className='fill-black dark:fill-white'
       >
         {competency}%
       </text>
