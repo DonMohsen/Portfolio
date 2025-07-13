@@ -33,18 +33,15 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
       textColor: "text-red-100",
     },
   };
-console.log(project.image);
-
   return (
     <>
       <Link
         href={`/projects/${project.id}`}
-
-        className=" overflow-hidden group border-black/[0.1] dark:border-white/[0.4] border-[0.1px]  dark:bg-black text-white flex flex-col  rounded-[10px]   duration-300"
+        className="relative  overflow-hidden group border-black/[0.1] dark:border-white/[0.4] border-[0.1px]  dark:bg-black text-white flex flex-col  rounded-[8px]   duration-300"
       >
         {/* Image Container */}
         {project.image && (
-          <div className=" relative -translate-y-[2px]   min-h-[200px] h-[200px]  rounded-[10px]">
+          <div className=" relative    w-full h-full max-h-[200px]  rounded-[8px]">
             <Image
               src={project.image}
               alt={`${project.name} image`}
@@ -52,45 +49,47 @@ console.log(project.image);
               height={720}
               quality={100}
               priority={true}
-              className="border-none x w-full h-full object-cover transition-transform duration-500 rounded-xl "
+              className="border-none x w-full h-full object-cover transition-transform duration-500 rounded-[8px] "
             />
 
-            <div className="transition-all duration-500 absolute w-full h-full z-50 bg-black top-0 right-0 rounded-[10px] dark:bg-opacity-20 bg-opacity-0"></div>
+            <div className="transition-all duration-500 absolute w-full h-full z-50 bg-black top-0 right-0 rounded-[8px] dark:bg-opacity-20 bg-opacity-0"></div>
           </div>
         )}
 
         {/* Content Section */}
-        <div className="p-2 mt-1  select-none flex flex-col gap-2 items-end justify-end">
-          <div
-            className={clsx(
-              "flex items-center justify-start rounded-[4px] w-fit p-[4px]   text-sm font-IRANSansXDemiBold flex-shrink",
-              projectTypeConfig[project.projectType]?.bgColor,
-              projectTypeConfig[project.projectType]?.textColor
-            )}
-          >
-            {projectTypeConfig[project.projectType]?.text}
+        <div className="p-2 mt-1  select-none flex flex-col gap items-end justify-end">
+          <div className="w-full flex flex-row items-center justify-center">
+         
+            <div className="w-full flex items-center justify-start">
+              <p
+                className={clsx(
+                  " rounded-[4px] w-fit p-[4px]   text-sm font-IRANSansXDemiBold flex-shrink",
+                  projectTypeConfig[project.projectType]?.bgColor,
+                  projectTypeConfig[project.projectType]?.textColor
+                )}
+              >
+                {projectTypeConfig[project.projectType]?.text}
+              </p>
+            </div>
+               <div className="w-full flex items-center justify-end ">
+              <CompetencyCircle
+                unfilledColor="#edebed"
+                filledColor={getProjectCompetencyColor(project.competency)}
+                competency={project.competency}
+                size={50}
+                strokeWidth={2}
+              />
+            </div>
           </div>
           <div className="flex-row flex justify-between w-full items-center">
-            <div className="w-fit ">
-              <CompetencyCircle
-              unfilledColor="#edebed"
-              filledColor={getProjectCompetencyColor(project.competency)}
-              competency={project.competency} 
-              size={50}
-               strokeWidth={2}/>
-              {/* <p className="text-black">hi</p> */}
-            </div>
-            <div className="text-[18px] font-bold w-full text-right text-black dark:text-white">
+            <div className="text-[18px] max-md:text-[16px] font-bold w-full text-right text-black dark:text-white">
               {project.name}
             </div>
           </div>
-      
-          <div className="flex items-center justify-between  w-full">
-            <div className="flex items-center justify-center gap-5">
-              <Github className="text-black dark:text-white" />
-              <LucideLink className="text-black dark:text-white" />
-            </div>
-            <div className="flex -space-x-3">
+
+          <div className="flex items-center justify-between mt-2 w-full">
+                <div className="flex -space-x-3" dir="ltr">
+                
               {project.techStack.slice(0, 3).map((tech, index) => (
                 <div
                   key={tech.technology.id}
@@ -103,16 +102,24 @@ console.log(project.image);
                   />
                 </div>
               ))}
-              {project.techStack.length > 3 && (
-                <div  className=" w-8 h-8 bg-white pr-1 dark:bg-neutral-900 border border-black/[.2] font-IRANSansXDemiBold dark:border-neutral-800 rounded-full flex items-center justify-center text-sm font-medium text-black/[0.7] dark:text-neutral-400">
+                {project.techStack.length > 3 && (
+                <div className=" w-8 h-8 bg-white pr-1  dark:bg-neutral-900 border border-black/[.2] font-IRANSansXDemiBold dark:border-neutral-800 rounded-full flex items-center justify-center text-sm font-medium text-black/[0.7] dark:text-neutral-400">
                   <p className="translate-y-[1px] font-IRANSansXExtraBold">
-
-                  +
-                  {getPersianNumbers((project.techStack.length - 3).toString())}
+                    +
+                    {getPersianNumbers(
+                      (project.techStack.length - 3).toString()
+                    )}
+                    
                   </p>
                 </div>
               )}
+              
             </div>
+            <div className="flex items-center justify-center gap-5">
+              <Github className="text-black dark:text-white" />
+              <LucideLink className="text-black dark:text-white" />
+            </div>
+        
           </div>
         </div>
       </Link>

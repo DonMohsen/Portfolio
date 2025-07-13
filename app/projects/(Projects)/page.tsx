@@ -4,7 +4,6 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import ProjectCardItem from "@/components/Projects/ProjectCardItem";
 import Head from "next/head";
-import { ProjectSkeleton } from "@/components/Loadings/ProjectSkeleton";
 import { Button } from "@/components/ui/button";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import { Layers, Search, SlidersHorizontal } from "lucide-react";
@@ -18,6 +17,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getPersianNumbers } from "@/utils/numbers";
+import ProjectSkeleton from "@/components/Loadings/ProjectSkeletonOne";
+import ProjectSkeletonOne from "@/components/Loadings/ProjectSkeletonOne";
+import ProjectSkeletonTwo from "@/components/Loadings/ProjectSkeletonTwo";
+import ProjectSkeletonThree from "@/components/Loadings/ProjectSkeletonThree";
 
 export default function ProjectsPage() {
   const searchParams = useSearchParams();
@@ -107,7 +110,6 @@ export default function ProjectsPage() {
             </button>
 
             <input
-            
               value={searchInput || ""}
               onChange={(e) => setSearchInput(e.target.value)} // Store input locally
               type="text"
@@ -116,9 +118,8 @@ export default function ProjectsPage() {
               className="flex-1 bg-transparent dark:placeholder:text-white/[0.3] border-none outline-none px-2 text-right placeholder:font-IRANSansXUltraLight font-IRANSansXRegular"
             />
           </div>
-
         </form>
-            {/* //!The filter header............. */}
+        {/* //!The filter header............. */}
         <div className="flex gap-4 items-center justify-between w-full bg-slate-200 dark:bg-slate-900 p-3 max-lg:p-[6px] rounded-xl text-[12px]  font-IRANSansXLight font-medium">
           <div className="w-full pl-2  max-lg:hidden">
             {loading || isPending ? (
@@ -129,10 +130,9 @@ export default function ProjectsPage() {
               </div>
             )}
           </div>
-         
 
           <div className="flex gap-4 items-center justify-end w-full">
-          <SlidersHorizontal className="cursor-pointer hover:scale-125 transition-all duration-300 lg:hidden" />
+            <SlidersHorizontal className="cursor-pointer hover:scale-125 transition-all duration-300 lg:hidden" />
 
             <button
               onClick={() => handleOrderChange("asc")}
@@ -148,8 +148,8 @@ export default function ProjectsPage() {
               onClick={() => handleOrderChange("desc")}
               className={`p-2 rounded transition-colors ${
                 order === "desc"
-                ? "text-teal-600 font-IRANSansXRegular font-bold"
-                : " text-black dark:text-white"
+                  ? "text-teal-600 font-IRANSansXRegular font-bold"
+                  : " text-black dark:text-white"
               }`}
             >
               جدید ترین
@@ -159,26 +159,36 @@ export default function ProjectsPage() {
               <p className=" font-IRANSansXMedium">:ترتیب</p>
               <Layers />
             </div>
-
           </div>
         </div>
       </div>
       <div className="w-full   lg:hidden text-[12px] mt-5 text-right  flex items-center justify-end pr-1">
-            {loading || isPending ? (
-              <div className="animate-pulse bg-slate-100 dark:bg-gray-700 h-5 w-[50px] rounded-md right-0"></div>
-            ) : (
-              <div className="font-IRANSansXLight">
-                {`نتیجه \u200E${getPersianNumbers(projects.length.toString())}`}
-              </div>
-            )}
+        {loading || isPending ? (
+          <div className="animate-pulse bg-slate-100 dark:bg-gray-700 h-5 w-[50px] rounded-md right-0"></div>
+        ) : (
+          <div className="font-IRANSansXLight">
+            {`نتیجه \u200E${getPersianNumbers(projects.length.toString())}`}
           </div>
+        )}
+      </div>
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 flex-1 mt-5">
-        {loading || isPending
-          ? [...Array(8)].map((_, i) => <ProjectSkeleton key={i} />)
-          : projects.map((project) => (
-              <ProjectCardItem project={project} key={project.id} />
-            ))}
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 flex-1 mt-5"
+        dir="rtl"
+      >
+        {loading || isPending ? (
+          <>
+            <ProjectSkeletonOne /> <ProjectSkeletonThree />
+            <ProjectSkeletonTwo />
+            <ProjectSkeletonTwo />
+            <ProjectSkeletonThree />
+            <ProjectSkeletonOne />{" "}
+          </>
+        ) : (
+          projects.map((project) => (
+            <ProjectCardItem project={project} key={project.id} />
+          ))
+        )}
       </div>
     </div>
   );

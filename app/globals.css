@@ -115,9 +115,6 @@
 .ham1.active .bottom {
   stroke-dashoffset: -138px;
 }
-
-
-
 @keyframes progress {
   0% { width: 0; }
   100% { width: 100%; }
