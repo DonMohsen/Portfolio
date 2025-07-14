@@ -19,6 +19,7 @@ import { useTheme } from "next-themes";
 import CompetencyCircle from "../CompetencyMeter";
 import { LinkPreview } from "../ui/link-preview";
 import { getProjectCompetencyColor } from "@/lib/getProjectCompetencyColor";
+import Card from "../tests/Card";
 
 const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
   const { scrollYProgress } = useScroll();
@@ -332,6 +333,14 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
           </div>
         </div>
       </div>
+      {/* <Card>
+        <Image className="w-full h-[66%] p-2 rounded-[28px]" alt="image" src='/image-placeholder.webp' width={1000} height={1000}/>
+
+        <div>
+
+          The Title
+        </div>
+      </Card> */}
     </div>
   );
 };

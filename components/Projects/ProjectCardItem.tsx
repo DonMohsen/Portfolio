@@ -37,7 +37,7 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
     <>
       <Link
         href={`/projects/${project.id}`}
-        className="relative  overflow-hidden group border-black/[0.1] dark:border-white/[0.4] border-[0.1px]  dark:bg-black text-white flex flex-col  rounded-[8px]   duration-300"
+        className="relative   overflow-hidden group border-black/[0.1] dark:border-white/[0.4] border-[0.1px]  dark:bg-black text-white flex flex-col  rounded-[8px]   duration-300"
       >
         {/* Image Container */}
         {project.image && (
@@ -57,13 +57,16 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
         )}
 
         {/* Content Section */}
-        <div className="p-2 mt-1  select-none flex flex-col gap items-end justify-end">
+        <div className="px-2 pb-2   select-none flex flex-col  items-end justify-end">
           <div className="w-full flex flex-row items-center justify-center">
-         
-            <div className="w-full flex items-center justify-start">
+           <div className="text-[18px] max-md:text-[16px] flex gap-1 items-center justify-start font-bold w-full text-right text-black dark:text-white">
+            <p className="w-fit ">
+
+              {project.name}
+            </p>
               <p
                 className={clsx(
-                  " rounded-[4px] w-fit p-[4px]   text-sm font-IRANSansXDemiBold flex-shrink",
+                  " rounded-[4px]  p-[4px]  max-md:text-[10px] text-[12px] font-IRANSansXDemiBold flex-shrink",
                   projectTypeConfig[project.projectType]?.bgColor,
                   projectTypeConfig[project.projectType]?.textColor
                 )}
@@ -71,7 +74,7 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
                 {projectTypeConfig[project.projectType]?.text}
               </p>
             </div>
-               <div className="w-full flex items-center justify-end ">
+               <div className="w-fit flex items-center justify-end ">
               <CompetencyCircle
                 unfilledColor="#edebed"
                 filledColor={getProjectCompetencyColor(project.competency)}
@@ -82,9 +85,7 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
             </div>
           </div>
           <div className="flex-row flex justify-between w-full items-center">
-            <div className="text-[18px] max-md:text-[16px] font-bold w-full text-right text-black dark:text-white">
-              {project.name}
-            </div>
+          
           </div>
 
           <div className="flex items-center justify-between mt-2 w-full">

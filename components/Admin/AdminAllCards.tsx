@@ -11,14 +11,7 @@ import { useState } from "react";
 import ConfirmModal, { ModalEnum } from "../Modals/confirm-modal";
 import useConfirmModal from "@/store/useConfirmModal";
 import { useToast } from "@/hooks/use-toast";
-// export type ProjectsWithTechsType = Projects & {
-//   techStack: {
-//     technology: {
-//       name: string,
-//       image:string
-//     };
-//   }[];
-// };
+
 const AdminAllCards = () => {
   const [formType, setFormType] = useState<"put" | "post" | "delete">("put");
   const [currentProject, setCurrentProject] = useState<ProjectsWithTechsType>();

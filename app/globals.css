@@ -117,7 +117,8 @@
 }
 @keyframes progress {
   0% { width: 0; }
-  100% { width: 100%; }
+  100% { width: 1
+  00%; }
 }
 
 .animate-progress {
@@ -143,6 +144,25 @@
 .animation-delay-400 {
   animation-delay: 0.4s;
 }
+
+.clipped-lb{
+  background: #d9e1ed;
+  width: 300px;
+  height: 400px;
+  clip-path: path("M 0,300 A 30,30 0,0,0 30,330 L 40,330 A 30,30 0,0,1  70,360 L 70,370 A 30,30 0,0,0 100,400 L 270,400 A 30,30 0,0,0 300,370 L 300,30 A 30,30 0,0,0 270,0 L 30,0 A 30,30 0,0,0 0,30 L 0,300 Z");
+  overflow: hidden;
+}
+
+/* .cart{
+  color: black;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  width: 100px;
+}
+ */
+
 /* Scrollbar styles */
 ::-webkit-scrollbar {   
   width: 8px; /* Thin scrollbar */
