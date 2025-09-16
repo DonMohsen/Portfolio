@@ -36,7 +36,6 @@ export default async function ProjectPage({ params,searchParams }: Props) {
 
   const project = await getProjectById(projectId);
   if (!project) return notFound();
-
   
   return (
     <div className="w-full h-full flex items-center justify-center ">
