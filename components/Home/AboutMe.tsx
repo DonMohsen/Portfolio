@@ -90,7 +90,7 @@ const AboutMe = () => {
           </div>
         </div>
         {/* //!شغل */}
-        <div className=" text-right p-7 rounded-md border col-span-2  border-black/[0.2] dark:border-white/[0.2] relative">
+        <div className=" text-right p-7 rounded-md border xl:col-span-2  border-black/[0.2] dark:border-white/[0.2] relative">
           <div className="flex gap-2 justify-start items-center">
             <div className="relative flex items-center justify-center rounded-full w-10 h-10 dark:bg-slate-700 bg-slate-300">
               <BriefcaseBusiness />{" "}
