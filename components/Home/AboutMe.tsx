@@ -19,7 +19,7 @@ const AboutMe = () => {
         className="grid grid-cols-2 max-xl:grid-cols-1 gap-4 my-10"
         style={{ direction: "rtl" }}
       >
-        <div className=" text-right p-7 rounded-md border border-black/[0.2] dark:border-white/[0.2] relative">
+        <div className=" text-right p-7 max-md:p-2 rounded-md border border-black/[0.2] dark:border-white/[0.2] relative">
           <div className="flex gap-2 justify-start items-center">
             <div className="relative flex items-center justify-center rounded-full w-10 h-10 dark:bg-slate-700 bg-slate-300">
               <User />
@@ -31,7 +31,7 @@ const AboutMe = () => {
             {/* //! Line of right of text */}
             <div className="absolute top-0 right-[1.25rem] w-[2px] bg-black/30 dark:bg-white/30 bottom-0"></div>
 
-            <p className="pr-[50px] pl-[8px] font-IRANSansXLight">
+            <p className="pr-[50px] max-md:pr-[40px]  font-IRANSansXLight">
               {/* لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
             استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در
             ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
@@ -44,7 +44,7 @@ const AboutMe = () => {
           </div>
         </div>
         {/* //!تحصیلات */}
-        <div className=" text-right p-7 rounded-md border border-black/[0.2] dark:border-white/[0.2] relative">
+        <div className=" text-right p-7 max-md:p-2 rounded-md border border-black/[0.2] dark:border-white/[0.2] relative">
           <div className="flex gap-2 justify-start items-center">
             <div className="relative flex items-center justify-center rounded-full w-10 h-10 dark:bg-slate-700 bg-slate-300">
               <GraduationCap />
@@ -56,7 +56,7 @@ const AboutMe = () => {
             {/* //! Line of right of text */}
             <div className="absolute top-0 right-[1.25rem] w-[2px] rounded-full bg-black/30 dark:bg-white/30 bottom-0"></div>
 
-            <div className="pr-[50px] pl-[8px] font-IRANSansXLight">
+            <div className="pr-[50px] max-md:pr-[40px]  font-IRANSansXLight">
               {/* لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
             استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در
             ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
@@ -90,7 +90,7 @@ const AboutMe = () => {
           </div>
         </div>
         {/* //!شغل */}
-        <div className=" text-right p-7 rounded-md border xl:col-span-2  border-black/[0.2] dark:border-white/[0.2] relative">
+        <div className=" text-right p-7 max-md:p-2 rounded-md border xl:col-span-2  border-black/[0.2] dark:border-white/[0.2] relative">
           <div className="flex gap-2 justify-start items-center">
             <div className="relative flex items-center justify-center rounded-full w-10 h-10 dark:bg-slate-700 bg-slate-300">
               <BriefcaseBusiness />{" "}
@@ -102,7 +102,7 @@ const AboutMe = () => {
             {/* //! Line of right of text */}
             <div className="absolute top-0 right-[1.25rem] w-[2px] bg-black/30 dark:bg-white/30 bottom-0"></div>
 
-            <div className="pr-[50px] pl-[8px] font-IRANSansXLight">
+            <div className="pr-[50px] max-md:pr-[40px]  font-IRANSansXLight">
               {/* لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
             استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در
             ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
@@ -113,7 +113,7 @@ const AboutMe = () => {
               <div className="flex items-start justify-center flex-col gap-1">
                 <p className="font-IRANSansXBold text-[16px] w-full flex items-center justify-between ">
                   کارآموز فرانت‌اند
-                  <span className="text-black/[0.5] dark:text-white/[0.5] font-IRANSansXLight">
+                  <span className="text-black/[0.5] dark:text-white/[0.5] font-IRANSansXLight max-md:text-[12px]">
                     1403/04-1403/06
                   </span>
                 </p>
@@ -134,7 +134,7 @@ const AboutMe = () => {
                  <div className="flex items-start justify-center flex-col gap-1 mt-5">
                 <p className="font-IRANSansXBold text-[16px] w-full flex items-center justify-between ">
                   برنامه‌نویس فرانت‌اند
-                  <span className="text-black/[0.5] dark:text-white/[0.5] font-IRANSansXLight">
+                  <span className="text-black/[0.5] dark:text-white/[0.5] font-IRANSansXLight max-md:text-[12px]">
                     1403/09-1404/04
                   </span>
                 </p>
