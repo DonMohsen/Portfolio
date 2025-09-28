@@ -9,11 +9,11 @@ const ResumeDownloadButton = () => {
         setDownloadLoading(true);
       
         // File URL (served from Next.js public folder)
-        const fileUrl = "/MohsenKhPersianCV.pdf"; // Relative to the public folder
+        const fileUrl = "/MohsenKh-PersianCV.pdf"; // Relative to the public folder
       
         const link = document.createElement("a");
         link.href = fileUrl;
-        link.download = "MohsenKhPersianCV.pdf";
+        link.download = "MohsenKh-PersianCV.pdf";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
