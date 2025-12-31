@@ -24,8 +24,8 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
           alt={`${project.name} image`}
           width={1919}
           height={975}
-          quality={100}
-          priority={true}
+          quality={75}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
           className="border-none w-full h-full object-cover transition-transform duration-500 "
         />
         
@@ -49,6 +49,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
               className="w-10 h-10"
               alt="liveLink" 
               src="/icons/web.png" 
+              sizes="40px"
             />
           </Link>
         </div>
@@ -82,9 +83,12 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
               key={tech.technology.id}
               className="w-10 h-10 bg-white dark:bg-neutral-900 border border-black/[.2] dark:border-neutral-800 rounded-full flex items-center justify-center shadow-sm"
             >
-              <img
+              <Image
                 src={tech.technology.imageUrl}
                 alt={`${tech.technology.name} image`}
+                width={24}
+                height={24}
+                sizes="24px"
                 className="w-6 h-6 object-contain"
               />
             </div>

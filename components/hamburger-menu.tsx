@@ -1,5 +1,4 @@
 "use client";
-import "@/app/globals.css";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
 import clsx from "clsx";
 const HamburgerMenu = () => {

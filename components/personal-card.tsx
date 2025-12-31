@@ -17,8 +17,9 @@ const PersonalCard = () => {
           className="rounded-full absolute bottom-[-25px] left-1/2 transform -translate-x-1/2 w-[100px] h-[100px]"
           alt="Profile-pic"
           src="/image-placeholder.webp"
-          width={200}
-          height={200}
+          width={100}
+          height={100}
+          sizes="100px"
         />
       </div>
       <div className="w-full flex items-center justify-center flex-col mt-10 px-[5%]">

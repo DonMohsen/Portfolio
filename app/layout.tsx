@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 // import { Signika_Negative } from "next/font/google";
 import "./globals.css";
 import { navItems } from "@/public/data";
@@ -9,6 +10,17 @@ import { Toaster } from "@/components/ui/toaster";
 import Head from "next/head";
 import Script from "next/script";
 import NextLocalizationProvider from "./providers/next-localization-provider";
+
+const iranSans = localFont({
+  src: [
+    { path: "../public/fonts/IRANSansXLight.ttf", weight: "300", style: "normal" },
+    { path: "../public/fonts/IRANSansXRegular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/IRANSansXBold.ttf", weight: "700", style: "normal" },
+    { path: "../public/fonts/IRANSansXBlack.ttf", weight: "900", style: "normal" },
+  ],
+  display: "swap",
+  variable: "--font-iran",
+});
 
 export const metadata: Metadata = {
   title: "محسن خجسته نژاد",
@@ -26,7 +38,7 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="fa">
       {/* <NextLocalizationProvider> */}
 
-      <body className="dark:bg-black ">
+      <body className={`${iranSans.variable} dark:bg-black`}>
       <Head>
 
     <title>محسن خجسته نژاد</title>
@@ -63,7 +75,9 @@ export default function RootLayout({
 
             <Navbar/>
           </div>
-          {children}
+          <main>
+            {children}
+          </main>
           <Toaster/>
         </ThemeProvider>
     

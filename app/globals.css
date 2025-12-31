@@ -2,76 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'IRANSansXBlack';
-  src: url('/fonts/IRANSansXBlack.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
+body {
+  font-family: var(--font-iran), Arial, sans-serif;
 }
 
-@font-face {
-  font-family: 'IRANSansXExtraBold';
-  src: url('/fonts/IRANSansXExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansXBold';
-  src: url('/fonts/IRANSansXBold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansXDemiBold';
-  src: url('/fonts/IRANSansXDemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansXMedium';
-  src: url('/fonts/IRANSansXMedium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansXRegular';
-  src: url('/fonts/IRANSansXRegular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansXLight';
-  src: url('/fonts/IRANSansXLight.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansXUltraLight';
-  src: url('/fonts/IRANSansXUltraLight.ttf') format('truetype');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansXThin';
-  src: url('/fonts/IRANSansXThin.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
+@layer utilities {
+  .font-IRANSansXBlack {
+    font-family: var(--font-iran), Arial, sans-serif;
+    font-weight: 900;
+  }
+  .font-IRANSansXExtraBold {
+    font-family: var(--font-iran), Arial, sans-serif;
+    font-weight: 800;
+  }
+  .font-IRANSansXBold {
+    font-family: var(--font-iran), Arial, sans-serif;
+    font-weight: 700;
+  }
+  .font-IRANSansXDemiBold {
+    font-family: var(--font-iran), Arial, sans-serif;
+    font-weight: 600;
+  }
+  .font-IRANSansXMedium {
+    font-family: var(--font-iran), Arial, sans-serif;
+    font-weight: 500;
+  }
+  .font-IRANSansXRegular {
+    font-family: var(--font-iran), Arial, sans-serif;
+    font-weight: 400;
+  }
+  .font-IRANSansXLight,
+  .font-IRANSansXUltraLight,
+  .font-IRANSansXThin {
+    font-family: var(--font-iran), Arial, sans-serif;
+    font-weight: 300;
+  }
 }
 
 .ham {
@@ -92,7 +57,6 @@
 /* Default stroke for light theme */
 .line {
   fill: none;
-  transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
   stroke: #000000; /* Default stroke for light theme */
   stroke-width: 3.5;
   stroke-linecap: round;

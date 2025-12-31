@@ -1,10 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
 import * as React from "react";
 import { useTheme } from "next-themes";
-
-// Dynamically import DarkModeToggle without SSR
-const DarkModeToggle = dynamic(() => import("react-dark-mode-toggle"), { ssr: false });
 
 function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -16,18 +12,23 @@ function ThemeToggle() {
 
   if (!mounted) return null;
 
+  const isDark = resolvedTheme === "dark";
   const handleClick = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    setTheme(isDark ? "light" : "dark");
   };
 
   return (
-    <div aria-hidden="false">
-    <DarkModeToggle
-      onChange={handleClick}
-      checked={resolvedTheme === "dark"}
-      size={60}
-    />
-  </div>
+    <button
+      type="button"
+      aria-label="Toggle theme"
+      aria-pressed={isDark}
+      onClick={handleClick}
+      className={`relative inline-flex h-[28px] w-[60px] items-center rounded-full border border-black/20 bg-white transition-colors dark:border-white/20 dark:bg-neutral-900`}
+    >
+      <span
+        className={`inline-block h-5 w-5 transform rounded-full bg-black/70 transition-transform dark:bg-white/80 ${isDark ? "translate-x-[34px]" : "translate-x-[6px]"}`}
+      />
+    </button>
   );
 }
 

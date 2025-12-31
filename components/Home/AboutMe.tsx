@@ -118,11 +118,12 @@ const AboutMe = () => {
                   </span>
                 </p>
                 <p className="text-[14px] font-IRANSansXLight">هلدینگ های‌وب</p>
-                <li className="text-[14px] pt-2 font-IRANSansXMedium">
+                <ul className="list-none">
+                  <li className="text-[14px] pt-2 font-IRANSansXMedium">
                   طراحی و پیاده سازی رابط های کاربری مقیاس‌پذیر و کاربرپسند با
                   استفاده از React16 و Redux{" "}
                 </li>
-                <li className="text-[14px] pt-2 font-IRANSansXMedium">
+                  <li className="text-[14px] pt-2 font-IRANSansXMedium">
                   یادگیری سریع ابزارهای جدید مانند SCSS و Jest و هم‌راستا شدن با
                   جریان کاری تیم و نیازهای پروژه.
                 </li>
@@ -130,6 +131,7 @@ const AboutMe = () => {
                   
                 همکاری نزدیک با طراحان و توسعه‌دهندگان بک‌اند برای بهبود زمان‌بندی و کیفیت تحویل پروژه‌ها
                 </li>
+                </ul>
               </div>
                  <div className="flex items-start justify-center flex-col gap-1 mt-5">
                 <p className="font-IRANSansXBold text-[16px] w-full flex items-center justify-between ">
@@ -139,7 +141,8 @@ const AboutMe = () => {
                   </span>
                 </p>
                 <p className="text-[14px] font-IRANSansXLight">شرکت تات بیکران </p>
-                <li className="text-[14px] pt-2 font-IRANSansXMedium">
+                <ul className="list-none">
+                  <li className="text-[14px] pt-2 font-IRANSansXMedium">
                 توسعه و نگهداری کامپوننت‌های React و یکپارچه‌سازی آن‌ها با وردپرس از طریق WP REST API (wp-json).
                 </li>
                 <li className="text-[14px] pt-2 font-IRANSansXMedium">
@@ -148,6 +151,7 @@ const AboutMe = () => {
                 <li className="text-[14px] pt-2 font-IRANSansXMedium">
                  یادگیری سریع مهارت‌های جدید مانند Photoshop و کسب دیدگاه تجاری و فروش در توسعه یک اپلیکیشن وب.
                 </li>
+                </ul>
               </div>
             </div>
           </div>

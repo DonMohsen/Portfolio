@@ -46,7 +46,6 @@ const CompetencyCircle: React.FC<CompetencyCircleProps> = ({
         strokeDashoffset={circumference - progress}
         strokeLinecap="round"
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        className="transition-all duration-500"
       />
 
       {/* Percentage Text */}

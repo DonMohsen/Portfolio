@@ -47,8 +47,8 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
               alt={`${project.name} image`}
               width={1280}
               height={720}
-              quality={100}
-              priority={true}
+              quality={75}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="border-none x w-full h-full object-cover transition-transform duration-500 rounded-[8px] "
             />
 
@@ -96,9 +96,12 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
                   key={tech.technology.id}
                   className="w-8 h-8 bg-white dark:bg-neutral-900 border border-black/[.2] dark:border-neutral-800 rounded-full flex items-center justify-center "
                 >
-                  <img
+                  <Image
                     src={tech.technology.imageUrl}
                     alt={`${tech.technology.name} image`}
+                    width={24}
+                    height={24}
+                    sizes="24px"
                     className="w-6 h-6 object-contain "
                   />
                 </div>
