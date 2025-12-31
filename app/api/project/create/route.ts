@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     });
 
     // ✅ Revalidate cache so new projects are visible immediately
-    revalidateTag("project");
+    revalidateTag("project", {});
 
     // Return the created project with status 201
     return NextResponse.json(newProject, { status: 201 });

@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     const newTechnology: Technology = await prisma.technology.create({
       data: body,
     });
-    revalidateTag("project");
+    revalidateTag("project", {});
     return NextResponse.json(newTechnology, { status: 201 });
     
   } catch (error) {

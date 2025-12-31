@@ -99,7 +99,7 @@ export async function PUT(
       },
       include: { techStack: { include: { technology: true } } }, 
     });
-    revalidateTag("project");
+    revalidateTag("project", {});
 
     return NextResponse.json(updatedProject, { status: 200 });
   } catch (error: any) {
@@ -131,7 +131,7 @@ export async function PUT(
           id: numberId,
         },
       });
-      revalidateTag("project");
+      revalidateTag("project", {});
   
       return NextResponse.json({ message: `Project with ID ${numberId} deleted successfully` ,deleted}, { status: 200 });
     } catch (error) {
