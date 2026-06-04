@@ -13,7 +13,7 @@ const getAllProjectsCount = unstable_cache(
       };
     } catch (error) {
       console.error("Error counting projects and technologies:", error);
-      throw new Error("Failed to fetch counts");
+      return {projectCount: 0, technologyCount: 0};
     }
   },
   ["home-projects-tech-counts"],

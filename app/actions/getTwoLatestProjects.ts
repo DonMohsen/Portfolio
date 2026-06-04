@@ -23,7 +23,7 @@ export const getTwoLatestProjects = unstable_cache(
       return projects;
     } catch (error) {
       console.error("Error fetching projects:", error);
-      throw new Error("Failed to fetch projects");
+      return [];
     }
   },
   ["home-two-latest-projects"],
