@@ -2,24 +2,26 @@
 
 import { Square, SquareCheckBig } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { startTransition } from "react";
+import { useLocale } from "next-intl";
 
 const ProjectsFilterNav = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const locale = useLocale();
+  const isFa = locale === "fa";
 
   const handleFilterClick = (type: string) => {
     const params = new URLSearchParams(searchParams.toString());
     searchParams.get("type") === type
       ? params.delete("type", type)
       : params.set("type", type);
-    router.replace(`/projects?${params.toString()}`);
+    router.replace(`/${locale}/projects?${params.toString()}`);
   };
 
   return (
     <div className="w-full p-4">
       <div className="rounded-lg border border-black/[0.2] dark:border-white/[0.2] p-4 flex flex-col font-IRANSansXMedium">
-        <p className="font-IRANSansXBold text-right py-5">فیلتر ها</p>
+        <p className="font-IRANSansXBold text-right py-5">{isFa ? "فیلتر ها" : "Filters"}</p>
 
         {/* Practice Checkbox */}
         <label className="flex items-center space-x-2 cursor-pointer justify-end">
@@ -41,7 +43,7 @@ const ProjectsFilterNav = () => {
               </span>
             )}
           </div>
-          <span className="">تمرینی</span>
+          <span className="">{isFa ? "تمرینی" : "Practice"}</span>
         </label>
 
         {/* Copy Checkbox */}
@@ -63,7 +65,7 @@ const ProjectsFilterNav = () => {
               </span>
             )}
           </div>
-          <span className="">کپی شده</span>
+          <span className="">{isFa ? "کپی شده" : "Copied"}</span>
         </label>
       </div>
     </div>

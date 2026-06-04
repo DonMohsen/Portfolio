@@ -4,12 +4,14 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 const ProjectsScoutButton = () => {
   const router = useRouter(); 
+  const locale = useLocale();
 
   const handleClick = () => {
-    router.replace("/projects"); 
+    router.replace(`/${locale}/projects`); 
   };
   return (
     <Button
@@ -18,7 +20,7 @@ const ProjectsScoutButton = () => {
     >
       <div className="flex items-center justify-center gap-2">
         <ArrowLeft className="md:group-hover:-translate-x-2 -translate-x-1 -translate-y-[1px]  transition-transform duration-300 " />
-        <p className="font-IRANSansXDemiBold">پروژه ها</p>
+        <p className="font-IRANSansXDemiBold">{locale === "fa" ? "پروژه ها" : "Projects"}</p>
       </div>
     </Button>
   );

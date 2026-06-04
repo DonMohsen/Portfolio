@@ -1,74 +1,78 @@
-import { PiNewspaperClipping, PiNewspaperClippingFill } from "react-icons/pi";
 import { webRoutesType } from "../Types/webRoutesTypes";
-import { IoHome, IoHomeOutline } from "react-icons/io5";
-import { BsTelephone, BsTelephoneFill } from "react-icons/bs";
-import { SlSocialLinkedin } from "react-icons/sl";
-import { GrLinkedinOption } from "react-icons/gr";
-import { MdEmail, MdOutlineMail } from "react-icons/md";
 import { useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { CgWebsite } from "react-icons/cg";
+import { useLocale } from "next-intl";
+import {
+  House,
+  Newspaper,
+  Globe,
+  Linkedin,
+  Mail
+} from "lucide-react";
 
 const useWebRoutes = () => {
     const pathName = usePathname();
+    const locale = useLocale();
+    const isFa = locale === "fa";
+    const withLocale = (path: string) => `/${locale}${path}`;
 
  const webRoutes = useMemo<webRoutesType[]>(
     () => [
     {
-        text:"خانه",
-        route:"/",
-        emptyIcon:IoHomeOutline,
-        filledIcon:IoHome,
-        isActive:pathName==="/",
+        text:isFa ? "خانه" : "Home",
+        route:withLocale("/"),
+        emptyIcon:House,
+        filledIcon:House,
+        isActive:pathName===withLocale("/"),
         id:1,
         isAChild:false
 
     },
     {
-        text:"پروژه ها",
-        route:"/projects",
-        emptyIcon:PiNewspaperClipping,
-        filledIcon:PiNewspaperClippingFill,
-        isActive:pathName.includes("/projects"),
+        text:isFa ? "پروژه ها" : "Projects",
+        route:withLocale("/projects"),
+        emptyIcon:Newspaper,
+        filledIcon:Newspaper,
+        isActive:pathName.includes(withLocale("/projects")),
         id:2,
         isAChild:false,
         routesChildren:[
             {
-                text:"پروژه های کپی شده",
-                route:"/projects?type=Copy",
+                text:isFa ? "پروژه های کپی شده" : "Copied Projects",
+                route:`${withLocale("/projects")}?type=Copy`,
                 filteredType:"Copy",
-                emptyIcon:PiNewspaperClipping,
-                filledIcon:PiNewspaperClippingFill,
+                emptyIcon:Newspaper,
+                filledIcon:Newspaper,
             //    isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Copy'),           
                id:3,
                 isAChild:true
             },
             {
-                text:"پروژه های تمرینی",
-                route:"/projects?type=Practice",
+                text:isFa ? "پروژه های تمرینی" : "Practice Projects",
+                route:`${withLocale("/projects")}?type=Practice`,
                 filteredType:"Practice",
-                emptyIcon:PiNewspaperClipping,
-                filledIcon:PiNewspaperClippingFill,
+                emptyIcon:Newspaper,
+                filledIcon:Newspaper,
                 // isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Practice'),           
                 id:4,
                 isAChild:true
             },
             {
-                text:"پروژه های فورک شده",
-                route:"/projects?type=Forked",
+                text:isFa ? "پروژه های فورک شده" : "Forked Projects",
+                route:`${withLocale("/projects")}?type=Forked`,
                 filteredType:"Forked",
-                emptyIcon:PiNewspaperClipping,
-                filledIcon:PiNewspaperClippingFill,
+                emptyIcon:Newspaper,
+                filledIcon:Newspaper,
             //    isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Forked'),           
                id:11,
                 isAChild:true
             },  
              {
-                text:"پروژه های واقعی",
-                route:"/projects?type=Real",
+                text:isFa ? "پروژه های واقعی" : "Production Projects",
+                route:`${withLocale("/projects")}?type=Real`,
                 filteredType:"Real",
-                emptyIcon:PiNewspaperClipping,
-                filledIcon:PiNewspaperClippingFill,
+                emptyIcon:Newspaper,
+                filledIcon:Newspaper,
             //    isActive: `${pathName}?${searchParams.toString()}`.includes('/projects?type=Real'),           
                id:12,
                 isAChild:true
@@ -87,40 +91,40 @@ const useWebRoutes = () => {
         ]
     },
     {
-        text:"بلاگ",
-        route:"/blogs",
-        emptyIcon:CgWebsite ,
-        filledIcon:CgWebsite,
-        isActive:pathName.includes('/blogs'),
+        text:isFa ? "بلاگ" : "Blog",
+        route:withLocale("/blogs"),
+        emptyIcon:Globe,
+        filledIcon:Globe,
+        isActive:pathName.includes(withLocale('/blogs')),
         id:5,
         isAChild:false,
         routesChildren:[
             {
-                text:"بلاگ های شخصی",
-                route:"/blogs",
-                emptyIcon:SlSocialLinkedin,
-                filledIcon:GrLinkedinOption,
+                text:isFa ? "بلاگ های شخصی" : "Personal Blogs",
+                route:withLocale("/blogs"),
+                emptyIcon:Linkedin,
+                filledIcon:Linkedin,
                 isActive:pathName==="/blogs?type=Personal",
                 id:6,
                 isAChild:true
                
             },
             {
-                text:"بلاگ های تکنولوژی",
+                text:isFa ? "بلاگ های تکنولوژی" : "Tech Blogs",
 
-                route:"/blogs?type=Tech",
-                emptyIcon:MdOutlineMail,
-                filledIcon:MdEmail ,
+                route:`${withLocale("/blogs")}?type=Tech`,
+                emptyIcon:Mail,
+                filledIcon:Mail,
                 isActive:pathName==="/blogs?type=Tech",
                 id:9,
                 isAChild:true
             },
             {
-                text:"بلاگ های متفرقه",
+                text:isFa ? "بلاگ های متفرقه" : "Other Blogs",
 
-                route:"/blogs?type=Others",
-                emptyIcon:MdOutlineMail,
-                filledIcon:MdEmail,
+                route:`${withLocale("/blogs")}?type=Others`,
+                emptyIcon:Mail,
+                filledIcon:Mail,
                 isActive:pathName==="/blogs?type=Others",
 
                 id:10,
@@ -128,7 +132,7 @@ const useWebRoutes = () => {
             }
         ]
     }
-],[pathName])
+],[isFa, pathName, locale])
 return webRoutes
 }
 export default useWebRoutes;

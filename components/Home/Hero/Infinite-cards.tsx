@@ -1,6 +1,5 @@
 "use client";
 import { AllTechstackType } from "@/app/Types/AllTechstackTypes";
-import NextjsIcon from "../public/icons8-nextjs-144.png"
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -12,12 +11,14 @@ export const InfiniteMovingCards = ({
   speed = "fast",
   pauseOnHover = false,
   className,
+  compact = false
 }: {
   items: AllTechstackType[]
   direction?: "left" | "right";
-  speed?: "fast" | "normal" | "slow";
+  speed?: "fast" | "normal" | "slow" | "xslow";
   pauseOnHover?: boolean;
   className?: string;
+  compact?: boolean;
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
@@ -64,8 +65,10 @@ export const InfiniteMovingCards = ({
         containerRef.current.style.setProperty("--animation-duration", "25s");
       } else if (speed === "normal") {
         containerRef.current.style.setProperty("--animation-duration", "40s");
-      } else {
+      } else if (speed === "slow") {
         containerRef.current.style.setProperty("--animation-duration", "80s");
+      } else {
+        containerRef.current.style.setProperty("--animation-duration", "120s");
       }
     }
   };
@@ -74,7 +77,7 @@ export const InfiniteMovingCards = ({
       ref={containerRef}
       className={cn(
         "scroller bg-transparent z-[51] relative   max-w-7xl overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
-        
+        className
       )}
     >
       <ul
@@ -91,19 +94,24 @@ export const InfiniteMovingCards = ({
 
             return (
               <li
-                 className="w-[250px] bg-slate-100 border-none max-md:text-xs  relative rounded-2xl border dark:bg-gradient-to-b from-slate-800 to-slate-600   flex-shrink-0  flex items-center justify-center max-md:w-[150px] "
+                 className={cn(
+                  "bg-slate-100 border-none relative rounded-2xl border dark:bg-gradient-to-b from-slate-800 to-slate-600 flex-shrink-0 flex items-center justify-center",
+                  compact
+                    ? "w-[170px] max-md:w-[130px]"
+                    : "w-[250px] max-md:w-[150px]"
+                 )}
             // style={{
             //   background:
             //     "linear-gradient(180deg, var(--slate-600), var(--slate-900)",
             // }}
             key={item.id}
           >
-            <div className="flex flex-col items-center  justify-center py-5 max-md:py-2">
+            <div className={cn("flex flex-col items-center justify-center", compact ? "py-3 max-md:py-2" : "py-5 max-md:py-2")}>
               
                   <Image 
-                  className="w-12 h-12 max-md:w-8 max-md:h-8"
+                  className={cn(compact ? "w-8 h-8 max-md:w-6 max-md:h-6" : "w-12 h-12 max-md:w-8 max-md:h-8")}
                   alt="nextjs-icon" src={item.src} width={70} height={70}/>
-                    <p className="text-black">
+                    <p className={cn("text-black", compact ? "text-xs mt-1" : "text-base")}>
                         {item.name}
                     </p>
              

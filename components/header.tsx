@@ -10,38 +10,40 @@ import { Button } from "@/components/ui/button";
 import useShowHeader from "@/store/useShowHeader";
 import useWebRoutes from "@/app/utils/useWebRoutes";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
-import useHamburgerMenu from "@/store/useHamburgerMenu";
+import LanguageSwitcher from "./language-switcher";
 
 export const Header = () => {
   const webRoutes = useWebRoutes();
-  const { scrollYProgress } = useScroll();
+  const { scrollY } = useScroll();
   const resumeToggle = useShowHeader((state) => state.toggleShowHeaderState);
-  const hamburgerMenuState = useHamburgerMenu((state) => state.hamburgerMenuState);
 
-  const [visible, setVisible] = useState(true);
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0);
+  const [isDark, setIsDark] = useState(false);
   const [hoveredRouteItem, setHoveredRouteItem] = useState<webRoutesType | null>(null);
-
-  // Handle scroll events to show/hide header
-  useMotionValueEvent(scrollYProgress, "change", (current) => {
-    if (typeof current === "number") {
-      const direction = current - scrollYProgress.getPrevious()!;
-
-      if (scrollYProgress.get() < 0.05 && !hamburgerMenuState) {
-        setVisible(true);
-      } else {
-        if (direction < 0 && !hamburgerMenuState) {
-          setVisible(true);
-        } else {
-          !hamburgerMenuState && setVisible(false);
-        }
-      }
-    }
-  });
 
   // Toggle resume header on mount
   useEffect(() => {
     resumeToggle();
   }, [resumeToggle]);
+
+  useMotionValueEvent(scrollY, "change", (current) => {
+    const value = typeof current === "number" ? current : 0;
+    const nextOpacity = Math.min(1, Math.max(0, value / 120));
+    setBackgroundOpacity(nextOpacity);
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const updateTheme = () => {
+      setIsDark(root.classList.contains("dark"));
+    };
+
+    updateTheme();
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
 
  
   return (
@@ -62,11 +64,21 @@ export const Header = () => {
       <AnimatePresence mode="wait">
         <motion.div
           initial={{ opacity: 1, y: -100 }}
-          animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.2 }}
           className={clsx(
-            "dark:bg-[#160d1c] bg-white border-b  border-black/[0.1] dark:border-white/[0.1] h-[60px] text-[#dddada]  flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3 font-extralight items-center justify-between space-x-10"
+            "h-[60px] text-[#dddada] flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3 font-extralight items-center justify-between space-x-10 transition-colors duration-300"
           )}
+          style={{
+            backgroundColor: isDark
+              ? `rgba(22, 13, 28, ${backgroundOpacity})`
+              : `rgba(255, 255, 255, ${backgroundOpacity})`,
+            borderBottom: `1px solid ${
+              isDark
+                ? `rgba(255, 255, 255, ${backgroundOpacity * 0.1})`
+                : `rgba(0, 0, 0, ${backgroundOpacity * 0.1})`
+            }`
+          }}
         >
           {/* Desktop Navigation */}
           <div className="flex items-center justify-center w-full relative gap-[3%] max-md:hidden">
@@ -120,17 +132,17 @@ export const Header = () => {
              
               ))}
             </AnimatePresence>
+            <LanguageSwitcher />
             <div aria-hidden="false">
-
-            <ThemeToggle />
+              <ThemeToggle />
             </div>
           </div>
 
           {/* Mobile Navigation */}
           <div className="z-50 text-white w-full md:hidden flex items-center gap-3 justify-end -translate-y-1 translate-x-5 ">
+            <LanguageSwitcher />
             <div aria-hidden="false">
-
-            <ThemeToggle />
+              <ThemeToggle />
             </div>
             <HamburgerMenu />
           </div>

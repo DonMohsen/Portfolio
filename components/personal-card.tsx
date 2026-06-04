@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 
@@ -7,8 +9,12 @@ import ProjectsScoutButton from "./projects-scout-button";
 import { InfiniteScrollingForCard } from "./Home/Hero/infinite-scrolling-for-card";
 import GitHubWeekGrid from "./Home/GitHubContributions";
 import { IoLocationOutline } from "react-icons/io5";
+import { useLocale } from "next-intl";
 
 const PersonalCard = () => {
+  const locale = useLocale();
+  const isFa = locale === "fa";
+
   return (
     <div className="relative h-[100vh] min-h-[700px] ">
       {/* //!Top SECTION */}
@@ -24,17 +30,22 @@ const PersonalCard = () => {
       </div>
       <div className="w-full flex items-center justify-center flex-col mt-10 px-[5%]">
         <h1 className="text-center font-IRANSansXBlack text-xl">
-          {/* لورم اخیرسوم */}
-          محسن خجسته نژاد
+          {isFa ? "محسن خجسته نژاد" : "Mohsen Khojasteh Nezhad"}
         </h1>
         <h2 className="text-center mt-2 font-IRANSansXRegular">
-          {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, qui. */}
-          برنامه نویس اپلیکیشن های تحت وب <br /> متمرکز روی فرانت اند
+          {isFa ? (
+            <>
+              برنامه نویس اپلیکیشن های تحت وب <br /> متمرکز روی فرانت اند
+            </>
+          ) : (
+            <>
+              Web application developer <br /> focused on front-end engineering
+            </>
+          )}
         </h2>
         <h3 className="mt-2 flex items-center justify-center gap-2 text-center">
           <p className="font-IRANSansXLight">
-            {/* Lorem ipsum dolor sit. */}
-            تهران منطقه۹
+            {isFa ? "تهران منطقه۹" : "Tehran, District 9"}
           </p>
           <IoLocationOutline />
         </h3>

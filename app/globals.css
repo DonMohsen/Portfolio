@@ -3,40 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: var(--font-iran), Arial, sans-serif;
-}
-
-@layer utilities {
-  .font-IRANSansXBlack {
-    font-family: var(--font-iran), Arial, sans-serif;
-    font-weight: 900;
-  }
-  .font-IRANSansXExtraBold {
-    font-family: var(--font-iran), Arial, sans-serif;
-    font-weight: 800;
-  }
-  .font-IRANSansXBold {
-    font-family: var(--font-iran), Arial, sans-serif;
-    font-weight: 700;
-  }
-  .font-IRANSansXDemiBold {
-    font-family: var(--font-iran), Arial, sans-serif;
-    font-weight: 600;
-  }
-  .font-IRANSansXMedium {
-    font-family: var(--font-iran), Arial, sans-serif;
-    font-weight: 500;
-  }
-  .font-IRANSansXRegular {
-    font-family: var(--font-iran), Arial, sans-serif;
-    font-weight: 400;
-  }
-  .font-IRANSansXLight,
-  .font-IRANSansXUltraLight,
-  .font-IRANSansXThin {
-    font-family: var(--font-iran), Arial, sans-serif;
-    font-weight: 300;
-  }
+  font-family: var(--font-iransansx), Arial, sans-serif;
 }
 
 .ham {
@@ -57,6 +24,7 @@ body {
 /* Default stroke for light theme */
 .line {
   fill: none;
+  transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
   stroke: #000000; /* Default stroke for light theme */
   stroke-width: 3.5;
   stroke-linecap: round;
@@ -107,6 +75,16 @@ body {
 
 .animation-delay-400 {
   animation-delay: 0.4s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .clipped-lb{

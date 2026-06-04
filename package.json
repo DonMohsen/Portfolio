@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "scrape:site": "node scripts/scrape-site.mjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {

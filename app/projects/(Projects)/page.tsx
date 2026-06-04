@@ -21,10 +21,12 @@ import ProjectSkeleton from "@/components/Loadings/ProjectSkeletonOne";
 import ProjectSkeletonOne from "@/components/Loadings/ProjectSkeletonOne";
 import ProjectSkeletonTwo from "@/components/Loadings/ProjectSkeletonTwo";
 import ProjectSkeletonThree from "@/components/Loadings/ProjectSkeletonThree";
+import { useLocale } from "next-intl";
 
 export default function ProjectsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const locale = useLocale();
 
   // Get filters from URL
   const order = searchParams.get("order") || "desc";
@@ -70,7 +72,7 @@ export default function ProjectsPage() {
       if (value) params.set(key, value);
       else params.delete(key);
     });
-    router.replace(`/projects?${params.toString()}`);
+    router.replace(`/${locale}/projects?${params.toString()}`);
   };
 
   return (

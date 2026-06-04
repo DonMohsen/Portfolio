@@ -1,10 +1,10 @@
 import { ProjectTypes } from "@prisma/client"
-import { IconType } from "react-icons"
+import { LucideIcon } from "lucide-react"
 
 export type webRoutesType={
     text:string,
-    filledIcon:IconType,
-    emptyIcon:IconType
+    filledIcon:LucideIcon,
+    emptyIcon:LucideIcon
     isActive?:boolean,
     route:string,
     routesChildren?:webRoutesType[],

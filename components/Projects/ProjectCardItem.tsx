@@ -8,35 +8,38 @@ import { Link as LucideLink } from "lucide-react";
 import { getPersianNumbers } from "@/utils/numbers";
 import CompetencyCircle from "../CompetencyMeter";
 import { getProjectCompetencyColor } from "@/lib/getProjectCompetencyColor";
+import { useLocale } from "next-intl";
 
 const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
+  const locale = useLocale();
+  const isFa = locale === "fa";
   const projectTypeConfig = {
     Copy: {
-      text: "کپی شده", // Custom display text
+      text: isFa ? "کپی شده" : "Copied",
       bgColor: "bg-green-300",
       textColor: "text-green-900",
     },
     Forked: {
-      text: "فورک شده",
+      text: isFa ? "فورک شده" : "Forked",
       bgColor: "bg-purple-300",
       textColor: "text-purple-900",
     },
     Practice: {
-      text: "تمرینی", // Custom text instead of "Practice"
+      text: isFa ? "تمرینی" : "Practice",
       bgColor: "bg-blue-300",
       textColor: "text-blue-900",
     },
     // Default fallback (optional)
     Real: {
-      text: "واقعی",
-      bgColor: "bg-red-500/90",
-      textColor: "text-red-100",
+      text: isFa ? "واقعی" : "Production",
+      bgColor: "bg-red-700",
+      textColor: "text-red-50",
     },
   };
   return (
     <>
       <Link
-        href={`/projects/${project.id}`}
+        href={`/${locale}/projects/${project.id}`}
         className="relative   overflow-hidden group border-black/[0.1] dark:border-white/[0.4] border-[0.1px]  dark:bg-black text-white flex flex-col  rounded-[8px]   duration-300"
       >
         {/* Image Container */}
@@ -110,9 +113,9 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
                 <div className=" w-8 h-8 bg-white pr-1  dark:bg-neutral-900 border border-black/[.2] font-IRANSansXDemiBold dark:border-neutral-800 rounded-full flex items-center justify-center text-sm font-medium text-black/[0.7] dark:text-neutral-400">
                   <p className="translate-y-[1px] font-IRANSansXExtraBold">
                     +
-                    {getPersianNumbers(
-                      (project.techStack.length - 3).toString()
-                    )}
+                    {isFa
+                      ? getPersianNumbers((project.techStack.length - 3).toString())
+                      : project.techStack.length - 3}
                     
                   </p>
                 </div>

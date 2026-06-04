@@ -20,15 +20,15 @@ export default {
   theme: {
   	extend: {
 		fontFamily: {
-			IRANSansXBlack: ['IRANSansXBlack', 'Arial', 'sans-serif'],
-			IRANSansXExtraBold: ['IRANSansXExtraBold', 'Arial', 'sans-serif'],
-			IRANSansXBold: ['IRANSansXBold', 'Arial', 'sans-serif'],
-			IRANSansXDemiBold: ['IRANSansXDemiBold', 'Arial', 'sans-serif'],
-			IRANSansXMedium: ['IRANSansXMedium', 'Arial', 'sans-serif'],
-			IRANSansXRegular: ['IRANSansXRegular', 'Arial', 'sans-serif'],
-			IRANSansXLight: ['IRANSansXLight', 'Arial', 'sans-serif'],
-			IRANSansXUltraLight: ['IRANSansXUltraLight', 'Arial', 'sans-serif'],
-			IRANSansXThin: ['IRANSansXThin', 'Arial', 'sans-serif'],
+			IRANSansXBlack: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			IRANSansXExtraBold: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			IRANSansXBold: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			IRANSansXDemiBold: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			IRANSansXMedium: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			IRANSansXRegular: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			IRANSansXLight: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			IRANSansXUltraLight: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			IRANSansXThin: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
 		  },
 		zIndex: {
 			'max': '99999999999', // Add a custom max z-index value

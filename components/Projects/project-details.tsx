@@ -20,6 +20,7 @@ import CompetencyCircle from "../CompetencyMeter";
 import { LinkPreview } from "../ui/link-preview";
 import { getProjectCompetencyColor } from "@/lib/getProjectCompetencyColor";
 import Card from "../tests/Card";
+import { useLocale } from "next-intl";
 
 const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
   const { scrollYProgress } = useScroll();
@@ -27,6 +28,8 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { theme } = useTheme();
+  const locale = useLocale();
+  const isFa = locale === "fa";
   const isDarkMode = theme === "dark";
 
   // Refs for different sections (Fixed TypeScript Error)
@@ -181,7 +184,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
             )}
             onClick={() => scrollToSection(imagesRef)}
           >
-            تصاویر
+            {isFa ? "تصاویر" : "Images"}
           </Button>
           <Button
             className={clsx(
@@ -191,7 +194,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
             )}
             onClick={() => scrollToSection(specificationsRef)}
           >
-            مشخصات
+            {isFa ? "مشخصات" : "Details"}
           </Button>
           <Button
             className={clsx(
@@ -200,7 +203,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
             )}
             onClick={() => scrollToSection(linksRef)}
           >
-            لینک ها
+            {isFa ? "لینک ها" : "Links"}
           </Button>
         </div>
       </div>
@@ -235,12 +238,12 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
               )}
             >
               {project.projectType === "Practice"
-                ? "تمرین شخصی"
+                ? isFa ? "تمرین شخصی" : "Practice"
                 : project.projectType === "Copy"
-                ? "کپی شده"
+                ? isFa ? "کپی شده" : "Copied"
                 : project.projectType === "Forked"
-                ? "فورک شده"
-                : "واقعی"}
+                ? isFa ? "فورک شده" : "Forked"
+                : isFa ? "واقعی" : "Production"}
             </p>
           </div>
           {/* //! completed tag */}
@@ -257,7 +260,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
             <p className="text-yellow-950 font-bold">Completed</p>
           </div>
         </div>
-        <p className="font-IRANSansXUltraLight " dir="rtl">{project.description}</p>
+        <p className="font-IRANSansXUltraLight " dir={isFa ? "rtl" : "ltr"}>{project.description}</p>
         {/* //! Tech Stack */}
         <div className="flex flex-wrap gap-2 my-4">
           {project.techStack.map(({ technology }) => {
@@ -286,7 +289,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
           })}
         </div>
         <div className="flex-col flex items-center justify-center gap-2 my-10">
-          <p className="font-IRANSansXBlack ">درصد تکامل پروژه</p>
+          <p className="font-IRANSansXBlack ">{isFa ? "درصد تکامل پروژه" : "Project completion"}</p>
           <CompetencyCircle
             competency={project.competency}
             filledColor={getProjectCompetencyColor(project.competency)}
@@ -298,7 +301,7 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
 
       <div ref={linksRef} className="py-20 w-full max-lg:px-4">
         <h2 className="text-xl font-IRANSansXBlack text-center mb-10">
-          لینک ها
+          {isFa ? "لینک ها" : "Links"}
         </h2>
         <div className="flex gap-10 flex-col  items-center justify-center border rounded-md p-5 border-black/[0.2] dark:border-white/[0.2]">
           <div className="flex  max-md:flex-col-reverse gap-2 w-full items-center justify-end">
@@ -308,11 +311,11 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
             >
               <p className="">
                 {project?.liveLink}
-                {!project.liveLink && "ندارد"}
+                {!project.liveLink && (isFa ? "ندارد" : "Not available")}
               </p>
             </LinkPreview>
             <div className="flex gap-2 items-center justify-center">
-              <p className="font-IRANSansXBold">: لینک لایو وبسایت</p>
+              <p className="font-IRANSansXBold">{isFa ? ": لینک لایو وبسایت" : "Website live URL:"}</p>
               <LucideLink />
             </div>
           </div>
@@ -323,11 +326,11 @@ const ProjectDetails = ({ project }: { project: ProjectsWithTechsType }) => {
             >
               <p className="">
                 {project?.githubLink}
-                {!project.githubLink && "ندارد"}
+                {!project.githubLink && (isFa ? "ندارد" : "Not available")}
               </p>
             </LinkPreview>
             <div className="flex gap-2 items-center justify-center">
-              <p className="font-IRANSansXBold">: (لینک گیت هاب) سورس کد</p>
+              <p className="font-IRANSansXBold">{isFa ? ": (لینک گیت هاب) سورس کد" : "Source code (GitHub):"}</p>
               <Github />
             </div>
           </div>

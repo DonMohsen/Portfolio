@@ -2,18 +2,19 @@
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { ArrowDown, Space } from 'lucide-react'
+import { useLocale } from "next-intl";
 
 const ResumeDownloadButton = () => {
     const [downloadLoading, setDownloadLoading] = useState(false)
+    const locale = useLocale();
     const handleDownload = () => {
         setDownloadLoading(true);
       
-        // File URL (served from Next.js public folder)
-        const fileUrl = "/MohsenKh-PersianCV.pdf"; // Relative to the public folder
+        const fileUrl = locale === "fa" ? "/MohsenKh-PersianCV.pdf" : "/MohsenKh-EnglishCV.pdf";
       
         const link = document.createElement("a");
         link.href = fileUrl;
-        link.download = "MohsenKh-PersianCV.pdf";
+        link.download = locale === "fa" ? "MohsenKhojastehNezhad-CV-FA.pdf" : "MohsenKhojastehNezhad-CV-EN.pdf";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -40,7 +41,7 @@ const ResumeDownloadButton = () => {
       </div>
     )}
     <p className="flex items-center justify-center">
-      دانلود رزومه
+      {locale === "fa" ? "دانلود رزومه" : "Download Resume"}
     </p>
   </Button>  )
 }
