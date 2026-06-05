@@ -40,6 +40,8 @@ export type GalaxyProps = {
   className?: string;
   /** Defaults match amanrwt hero */
   cards?: GalaxyInfoCard[];
+  /** When false, only floating info cards render (canvas handled by HeroCosmicBackground). */
+  showCanvas?: boolean;
 };
 
 const DEFAULT_CARDS: GalaxyInfoCard[] = [
@@ -204,32 +206,45 @@ function HeroCanvas() {
   );
 }
 
-export default function Galaxy({ className = "", cards = DEFAULT_CARDS }: GalaxyProps) {
+export default function Galaxy({
+  className = "",
+  cards = DEFAULT_CARDS,
+  showCanvas = true,
+}: GalaxyProps) {
   const list = cards.length ? cards : DEFAULT_CARDS;
 
   return (
     <div
       className={`relative hidden min-h-[500px] lg:block lg:min-h-[600px] ${className}`}
     >
-      <HeroCanvas />
+      {showCanvas ? <HeroCanvas /> : null}
       {list.map((c) => (
         <div
           key={c.label}
-          className="absolute z-10 rounded-lg border border-[#313244] bg-[#181825] px-4 py-3"
+          className="absolute z-10 rounded-lg border px-4 py-3 transition-colors duration-500"
           style={
             {
               top: c.top,
               right: c.right,
               left: c.left,
               bottom: c.bottom,
+              backgroundColor: "var(--galaxy-card-bg)",
+              borderColor: "var(--galaxy-card-border)",
+              boxShadow: "var(--galaxy-card-shadow)",
               animation: `float 4s ease-in-out ${c.delay ?? 0}s infinite`,
             } as CSSProperties
           }
         >
-          <span className="block font-mono text-[10px] uppercase tracking-[0.12em] text-[#6c7086]">
+          <span
+            className="block font-mono text-[10px] uppercase tracking-[0.12em]"
+            style={{ color: "var(--galaxy-card-label)" }}
+          >
             {c.label}
           </span>
-          <span className="mt-0.5 block font-sans text-[13px] text-[#cdd6f4]">
+          <span
+            className="mt-0.5 block font-sans text-[13px]"
+            style={{ color: "var(--galaxy-card-value)" }}
+          >
             {c.value}
           </span>
         </div>

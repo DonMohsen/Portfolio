@@ -8,13 +8,20 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**", // Allow all hostnames
-        port: "", // Leave blank to allow all ports
-        pathname: "**", // Allow all paths
+        hostname: "**",
+        port: "",
+        pathname: "**",
       },
     ],
   },
- 
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "@radix-ui/react-icons",
+      "@heroicons/react",
+    ],
+  },
 };
 
 export default withNextIntl(nextConfig);

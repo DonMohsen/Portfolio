@@ -58,11 +58,19 @@
     "zod-to-ts": "^1.2.0",
     "zustand": "^5.0.2"
   },
+  "browserslist": [
+    "chrome >= 93",
+    "firefox >= 92",
+    "safari >= 15.4",
+    "edge >= 93",
+    "not dead"
+  ],
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cssnano": "^8.0.1",
     "eslint": "^9",
     "eslint-config-next": "^16.1.1",
     "postcss": "^8",

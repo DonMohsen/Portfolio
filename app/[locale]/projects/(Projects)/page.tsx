@@ -72,7 +72,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="bg-white dark:bg-black flex flex-col  ">
+    <div className="flex flex-col bg-page">
       <Head>
         <title>{isFa ? "پروژه ها | محسن خجسته نژاد" : "Projects | Mohsen Khojasteh Nezhad"}</title>
       </Head>

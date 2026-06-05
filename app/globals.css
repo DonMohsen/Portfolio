@@ -2,6 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light: warm cream + right peach glow | Dark: navy galaxy */
+:root {
+  --page-bg: #f7f5f0;
+  --page-glow:
+    radial-gradient(
+      ellipse 80% 95% at 88% 42%,
+      rgba(255, 208, 140, 0.52) 0%,
+      rgba(255, 225, 185, 0.22) 38%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 70% 55% at 92% 92%,
+      rgba(255, 198, 120, 0.38) 0%,
+      transparent 68%
+    );
+  --page-text: #1a2744;
+  --page-text-muted: rgba(26, 39, 68, 0.76);
+  --page-text-subtle: rgba(26, 39, 68, 0.6);
+  --accent: #c9956a;
+  --accent-foreground: #1a2744;
+  --tech-card-bg: #fffdf8;
+  --tech-card-border: rgba(26, 39, 68, 0.1);
+  --tech-card-text: #6b7289;
+  --tech-card-shadow: 0 6px 22px rgba(26, 39, 68, 0.07);
+  --galaxy-card-bg: rgba(255, 253, 248, 0.96);
+  --galaxy-card-border: rgba(26, 39, 68, 0.1);
+  --galaxy-card-label: rgba(26, 39, 68, 0.48);
+  --galaxy-card-value: #1a2744;
+  --galaxy-card-shadow: 0 8px 28px rgba(26, 39, 68, 0.09);
+  --cosmic-line: rgba(42, 52, 82, 0.32);
+}
+
+.dark {
+  --page-glow: none;
+  --page-bg: #171a36;
+  --page-text: #dce3ff;
+  --page-text-muted: rgba(220, 227, 255, 0.82);
+  --page-text-subtle: rgba(220, 227, 255, 0.68);
+  --accent: #f8b78c;
+  --accent-foreground: #171a36;
+  --tech-card-bg: #1e2348;
+  --tech-card-border: rgba(255, 255, 255, 0.09);
+  --tech-card-text: #9499ab;
+  --tech-card-shadow: none;
+  --galaxy-card-bg: rgba(24, 28, 52, 0.92);
+  --galaxy-card-border: rgba(114, 127, 175, 0.28);
+  --galaxy-card-label: rgba(196, 208, 255, 0.55);
+  --galaxy-card-value: #e4ebff;
+  --galaxy-card-shadow: none;
+  --cosmic-line: rgba(248, 183, 140, 0.15);
+}
+
+html,
+body {
+  background-color: var(--page-bg);
+  background-image: var(--page-glow);
+  background-attachment: fixed;
+  color: var(--page-text);
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
+
 body {
   font-family: var(--font-iransansx), Arial, sans-serif;
 }

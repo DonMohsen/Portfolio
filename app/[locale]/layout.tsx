@@ -1,19 +1,19 @@
-import type {Metadata} from "next";
-import {notFound} from "next/navigation";
-import {getMessages, setRequestLocale} from "next-intl/server";
-import {NextIntlClientProvider} from "next-intl";
-import {ThemeProvider} from "../providers/theme-provider";
-import {Header} from "@/components/header";
-import Navbar from "@/components/navbar";
-import {Toaster} from "@/components/ui/toaster";
-import {hasLocale} from "next-intl";
-import {routing} from "@/i18n/routing";
-import Script from "next/script";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { ThemeProvider } from "../providers/theme-provider";
+import { Header } from "@/components/header";
+import DeferredChrome from "@/components/DeferredChrome";
+import { hasLocale } from "next-intl";
+import { routing } from "@/i18n/routing";
 
-type Params = Promise<{locale: string}>;
+type Params = Promise<{ locale: string }>;
 
-export async function generateMetadata(props: {params: Params}): Promise<Metadata> {
-  const {locale} = await props.params;
+export async function generateMetadata(props: {
+  params: Params;
+}): Promise<Metadata> {
+  const { locale } = await props.params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const isFa = locale === "fa";
   const title = isFa
@@ -36,20 +36,25 @@ export async function generateMetadata(props: {params: Params}): Promise<Metadat
       "محسن خجسته",
       "mohsen portfolio",
       "front-end developer",
-      "nextjs developer"
+      "nextjs developer",
     ],
     robots: {
       index: true,
       follow: true,
-      googleBot: {index: true, follow: true, "max-snippet": -1, "max-image-preview": "large"}
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+      },
     },
     alternates: {
       canonical: "/",
       languages: {
         fa: "/fa",
         en: "/en",
-        "x-default": "/fa"
-      }
+        "x-default": "/fa",
+      },
     },
     openGraph: {
       title,
@@ -57,29 +62,29 @@ export async function generateMetadata(props: {params: Params}): Promise<Metadat
       url: `https://donmohsen.ir/${locale}`,
       siteName: "Mohsen Khojasteh Nezhad Portfolio",
       locale: isFa ? "fa_IR" : "en_US",
-      type: "website"
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description
+      description,
     },
     verification: {
-      google: "8rnd6SZNcUVTXewASPcTSKtabrKxhaHnfN0hpXnO_nY"
-    }
+      google: "8rnd6SZNcUVTXewASPcTSKtabrKxhaHnfN0hpXnO_nY",
+    },
   };
 }
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({locale}));
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 export default async function LocaleLayout(props: {
   children: React.ReactNode;
   params: Params;
 }) {
-  const {children} = props;
-  const {locale} = await props.params;
+  const { children } = props;
+  const { locale } = await props.params;
   if (!hasLocale(routing.locales, locale)) notFound();
 
   setRequestLocale(locale);
@@ -92,24 +97,32 @@ export default async function LocaleLayout(props: {
     alternateName: "محسن خجسته نژاد",
     url: "https://donmohsen.ir",
     jobTitle: "Front-End Developer",
-    sameAs: ["https://github.com/DonMohsen", "https://linkedin.com/in/mohsenkhojastehnezhad"]
+    sameAs: [
+      "https://github.com/DonMohsen",
+      "https://linkedin.com/in/mohsenkhojastehnezhad",
+    ],
   };
 
   return (
-    <div lang={locale} dir={locale === "fa" ? "rtl" : "ltr"}>
-      <Script
-        id="person-jsonld"
+    <div
+      lang={locale}
+      dir={locale === "fa" ? "rtl" : "ltr"}
+      className="min-h-screen bg-page"
+    >
+      <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{__html: JSON.stringify(personSchema)}}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <ThemeProvider attribute="class" defaultTheme="dark">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
           <Header />
-          <div className="overflow-hidden">
-            <Navbar />
-          </div>
-          <main>{children}</main>
-          <Toaster />
+          <main className="bg-page">{children}</main>
+          <DeferredChrome />
         </ThemeProvider>
       </NextIntlClientProvider>
     </div>

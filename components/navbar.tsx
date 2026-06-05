@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import RoutesItem from "./routes-item";
 import { AnimatePresence, motion } from "framer-motion";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
@@ -17,17 +17,19 @@ const Navbar = () => {
     <AnimatePresence>
       {hamValue && (
         <motion.div
-          initial={{ x: "100%", opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: "100%", opacity: 0 }}
-          transition={{ ease: "easeInOut", duration: 0.5 }}
-          className="mt-[60px] z-[70] fixed w-full h-full flex justify-end bg-black/30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ ease: "easeInOut", duration: 0.25 }}
+          className="fixed inset-0 top-[60px] z-[6000]"
         >
-          {/* Overlay for closing menu */}
-          <div onClick={toggleHamburger} className="w-full h-full"></div>
+          <div
+            onClick={toggleHamburger}
+            className="absolute inset-0 bg-black/30"
+            aria-hidden
+          />
 
-          {/* Sidebar */}
-          <motion.div
+          <motion.aside
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -36,12 +38,12 @@ const Navbar = () => {
               stiffness: 400,
               damping: 30,
             }}
-            className="fixed h-full w-[85%] md:w-[40%] lg:w-[30%] bg-white dark:bg-[#160d1c] shadow-xl flex flex-col px-4 py-6"
+            className="fixed right-0 top-[60px] bottom-0 z-10 flex w-[85%] max-w-sm flex-col bg-white px-4 py-6 shadow-xl dark:bg-[#160d1c] md:w-[40%] lg:w-[30%]"
           >
             {webRoutes.map((item: webRoutesType) => (
               <RoutesItem key={item.id} webRoute={item} />
             ))}
-          </motion.div>
+          </motion.aside>
         </motion.div>
       )}
     </AnimatePresence>

@@ -5,7 +5,6 @@ const defaultTheme = require("tailwindcss/defaultTheme");
  
 const svgToDataUri = require("mini-svg-data-uri");
  
-const colors = require("tailwindcss/colors");
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
@@ -46,6 +45,15 @@ export default {
 		  },
   		
   		colors: {
+			page: "var(--page-bg)",
+			"page-text": "var(--page-text)",
+			"page-muted": "var(--page-text-muted)",
+			"page-subtle": "var(--page-text-subtle)",
+			"accent-cosmic": "var(--accent)",
+			"accent-cosmic-fg": "var(--accent-foreground)",
+			"tech-card": "var(--tech-card-bg)",
+			"tech-card-border": "var(--tech-card-border)",
+			"tech-card-text": "var(--tech-card-text)",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -107,18 +115,6 @@ export default {
 		  { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
 		);
 	  },
-
-	  function addVariablesForColors({ addBase, theme }: any) {
-		let allColors = flattenColorPalette(theme("colors"));
-		let newVars = Object.fromEntries(
-		  Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-		);
-	   
-		addBase({
-		  ":root": newVars,
-		});
-	  }
-
 
   ],
 } satisfies Config;

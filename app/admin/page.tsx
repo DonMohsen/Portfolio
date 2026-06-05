@@ -8,13 +8,13 @@ const AdminPage = () => {
   return (
     <ReactQueryProvider>
 
-      <div>
-
-
-        <AdminAllCards />
-
-      </div>
-    </ReactQueryProvider>
+    <div>
+        
+       
+            <AdminAllCards/>
+    
+    </div>
+        </ReactQueryProvider>
   )
 }
 
