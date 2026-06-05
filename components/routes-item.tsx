@@ -13,9 +13,13 @@ const itemVariants = {
 };
 
 const childVariants = {
-  hidden: { opacity: 0, height: 0 },
-  visible: { opacity: 1, height: "auto", transition: { duration: 0.4, ease: "easeInOut" } },
-  exit: { opacity: 0, height: 0, transition: { duration: 0.3, ease: "easeInOut" } },
+  hidden: { opacity: 0, scaleY: 0 },
+  visible: {
+    opacity: 1,
+    scaleY: 1,
+    transition: { duration: 0.35, ease: "easeInOut" },
+  },
+  exit: { opacity: 0, scaleY: 0, transition: { duration: 0.25, ease: "easeInOut" } },
 };
 
 const RoutesItem = ({ webRoute, className,childIsActive }: { webRoute: webRoutesType; className?: string; childIsActive?:boolean }) => {

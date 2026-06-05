@@ -32,11 +32,12 @@ export default function DesktopHeaderNav() {
           <AnimatePresence>
             {item.routesChildren && hoveredRouteItem?.id === item.id && (
               <motion.div
-                initial={{ scaleY: 0, opacity: 0 }}
-                animate={{ scaleY: 1, opacity: 1 }}
-                exit={{ scaleY: 0, opacity: 0 }}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ ease: "easeInOut", duration: 0.2 }}
-                className="absolute right-0 top-full w-[250px] dark:bg-[#1a0a1b] bg-white origin-top shadow-lg rounded-md border dark:border-white/[0.1] border-black/[0.1]"
+                style={{ transformOrigin: "top center" }}
+                className="absolute right-0 top-full w-[250px] dark:bg-[#1a0a1b] bg-white shadow-lg rounded-md border dark:border-white/[0.1] border-black/[0.1] will-change-transform"
               >
                 <div className="p-4">
                   {item.routesChildren.map((child) => (

@@ -58,13 +58,6 @@
     "zod-to-ts": "^1.2.0",
     "zustand": "^5.0.2"
   },
-  "browserslist": [
-    "chrome >= 93",
-    "firefox >= 92",
-    "safari >= 15.4",
-    "edge >= 93",
-    "not dead"
-  ],
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
