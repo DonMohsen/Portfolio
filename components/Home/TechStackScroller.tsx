@@ -74,10 +74,7 @@ function MarqueeRow({
       <ul className="flex w-max shrink-0 flex-nowrap gap-3 px-1 py-2.5 animate-scroll md:gap-4 md:py-3">
         {scrollingItems.map((item, index) => (
           <li key={`${item.id}-${index}`}>
-            <div
-              className="flex w-[148px] flex-col items-center justify-center rounded-lg border border-tech-card-border bg-tech-card px-3 py-3 transition-colors duration-500 hover:border-page-text/20 max-md:w-[124px] max-md:py-2.5"
-              style={{ boxShadow: "var(--tech-card-shadow)" }}
-            >
+            <div className="flex w-[148px] flex-col items-center justify-center rounded-lg border border-tech-card-border bg-tech-card px-3 py-3 shadow-none transition-colors duration-500 hover:border-page-text/20 max-md:w-[124px] max-md:py-2.5">
               <div className="flex h-9 w-9 items-center justify-center max-md:h-8 max-md:w-8">
                 <Image
                   className="h-6 w-6 opacity-80 transition-opacity duration-300 hover:opacity-100 dark:brightness-0 dark:invert dark:contrast-110 max-md:h-5 max-md:w-5"

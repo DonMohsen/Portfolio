@@ -54,32 +54,41 @@
   --cosmic-line: rgba(248, 183, 140, 0.15);
 }
 
-html {
-  height: 100%;
-}
-
 html,
 body {
   background-color: var(--page-bg);
   background-image: var(--page-glow);
-  background-attachment: fixed;
+  background-attachment: scroll;
   color: var(--page-text);
   transition: background-color 0.45s ease, color 0.45s ease;
 }
 
 body {
-  min-height: 100dvh;
+  min-height: calc(var(--dvh, 1dvh) * 100);
   font-family: var(--font-iranyekan), Arial, Helvetica, sans-serif;
 }
 
-/* Fixed cosmic layers: match dynamic visible viewport (mobile browser chrome) */
+/* Fixed cosmic + light glow: height locked via --dvh (not live 100dvh) */
 .cosmic-viewport {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 0;
   width: 100%;
-  height: 100dvh;
+  height: calc(var(--dvh, 1dvh) * 100);
+  overflow: hidden;
+  pointer-events: none;
+  mask-mode: alpha;
+  -webkit-mask-mode: alpha;
+}
+
+.min-h-dvh {
+  min-height: calc(var(--dvh, 1dvh) * 100);
+}
+
+.h-dvh {
+  height: calc(var(--dvh, 1dvh) * 100);
 }
 
 .ham {

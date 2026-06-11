@@ -104,8 +104,8 @@ export default async function HomePage(props: { params: Params }) {
   return (
     <div className="w-full bg-page transition-colors duration-500">
       <HeroCosmicDynamic align={isFa ? "left" : "right"} />
-      <section className="relative z-10 flex min-h-[100dvh] flex-col lg:grid lg:grid-cols-2 lg:overflow-hidden">
-        <div className="flex flex-col items-center px-5 pb-4 pt-[4.5rem] text-center transition-colors duration-500 sm:px-6 lg:items-start lg:justify-center lg:px-12 lg:py-12 lg:pt-12 lg:text-start xl:px-16">
+      <section className="relative z-10 flex min-h-dvh flex-col overflow-hidden lg:grid lg:grid-cols-2">
+        <div className="relative flex flex-col items-center px-5 pb-4 pt-[4.5rem] text-center transition-colors duration-500 sm:px-6 lg:items-start lg:justify-center lg:px-12 lg:py-12 lg:pt-12 lg:text-start xl:px-16">
           <h1 className="text-[2.65rem] font-bold leading-[0.95] text-page-text sm:text-6xl lg:text-7xl">
             {isFa ? "محسن" : "Mohsen"}
             <br />

@@ -16,7 +16,7 @@ const LanguageSwitcher = dynamic(() => import("./language-switcher"), {
 
 export default function MobileHeaderBar() {
   return (
-    <div className="h-[60px] flex w-full fixed z-[5000] top-0 inset-x-0 mx-auto px-3 max-md:pt-3 items-center justify-end md:hidden">
+    <div className="flex h-[60px] w-full fixed inset-x-0 top-0 z-[5000] mx-auto items-center justify-end border-b border-tech-card-border bg-page/80 px-3 backdrop-blur-sm transition-colors duration-300 max-md:pt-3 md:hidden">
       <div className="z-50 flex items-center gap-3 -translate-y-1 translate-x-5">
         <LanguageSwitcher />
         <DeferredThemeToggle />

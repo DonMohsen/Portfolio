@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local site mirrors (scripts/scrape-site.mjs)
 /scraped
+
+# lighthouse audit reports (local only)
+lighthouse*.json

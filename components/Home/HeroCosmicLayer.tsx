@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { isDarkTheme, readPageBg } from "@/lib/brand";
 import { readViewportHeight, readViewportSize } from "@/lib/viewport";
 
@@ -149,11 +149,37 @@ function getFadeProgress(viewportHeight: number) {
   if (!el || vh <= 0) return 0;
 
   const top = el.getBoundingClientRect().top;
+  const fadeStart = vh * 0.92;
+  const fadeEnd = -vh * 0.45;
 
-  if (top >= vh) return 0;
-  if (top <= 0) return 1;
+  if (top >= fadeStart) return 0;
+  if (top <= fadeEnd) return 1;
 
-  return (vh - top) / vh;
+  const linear = (fadeStart - top) / (fadeStart - fadeEnd);
+  return linear * linear * (3 - 2 * linear);
+}
+
+/** Opacity curve: stays visible longer, fades gently at the very end. */
+function cosmicFadeOpacity(fade: number) {
+  const remaining = Math.max(0, 1 - fade);
+  return remaining * remaining * remaining;
+}
+
+/** Static bottom feather — scroll fade handled only via opacity (no mask cliff). */
+function buildCosmicDissolveMask(narrowMobile: boolean) {
+  if (narrowMobile) {
+    return "linear-gradient(to bottom, transparent 0%, transparent 38%, black 50%, black 76%, transparent 100%)";
+  }
+
+  return "linear-gradient(to bottom, black 0%, black 76%, transparent 100%)";
+}
+
+function dissolveMaskStyle(narrowMobile: boolean): CSSProperties {
+  const mask = buildCosmicDissolveMask(narrowMobile);
+  return {
+    maskImage: mask,
+    WebkitMaskImage: mask,
+  };
 }
 
 export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProps) {
@@ -163,6 +189,15 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
   const isDarkRef = useRef(true);
   const [fade, setFade] = useState(0);
   const [veilColor, setVeilColor] = useState("#171a36");
+  const [narrowMobile, setNarrowMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MAX_SM_BREAKPOINT - 1}px)`);
+    const syncLayout = () => setNarrowMobile(mq.matches);
+    syncLayout();
+    mq.addEventListener("change", syncLayout);
+    return () => mq.removeEventListener("change", syncLayout);
+  }, []);
 
   useEffect(() => {
     const syncThemeTokens = () => {
@@ -197,13 +232,11 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     updateFade();
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
     };
   }, []);
 
@@ -382,19 +415,10 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     const scheduleId = requestAnimationFrame(start);
     const cancelSchedule = () => cancelAnimationFrame(scheduleId);
 
-    const onResize = () => {
-      resize(false);
+    const onOrientationChange = () => {
+      resize(true);
       if (reducedMotion) drawFrame();
     };
-
-    const container = viewportRef.current;
-    const resizeObserver =
-      container && typeof ResizeObserver !== "undefined"
-        ? new ResizeObserver(() => onResize())
-        : null;
-    if (container && resizeObserver) {
-      resizeObserver.observe(container);
-    }
 
     const onMove = (event: MouseEvent) => {
       mouse.x = event.clientX;
@@ -426,7 +450,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
 
     const themeObserver = new MutationObserver(onThemeChange);
 
-    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onOrientationChange);
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseleave", onLeave);
     document.addEventListener("visibilitychange", onVisibility);
@@ -438,43 +462,44 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     return () => {
       disposed = true;
       running = false;
-      resizeObserver?.disconnect();
       cancelSchedule();
       cancelAnimationFrame(frameId);
       themeObserver.disconnect();
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onOrientationChange);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [align]);
 
-  const cosmicOpacity = 1 - fade;
-  const hidden = fade >= 1;
+  const layerOpacity = cosmicFadeOpacity(fade);
+  const fullyHidden = fade >= 1;
+  const dissolveMask = dissolveMaskStyle(narrowMobile);
+  const veilBlend = Math.max(0, Math.min(1, (fade - 0.35) / 0.65));
+  const veilOpacity = veilBlend * veilBlend * layerOpacity;
 
   return (
-    <div ref={viewportRef} className="cosmic-viewport pointer-events-none z-[1]">
+    <div
+      ref={viewportRef}
+      className="cosmic-viewport"
+      style={{
+        ...dissolveMask,
+        opacity: layerOpacity,
+        visibility: fullyHidden ? "hidden" : "visible",
+      }}
+    >
       <div
-        className="absolute inset-0 dark:hidden max-sm:[mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)] max-sm:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)]"
+        className="absolute inset-0 dark:hidden"
         style={{
-          opacity: cosmicOpacity,
-          visibility: hidden ? "hidden" : "visible",
           background: `
-            radial-gradient(ellipse 85% 100% at 90% 45%, rgba(255, 205, 130, 0.45) 0%, rgba(255, 222, 175, 0.18) 42%, transparent 74%),
-            radial-gradient(ellipse 70% 60% at 92% 88%, rgba(255, 195, 115, 0.35) 0%, transparent 70%)
+            radial-gradient(ellipse 90% 115% at 90% 48%, rgba(255, 205, 130, 0.42) 0%, rgba(255, 222, 175, 0.16) 48%, transparent 88%),
+            radial-gradient(ellipse 75% 70% at 92% 90%, rgba(255, 195, 115, 0.28) 0%, transparent 82%)
           `,
         }}
         aria-hidden
       />
 
-      <div
-        className="absolute inset-0 max-sm:[mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)] max-sm:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)]"
-        style={{
-          opacity: cosmicOpacity,
-          visibility: hidden ? "hidden" : "visible",
-        }}
-        aria-hidden
-      >
+      <div className="absolute inset-0" aria-hidden>
         <canvas ref={canvasRef} className="h-full w-full" />
       </div>
 
@@ -482,9 +507,9 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
         aria-hidden
         className="pointer-events-none absolute inset-0 z-[2]"
         style={{
-          opacity: fade,
-          visibility: fade > 0 ? "visible" : "hidden",
-          backgroundColor: veilColor,
+          opacity: veilOpacity,
+          visibility: veilOpacity > 0.004 ? "visible" : "hidden",
+          background: `linear-gradient(to bottom, transparent 0%, transparent 58%, ${veilColor} 100%)`,
           transition: "background-color 0.45s ease",
         }}
       />

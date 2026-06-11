@@ -108,7 +108,7 @@ export default async function LocaleLayout(props: {
     <div
       lang={locale}
       dir={locale === "fa" ? "rtl" : "ltr"}
-      className="min-h-[100dvh] bg-page"
+      className="min-h-dvh bg-page"
     >
       <script
         type="application/ld+json"
