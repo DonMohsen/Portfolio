@@ -19,15 +19,17 @@ export default {
   theme: {
   	extend: {
 		fontFamily: {
-			IRANSansXBlack: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
-			IRANSansXExtraBold: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
-			IRANSansXBold: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
-			IRANSansXDemiBold: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
-			IRANSansXMedium: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
-			IRANSansXRegular: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
-			IRANSansXLight: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
-			IRANSansXUltraLight: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
-			IRANSansXThin: ['var(--font-iransansx)', 'Arial', 'sans-serif'],
+			sans: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANYekan: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXBlack: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXExtraBold: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXBold: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXDemiBold: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXMedium: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXRegular: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXLight: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXUltraLight: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
+			IRANSansXThin: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
 		  },
 		zIndex: {
 			'max': '99999999999', // Add a custom max z-index value
@@ -90,9 +92,21 @@ export default {
   	}
   },
   plugins: [
-	
-	
 	require("tailwindcss-animate"),
+	function ({ addUtilities }: { addUtilities: (utils: Record<string, Record<string, string>>) => void }) {
+		const family = "var(--font-iranyekan), Arial, Helvetica, sans-serif";
+		addUtilities({
+			".font-IRANSansXThin": { fontFamily: family, fontWeight: "100" },
+			".font-IRANSansXUltraLight": { fontFamily: family, fontWeight: "200" },
+			".font-IRANSansXLight": { fontFamily: family, fontWeight: "300" },
+			".font-IRANSansXRegular": { fontFamily: family, fontWeight: "400" },
+			".font-IRANSansXMedium": { fontFamily: family, fontWeight: "500" },
+			".font-IRANSansXDemiBold": { fontFamily: family, fontWeight: "600" },
+			".font-IRANSansXBold": { fontFamily: family, fontWeight: "700" },
+			".font-IRANSansXExtraBold": { fontFamily: family, fontWeight: "800" },
+			".font-IRANSansXBlack": { fontFamily: family, fontWeight: "900" },
+		});
+	},
 	function ({ matchUtilities, theme }: any) {
 		matchUtilities(
 		  {

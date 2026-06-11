@@ -54,6 +54,10 @@
   --cosmic-line: rgba(248, 183, 140, 0.15);
 }
 
+html {
+  height: 100%;
+}
+
 html,
 body {
   background-color: var(--page-bg);
@@ -64,7 +68,18 @@ body {
 }
 
 body {
-  font-family: var(--font-iransansx), Arial, sans-serif;
+  min-height: 100dvh;
+  font-family: var(--font-iranyekan), Arial, Helvetica, sans-serif;
+}
+
+/* Fixed cosmic layers: match dynamic visible viewport (mobile browser chrome) */
+.cosmic-viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100dvh;
 }
 
 .ham {
@@ -165,6 +180,43 @@ body {
   width: 100px;
 }
  */
+
+@keyframes nav-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes nav-panel-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes nav-item-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes nav-children-in {
+  from { opacity: 0; transform: scaleY(0.85); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+.nav-overlay {
+  animation: nav-overlay-in 0.25s ease-out both;
+}
+
+.nav-panel {
+  animation: nav-panel-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.nav-item-enter {
+  animation: nav-item-in 0.3s ease-out both;
+}
+
+.nav-children-expand {
+  animation: nav-children-in 0.28s ease-out both;
+  transform-origin: top center;
+}
 
 /* Scrollbar styles */
 ::-webkit-scrollbar {   

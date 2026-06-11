@@ -1,24 +1,15 @@
 import "./globals.css";
 import localFont from "next/font/local";
 
-const iranSansX = localFont({
-  src: [
-    {
-      path: "../public/fonts/IRANSansXRegular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/IRANSansXBold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  variable: "--font-iransansx",
+const iranYekan = localFont({
+  src: "../public/fonts/iranyekan/iranyekanwebregularfanum.ttf",
+  weight: "400",
+  style: "normal",
+  variable: "--font-iranyekan",
   display: "swap",
   preload: true,
   adjustFontFallback: "Arial",
-  fallback: ["Arial", "sans-serif"],
+  fallback: ["Arial", "Helvetica", "sans-serif"],
 });
 
 export default function RootLayout({
@@ -30,9 +21,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${iranSansX.variable} dark`}
+      className={`${iranYekan.variable} dark`}
     >
-      <body className={`${iranSansX.className} antialiased`}>{children}</body>
+      <body className={`${iranYekan.className} antialiased`}>{children}</body>
     </html>
   );
 }

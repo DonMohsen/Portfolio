@@ -1,10 +1,17 @@
+import nextDynamic from "next/dynamic";
 import HeroGalaxyCards, {
   type HeroInfoCard,
 } from "@/components/Home/HeroGalaxyCards";
-import HeroCosmicLazy from "@/components/Home/hero-cosmic-lazy";
-import TechStackScroller from "@/components/Home/TechStackScroller";
-import HomeBelowFold from "@/components/Home/HomeBelowFold";
+import HeroCosmicDynamic from "@/components/Home/HeroCosmicDynamic";
 import Link from "next/link";
+
+const TechStackScroller = nextDynamic(
+  () => import("@/components/Home/TechStackScroller")
+);
+
+const HomeBelowFold = nextDynamic(
+  () => import("@/components/Home/HomeBelowFold")
+);
 
 const HERO_GALAXY_EN: HeroInfoCard[] = [
   {
@@ -96,13 +103,13 @@ export default async function HomePage(props: { params: Params }) {
 
   return (
     <div className="w-full bg-page transition-colors duration-500">
-      <HeroCosmicLazy align={isFa ? "left" : "right"} />
+      <HeroCosmicDynamic align={isFa ? "left" : "right"} />
       <section className="relative z-10 flex min-h-[100dvh] flex-col lg:grid lg:grid-cols-2 lg:overflow-hidden">
         <div className="flex flex-col items-center px-5 pb-4 pt-[4.5rem] text-center transition-colors duration-500 sm:px-6 lg:items-start lg:justify-center lg:px-12 lg:py-12 lg:pt-12 lg:text-start xl:px-16">
-          <h1 className="text-[2.65rem] font-semibold leading-[0.95] text-page-text sm:text-6xl lg:text-7xl">
+          <h1 className="text-[2.65rem] font-bold leading-[0.95] text-page-text sm:text-6xl lg:text-7xl">
             {isFa ? "محسن" : "Mohsen"}
             <br />
-            <span className="whitespace-nowrap font-medium italic text-accent-cosmic">
+            <span className="whitespace-nowrap font-normal italic text-accent-cosmic">
               {isFa ? "خجسته نژاد" : "Khojasteh Nezhad"}
             </span>
           </h1>
@@ -119,7 +126,7 @@ export default async function HomePage(props: { params: Params }) {
           <div className="mt-7 w-full max-w-md lg:mt-8 lg:max-w-none">
             <Link
               href={`/${locale}/projects`}
-              className="inline-flex w-full items-center justify-center rounded-lg bg-accent-cosmic px-6 py-3.5 text-[12px] font-semibold uppercase tracking-[0.22em] text-accent-cosmic-fg transition-colors duration-500 lg:w-auto"
+              className="inline-flex w-full items-center justify-center rounded-lg bg-accent-cosmic px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.22em] text-accent-cosmic-fg transition-colors duration-500 lg:w-auto"
             >
               {isFa ? "مشاهده پروژه‌ها" : "View my work"}
             </Link>

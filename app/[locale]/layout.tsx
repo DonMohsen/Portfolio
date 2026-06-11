@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "../providers/theme-provider";
-import { Header } from "@/components/header";
+import DeferredFont from "@/components/DeferredFont";
+import DeferredHeader from "@/components/DeferredHeader";
 import DeferredChrome from "@/components/DeferredChrome";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
@@ -107,12 +108,13 @@ export default async function LocaleLayout(props: {
     <div
       lang={locale}
       dir={locale === "fa" ? "rtl" : "ltr"}
-      className="min-h-screen bg-page"
+      className="min-h-[100dvh] bg-page"
     >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
+      <DeferredFont />
       <NextIntlClientProvider locale={locale} messages={messages}>
         <ThemeProvider
           attribute="class"
@@ -120,7 +122,7 @@ export default async function LocaleLayout(props: {
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Header />
+          <DeferredHeader />
           <main className="bg-page">{children}</main>
           <DeferredChrome />
         </ThemeProvider>

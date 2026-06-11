@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { isDarkTheme, readPageBg } from "@/lib/brand";
+import { readViewportHeight, readViewportSize } from "@/lib/viewport";
 
 type HeroCosmicLayerProps = {
   align?: "left" | "right";
@@ -142,9 +143,9 @@ function createStar(
 
 const TECH_STACK_SELECTOR = "[data-tech-stack-section]";
 
-function getFadeProgress() {
+function getFadeProgress(viewportHeight: number) {
   const el = document.querySelector(TECH_STACK_SELECTOR);
-  const vh = window.innerHeight;
+  const vh = viewportHeight;
   if (!el || vh <= 0) return 0;
 
   const top = el.getBoundingClientRect().top;
@@ -156,6 +157,7 @@ function getFadeProgress() {
 }
 
 export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProps) {
+  const viewportRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fadeRef = useRef(0);
   const isDarkRef = useRef(true);
@@ -182,7 +184,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     let frame = 0;
 
     const updateFade = () => {
-      const next = getFadeProgress();
+      const next = getFadeProgress(readViewportHeight(viewportRef.current));
       fadeRef.current = next;
       setFade(next);
     };
@@ -228,26 +230,59 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
         ? CONNECTION_DISTANCE_MOBILE
         : CONNECTION_DISTANCE_DESKTOP;
 
-    const initStars = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+    let lastWidth = 0;
+    let lastHeight = 0;
+
+    const initStars = (width: number, height: number) => {
       const { minX, maxX, minY } = getBounds(width, height, align);
       const isDark = isDarkTheme();
       isDarkRef.current = isDark;
-      const dense = isMobileLayout();
+      const dense = isMobileLayout(width);
       stars = Array.from({ length: starCount() }, () =>
         createStar(width, height, minX, maxX, isDark, dense, minY)
       );
     };
 
-    const resize = () => {
+    const applyCanvasSize = (width: number, height: number) => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      initStars();
+    };
+
+    const resize = (reinit = false) => {
+      const container = viewportRef.current;
+      if (!container) return;
+
+      const { width, height } = readViewportSize(container);
+      if (width <= 0 || height <= 0) return;
+
+      if (reinit || stars.length === 0) {
+        applyCanvasSize(width, height);
+        initStars(width, height);
+        lastWidth = width;
+        lastHeight = height;
+        return;
+      }
+
+      if (
+        lastWidth > 0 &&
+        lastHeight > 0 &&
+        (width !== lastWidth || height !== lastHeight)
+      ) {
+        const scaleX = width / lastWidth;
+        const scaleY = height / lastHeight;
+        for (const star of stars) {
+          star.x *= scaleX;
+          star.y *= scaleY;
+        }
+      }
+
+      applyCanvasSize(width, height);
+      lastWidth = width;
+      lastHeight = height;
     };
 
     const connectionStroke = (alpha: number) => {
@@ -259,14 +294,25 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     };
 
     const drawFrame = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+      const { width, height } = readViewportSize(viewportRef.current);
+      if (width <= 0 || height <= 0) return;
+
       const { minX, maxX, minY } = getBounds(width, height, align);
       const distance = linkDistance();
       const mobile = isMobileLayout();
       const starBounds: StarBounds = { minX, maxX, minY, height };
 
-      ctx.clearRect(0, minY, width, height - minY);
+      // Clear the full canvas — partial clear above minY left ghost dots when
+      // particles bounced at the ceiling (arc + shadow paint above minY).
+      ctx.clearRect(0, 0, width, height);
+
+      const clipCeiling = isMaxSm(width);
+      if (clipCeiling) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, minY, width, height - minY);
+        ctx.clip();
+      }
 
       for (const star of stars) {
         const dx = mouse.x - star.x;
@@ -284,8 +330,11 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
 
       for (let i = 0; i < stars.length; i++) {
         for (let j = i + 1; j < stars.length; j++) {
-          const dx = stars[i]!.x - stars[j]!.x;
-          const dy = stars[i]!.y - stars[j]!.y;
+          const a = stars[i]!;
+          const b = stars[j]!;
+
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
           const dist = Math.hypot(dx, dy);
           if (dist < distance) {
             const lineAlpha = isDarkRef.current
@@ -297,13 +346,17 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
                 : 0.22;
             const alpha = ((distance - dist) / distance) * lineAlpha;
             ctx.beginPath();
-            ctx.moveTo(stars[i]!.x, stars[i]!.y);
-            ctx.lineTo(stars[j]!.x, stars[j]!.y);
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
             ctx.strokeStyle = connectionStroke(alpha);
             ctx.lineWidth = mobile ? 0.68 : 0.55;
             ctx.stroke();
           }
         }
+      }
+
+      if (clipCeiling) {
+        ctx.restore();
       }
     };
 
@@ -317,7 +370,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
 
     const start = () => {
       if (disposed) return;
-      resize();
+      resize(true);
       if (reducedMotion) {
         drawFrame();
         return;
@@ -330,9 +383,18 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     const cancelSchedule = () => cancelAnimationFrame(scheduleId);
 
     const onResize = () => {
-      resize();
+      resize(false);
       if (reducedMotion) drawFrame();
     };
+
+    const container = viewportRef.current;
+    const resizeObserver =
+      container && typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => onResize())
+        : null;
+    if (container && resizeObserver) {
+      resizeObserver.observe(container);
+    }
 
     const onMove = (event: MouseEvent) => {
       mouse.x = event.clientX;
@@ -357,7 +419,8 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     };
 
     const onThemeChange = () => {
-      initStars();
+      const { width, height } = readViewportSize(viewportRef.current);
+      if (width > 0 && height > 0) initStars(width, height);
       if (reducedMotion) drawFrame();
     };
 
@@ -375,6 +438,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     return () => {
       disposed = true;
       running = false;
+      resizeObserver?.disconnect();
       cancelSchedule();
       cancelAnimationFrame(frameId);
       themeObserver.disconnect();
@@ -389,9 +453,9 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
   const hidden = fade >= 1;
 
   return (
-    <>
+    <div ref={viewportRef} className="cosmic-viewport pointer-events-none z-[1]">
       <div
-        className="pointer-events-none fixed inset-0 z-[1] dark:hidden max-sm:[mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)] max-sm:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)]"
+        className="absolute inset-0 dark:hidden max-sm:[mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)] max-sm:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)]"
         style={{
           opacity: cosmicOpacity,
           visibility: hidden ? "hidden" : "visible",
@@ -404,7 +468,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
       />
 
       <div
-        className="pointer-events-none fixed inset-0 z-[1] max-sm:[mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)] max-sm:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)]"
+        className="absolute inset-0 max-sm:[mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)] max-sm:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,transparent_40%,black_52%)]"
         style={{
           opacity: cosmicOpacity,
           visibility: hidden ? "hidden" : "visible",
@@ -416,7 +480,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
 
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-[2]"
+        className="pointer-events-none absolute inset-0 z-[2]"
         style={{
           opacity: fade,
           visibility: fade > 0 ? "visible" : "hidden",
@@ -424,6 +488,6 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
           transition: "background-color 0.45s ease",
         }}
       />
-    </>
+    </div>
   );
 }
