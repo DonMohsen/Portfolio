@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { scheduleAfterLoadIdle } from "@/lib/schedule-idle";
 
 const ThemeToggleTree = dynamic(() => import("./ThemeToggleTree"), {
   ssr: false,
@@ -13,28 +14,11 @@ const ThemeToggleTree = dynamic(() => import("./ThemeToggleTree"), {
   ),
 });
 
-function scheduleMount(onReady: () => void) {
-  const run = () => {
-    if (typeof window.requestIdleCallback === "function") {
-      window.requestIdleCallback(onReady, { timeout: 4000 });
-      return;
-    }
-    window.setTimeout(onReady, 1500);
-  };
-
-  if (document.readyState === "complete") {
-    run();
-    return;
-  }
-
-  window.addEventListener("load", run, { once: true });
-}
-
 export default function DeferredThemeToggle() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    scheduleMount(() => setReady(true));
+    scheduleAfterLoadIdle(() => setReady(true));
   }, []);
 
   if (!ready) {

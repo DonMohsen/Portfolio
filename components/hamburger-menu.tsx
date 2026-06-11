@@ -1,14 +1,22 @@
 "use client";
 
 import useHamburgerMenu from "@/store/useHamburgerMenu";
+import { prefetchCurveMenuOverlay } from "@/components/curve-menu/prefetch";
 import clsx from "clsx";
+
 const HamburgerMenu = () => {
   const toggleHamburger = useHamburgerMenu(
     (state) => state.toggleHamburgerMenuState
   );
+  const closeMenu = useHamburgerMenu((state) => state.closeHamburgerMenuState);
   const hamburgerState = useHamburgerMenu((state) => state.hamburgerMenuState);
-  
+
   const handleToggleHamburger = () => {
+    if (hamburgerState) {
+      closeMenu();
+      return;
+    }
+    window.dispatchEvent(new CustomEvent("curve-menu:open"));
     toggleHamburger();
   };
   return (
@@ -17,6 +25,8 @@ const HamburgerMenu = () => {
       className={clsx(`ham hamRotate ham1`, hamburgerState && "active")}
       viewBox="0 0 100 100"
       width="80"
+      onPointerEnter={prefetchCurveMenuOverlay}
+      onFocus={prefetchCurveMenuOverlay}
       onClick={handleToggleHamburger}
     >
       <path

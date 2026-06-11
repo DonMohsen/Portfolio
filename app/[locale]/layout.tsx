@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "../providers/theme-provider";
-import DeferredFont from "@/components/DeferredFont";
 import DeferredHeader from "@/components/DeferredHeader";
+import { getDeferredFontScript } from "@/lib/deferred-font-script";
 import DeferredChrome from "@/components/DeferredChrome";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
@@ -114,7 +114,9 @@ export default async function LocaleLayout(props: {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
-      <DeferredFont />
+      <script
+        dangerouslySetInnerHTML={{ __html: getDeferredFontScript() }}
+      />
       <NextIntlClientProvider locale={locale} messages={messages}>
         <ThemeProvider
           attribute="class"

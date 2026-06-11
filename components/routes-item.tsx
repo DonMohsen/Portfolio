@@ -11,10 +11,12 @@ const RoutesItem = ({
   webRoute,
   className,
   childIsActive,
+  inCurveMenu = false,
 }: {
   webRoute: webRoutesType;
   className?: string;
   childIsActive?: boolean;
+  inCurveMenu?: boolean;
 }) => {
   const { routesChildren, route, isActive, text, isAChild } = webRoute;
   const [openChildren, setOpenChildren] = useState(false);
@@ -28,12 +30,24 @@ const RoutesItem = ({
   const closeHamburgerAfterClick = () => hamburgerToggle();
 
   return (
-    <div className={clsx("my-2 flex flex-col nav-item-enter", className)}>
-      <div className="flex items-center justify-between w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-black transition cursor-pointer">
+    <div className={clsx("my-2 flex min-w-0 max-w-full flex-col", className)}>
+      <div
+        className={clsx(
+          "flex w-full min-w-0 cursor-pointer items-center justify-between rounded-lg px-4 py-2 transition",
+          inCurveMenu
+            ? "bg-page-text/[0.06] text-page-text dark:bg-white/10 dark:text-white"
+            : "bg-gray-100 dark:bg-black"
+        )}
+      >
         {routesChildren && routesChildren.length > 0 && (
           <button
             onClick={() => setOpenChildren(!openChildren)}
-            className="p-1 w-[50%] flex items-center justify-center bg-slate-300 dark:bg-slate-900 rounded-xl"
+            className={clsx(
+              "flex w-[50%] items-center justify-center rounded-xl p-1",
+              inCurveMenu
+                ? "bg-page-text/10 dark:bg-white/15"
+                : "bg-slate-300 dark:bg-slate-900"
+            )}
             type="button"
             aria-expanded={openChildren}
           >
@@ -68,9 +82,14 @@ const RoutesItem = ({
       </div>
 
       {openChildren && routesChildren && (
-        <div className="nav-children-expand mr-4 overflow-hidden origin-top space-y-1">
+        <div className="nav-children-expand mr-2 min-w-0 max-w-full origin-top space-y-1 overflow-hidden">
           {routesChildren.map((child: webRoutesType) => (
-            <RoutesItem key={child.id} webRoute={child} className="pl-1" />
+            <RoutesItem
+              key={child.id}
+              webRoute={child}
+              className="pl-1"
+              inCurveMenu={inCurveMenu}
+            />
           ))}
         </div>
       )}

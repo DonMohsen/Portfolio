@@ -1,0 +1,83 @@
+/* Outer shell: no width lock, no overflow clip — curve SVG must extend left (-99px) */
+.menu {
+  height: 100vh;
+  height: 100dvh;
+  background-color: #ffffff;
+  position: fixed;
+  right: 0;
+  top: 0;
+  color: #1a2744;
+  z-index: 6000;
+  overflow: visible;
+}
+
+:global(.dark) .menu {
+  background-color: rgb(41, 41, 41);
+  color: #ffffff;
+}
+
+.body {
+  box-sizing: border-box;
+  width: min(85vw, 24rem);
+  max-width: 24rem;
+  height: 100%;
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  font-size: 56px;
+  gap: 12px;
+  margin-top: 80px;
+}
+
+.navHeader {
+  color: rgba(26, 39, 68, 0.48);
+  border-bottom: 1px solid rgba(26, 39, 68, 0.12);
+  text-transform: uppercase;
+  font-size: 11px;
+  margin-bottom: 40px;
+}
+
+:global(.dark) .navHeader {
+  color: rgb(153, 153, 153);
+  border-bottom-color: rgb(153, 153, 153);
+}
+
+.body a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 300;
+}
+
+.portfolioBody {
+  justify-content: flex-start;
+}
+
+.portfolioNav {
+  width: 100%;
+  min-width: 0;
+  font-size: 1rem;
+  margin-top: 48px;
+  gap: 8px;
+}
+
+@media (max-width: 767px) {
+  .body {
+    padding: 88px 28px 32px;
+  }
+
+  .portfolioBody {
+    padding-top: 72px;
+  }
+
+  .portfolioNav {
+    margin-top: 32px;
+  }
+}
