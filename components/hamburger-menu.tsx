@@ -1,7 +1,10 @@
 "use client";
 
 import useHamburgerMenu from "@/store/useHamburgerMenu";
-import { prefetchCurveMenuOverlay } from "@/components/curve-menu/prefetch";
+import {
+  prepareCurveMenuOverlay,
+  prefetchCurveMenuOverlay,
+} from "@/components/curve-menu/prefetch";
 import clsx from "clsx";
 
 const HamburgerMenu = () => {
@@ -25,8 +28,12 @@ const HamburgerMenu = () => {
       className={clsx(`ham hamRotate ham1`, hamburgerState && "active")}
       viewBox="0 0 100 100"
       width="80"
+      onTouchStart={prepareCurveMenuOverlay}
+      onPointerDown={(event) => {
+        if (event.pointerType === "touch") prepareCurveMenuOverlay();
+      }}
       onPointerEnter={prefetchCurveMenuOverlay}
-      onFocus={prefetchCurveMenuOverlay}
+      onFocus={prepareCurveMenuOverlay}
       onClick={handleToggleHamburger}
     >
       <path
