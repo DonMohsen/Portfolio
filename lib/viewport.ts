@@ -1,10 +1,16 @@
-/** 1% of the visible viewport — locked on load / orientationchange only. */
+/** 1% of the visible viewport — locked on load; refreshed on desktop resize / orientation. */
 export const DVH_CSS_VAR = "--dvh";
+export const DVH_SYNC_EVENT = "dvh-sync";
 
 export function syncDvhUnit() {
   if (typeof window === "undefined") return;
   const unit = window.innerHeight * 0.01;
   document.documentElement.style.setProperty(DVH_CSS_VAR, `${unit}px`);
+}
+
+export function dispatchDvhSync() {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new Event(DVH_SYNC_EVENT));
 }
 
 /** Locked hero height from --dvh (set once on load / orientationchange). */
@@ -30,4 +36,10 @@ export function readViewportSize(container: HTMLElement | null) {
 
 export function readViewportHeight(container?: HTMLElement | null) {
   return readViewportSize(container ?? null).height;
+}
+
+/** Live visible viewport height — tracks mobile browser chrome (address bar). */
+export function readVisualViewportHeight() {
+  if (typeof window === "undefined") return 0;
+  return Math.round(window.visualViewport?.height ?? window.innerHeight);
 }

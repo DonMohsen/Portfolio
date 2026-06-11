@@ -23,7 +23,10 @@ export default function CurveMenu({ children, bodyClassName }: CurveMenuProps) {
       exit="exit"
       className={`${styles.menu} md:hidden`}
     >
-      <div className={`${styles.body} ${bodyClassName ?? ""}`.trim()}>
+      <div
+        data-curve-menu-body
+        className={`${styles.body} ${bodyClassName ?? ""}`.trim()}
+      >
         {children}
       </div>
       <Curve />

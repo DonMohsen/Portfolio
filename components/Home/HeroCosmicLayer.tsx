@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { isDarkTheme, readPageBg } from "@/lib/brand";
-import { readViewportHeight, readViewportSize } from "@/lib/viewport";
+import {
+  DVH_SYNC_EVENT,
+  readViewportHeight,
+  readViewportSize,
+} from "@/lib/viewport";
 
 type HeroCosmicLayerProps = {
   align?: "left" | "right";
@@ -229,14 +233,23 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
       frame = requestAnimationFrame(updateFade);
     };
 
+    const onLayoutChange = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updateFade);
+    };
+
     updateFade();
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onLayoutChange, { passive: true });
+    window.addEventListener(DVH_SYNC_EVENT, onLayoutChange);
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onLayoutChange);
+      window.removeEventListener(DVH_SYNC_EVENT, onLayoutChange);
     };
   }, []);
 
@@ -451,6 +464,8 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     const themeObserver = new MutationObserver(onThemeChange);
 
     window.addEventListener("orientationchange", onOrientationChange);
+    window.addEventListener("resize", onLayoutResize, { passive: true });
+    window.addEventListener(DVH_SYNC_EVENT, onLayoutResize);
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseleave", onLeave);
     document.addEventListener("visibilitychange", onVisibility);
@@ -466,6 +481,8 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
       cancelAnimationFrame(frameId);
       themeObserver.disconnect();
       window.removeEventListener("orientationchange", onOrientationChange);
+      window.removeEventListener("resize", onLayoutResize);
+      window.removeEventListener(DVH_SYNC_EVENT, onLayoutResize);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
       document.removeEventListener("visibilitychange", onVisibility);
