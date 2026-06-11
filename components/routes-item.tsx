@@ -6,7 +6,7 @@ import useHamburgerMenu from "@/store/useHamburgerMenu";
 import Link from "next/link";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
 import clsx from "clsx";
-import { prefetchPageTransition } from "@/components/page-transition/prefetch";
+import { preparePageTransition } from "@/components/page-transition/prefetch";
 
 const RoutesItem = ({
   webRoute,
@@ -62,8 +62,8 @@ const RoutesItem = ({
         )}
         <Link
           onClick={closeHamburgerAfterClick}
-          onPointerEnter={prefetchPageTransition}
-          onFocus={prefetchPageTransition}
+          onPointerEnter={preparePageTransition}
+          onFocus={preparePageTransition}
           href={route}
           className="flex items-center space-x-3 w-full"
         >

@@ -3,10 +3,15 @@ import HeroGalaxyCards, {
   type HeroInfoCard,
 } from "@/components/Home/HeroGalaxyCards";
 import HeroCosmicDynamic from "@/components/Home/HeroCosmicDynamic";
+import { getHomeProjectsOverviewData } from "@/lib/home-projects";
 import Link from "next/link";
 
 const TechStackScroller = nextDynamic(
   () => import("@/components/Home/TechStackScroller")
+);
+
+const ProjectsOverview = nextDynamic(
+  () => import("@/components/Home/ProjectsOverview")
 );
 
 const HomeBelowFold = nextDynamic(
@@ -100,6 +105,7 @@ export default async function HomePage(props: { params: Params }) {
   const { locale } = await props.params;
   const isFa = locale === "fa";
   const heroCards = isFa ? HERO_GALAXY_FA : HERO_GALAXY_EN;
+  const { projects, projectCount } = await getHomeProjectsOverviewData();
 
   return (
     <div className="w-full bg-page transition-colors duration-500">
@@ -119,7 +125,7 @@ export default async function HomePage(props: { params: Params }) {
               ? "مهندس فرانت‌اند و سازنده محصول"
               : "Frontend Engineer & Builder"}
           </p>
-          <p className="mt-5 max-w-[560px] text-[15px] leading-7 text-page-subtle sm:text-[16px] sm:leading-8">
+          <p className="mt-5 max-w-[560px] line-clamp-2 text-[15px] leading-6 text-page-subtle sm:line-clamp-3 sm:text-[16px] sm:leading-8 lg:line-clamp-none">
             {isFa
               ? "اپلیکیشن‌های قابل‌اعتماد با React و Next.js می‌سازم و ابزارهای AI را در جریان واقعی توسعه استفاده می‌کنم، با تمرکز روی معماری، کیفیت و تحویل دقیق."
               : "I build reliable web apps with React and Next.js, and I use AI tools in real workflows while keeping architecture, quality, and shipping discipline."}
@@ -141,7 +147,14 @@ export default async function HomePage(props: { params: Params }) {
 
       <div className="relative z-10">
         <TechStackScroller />
-        <HomeBelowFold locale={locale} />
+        <div className="relative z-10 px-3 md:px-10 [content-visibility:auto] [contain-intrinsic-size:auto_1200px]">
+          <ProjectsOverview
+            projects={projects}
+            locale={locale}
+            projectCount={projectCount}
+          />
+        </div>
+        <HomeBelowFold />
       </div>
     </div>
   );

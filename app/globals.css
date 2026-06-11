@@ -91,6 +91,10 @@ body {
   height: calc(var(--dvh, 1dvh) * 100);
 }
 
+.project-lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.85);
+}
+
 .ham {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -222,13 +226,18 @@ body {
 .hero-lcp {
   container-type: inline-size;
   width: 100%;
+  min-height: 7.25rem;
   font-synthesis: weight style;
   font-size-adjust: 0.48;
 }
 
+[lang="en"] .hero-lcp {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .hero-lcp-given {
-  font-size: clamp(2rem, 8vw, 2.75rem);
-  line-height: 1.1;
+  font-size: clamp(2.35rem, 10vw, 2.75rem);
+  line-height: 1.08;
 }
 
 @media (min-width: 640px) {

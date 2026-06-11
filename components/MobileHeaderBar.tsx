@@ -10,7 +10,7 @@ const LanguageSwitcher = dynamic(() => import("./language-switcher"), {
   ssr: false,
   loading: () => (
     <div
-      className="h-[26px] w-[72px] rounded-md border border-black/10 dark:border-white/20"
+      className="h-9 w-9 rounded-lg border border-black/10 dark:border-white/20"
       aria-hidden
     />
   ),

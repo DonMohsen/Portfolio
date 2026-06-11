@@ -7,7 +7,7 @@ import useWebRoutes from "@/app/utils/useWebRoutes";
 import { webRoutesType } from "@/app/Types/webRoutesTypes";
 import LanguageSwitcher from "./language-switcher";
 import DeferredThemeToggle from "./DeferredThemeToggle";
-import { prefetchPageTransition } from "@/components/page-transition/prefetch";
+import { preparePageTransition } from "@/components/page-transition/prefetch";
 
 export default function DesktopHeaderNav() {
   const webRoutes = useWebRoutes();
@@ -25,8 +25,8 @@ export default function DesktopHeaderNav() {
         >
           <Link
             href={item.route}
-            onPointerEnter={prefetchPageTransition}
-            onFocus={prefetchPageTransition}
+            onPointerEnter={preparePageTransition}
+            onFocus={preparePageTransition}
             className="text-black dark:text-white flex items-center space-x-1 py-3 px-4 dark:hover:text-neutral-300 hover:text-neutral-500"
           >
             <span className="text-xs !cursor-pointer">{item?.text}</span>
@@ -47,8 +47,8 @@ export default function DesktopHeaderNav() {
                     <Link
                       key={child.id}
                       href={child.route}
-                      onPointerEnter={prefetchPageTransition}
-                      onFocus={prefetchPageTransition}
+                      onPointerEnter={preparePageTransition}
+                      onFocus={preparePageTransition}
                       className="block py-2 px-4 text-black dark:text-white text-right dark:hover:bg-gray-800 hover:bg-gray-100 hover:rounded-md transition-all"
                       aria-label={child.text}
                     >

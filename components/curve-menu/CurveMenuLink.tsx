@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { prefetchPageTransition } from "@/components/page-transition/prefetch";
+import { preparePageTransition } from "@/components/page-transition/prefetch";
 import { motion } from "framer-motion";
 import { scale, slide } from "./anim";
 import styles from "./curve-menu-link.module.css";
@@ -43,8 +43,8 @@ export default function CurveMenuLink({
       <Link
         href={href}
         onClick={onNavigate}
-        onPointerEnter={prefetchPageTransition}
-        onFocus={prefetchPageTransition}
+        onPointerEnter={preparePageTransition}
+        onFocus={preparePageTransition}
       >
         {title}
       </Link>
