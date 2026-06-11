@@ -220,5 +220,33 @@ body {
 
 /* LCP hero: synthetic bold until real 700 loads on interaction */
 .hero-lcp {
+  container-type: inline-size;
+  width: 100%;
   font-synthesis: weight style;
+  font-size-adjust: 0.48;
+}
+
+.hero-lcp-given {
+  font-size: clamp(2rem, 8vw, 2.75rem);
+  line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  .hero-lcp-given {
+    font-size: 3.75rem;
+    line-height: 1.08;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-lcp-given {
+    font-size: 4.5rem;
+  }
+}
+
+/* Surname always one line — scales with hero column width */
+.hero-lcp-surname {
+  font-size: clamp(0.95rem, 8.25cqw, 4.5rem);
+  line-height: 1.1;
+  white-space: nowrap;
 }

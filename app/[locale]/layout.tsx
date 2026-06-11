@@ -6,6 +6,7 @@ import { ThemeProvider } from "../providers/theme-provider";
 import DeferredHeader from "@/components/DeferredHeader";
 import { getDeferredFontScript } from "@/lib/deferred-font-script";
 import DeferredChrome from "@/components/DeferredChrome";
+import DeferredPageTransition from "@/components/page-transition/DeferredPageTransition";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 
@@ -127,6 +128,7 @@ export default async function LocaleLayout(props: {
           <DeferredHeader />
           <main className="bg-page">{children}</main>
           <DeferredChrome />
+          <DeferredPageTransition />
         </ThemeProvider>
       </NextIntlClientProvider>
     </div>

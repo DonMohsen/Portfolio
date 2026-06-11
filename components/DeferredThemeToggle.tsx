@@ -18,7 +18,7 @@ export default function DeferredThemeToggle() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    scheduleAfterLoadIdle(() => setReady(true));
+    scheduleAfterLoadIdle(() => setReady(true), { minDelayMs: 1500 });
   }, []);
 
   if (!ready) {
