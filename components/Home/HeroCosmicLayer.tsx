@@ -428,6 +428,21 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     const scheduleId = requestAnimationFrame(start);
     const cancelSchedule = () => cancelAnimationFrame(scheduleId);
 
+    const onLayoutResize = () => {
+      const container = viewportRef.current;
+      if (!container) return;
+
+      const { width, height } = readViewportSize(container);
+      const crossedLayout =
+        (lastWidth < 1024 && width >= 1024) ||
+        (lastWidth >= 1024 && width < 1024) ||
+        (lastWidth < MAX_SM_BREAKPOINT && width >= MAX_SM_BREAKPOINT) ||
+        (lastWidth >= MAX_SM_BREAKPOINT && width < MAX_SM_BREAKPOINT);
+
+      resize(crossedLayout || height !== lastHeight);
+      if (reducedMotion) drawFrame();
+    };
+
     const onOrientationChange = () => {
       resize(true);
       if (reducedMotion) drawFrame();
