@@ -139,7 +139,7 @@ export default async function HomePage(props: { params: Params }) {
         </div>
       </section>
 
-      <div className="relative z-10 [content-visibility:auto]">
+      <div className="relative z-10">
         <TechStackScroller />
         <HomeBelowFold locale={locale} />
       </div>
