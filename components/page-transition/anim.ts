@@ -6,18 +6,18 @@ export const curveEaseOut = [0.33, 1, 0.68, 1] as const;
 
 /** Route label — visible while the curve covers the screen. */
 export const routeText: Variants = {
-  coverFrom: { opacity: 0, top: "47.5%" },
+  coverFrom: { opacity: 0, top: "50%" },
   coverTo: {
     opacity: 1,
-    top: "40%",
+    top: "50%",
     transition: { duration: 0.5, delay: 0.4, ease: curveEaseOut },
   },
-  revealFrom: { opacity: 1, top: "40%" },
+  revealFrom: { opacity: 1, top: "50%" },
   revealTo: {
     opacity: 0,
     top: -100,
     transition: { duration: 0.75, delay: 0.35, ease: curveEase },
-    transitionEnd: { top: "47.5%" },
+    transitionEnd: { top: "50%" },
   },
 };
 

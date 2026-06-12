@@ -1,39 +1,11 @@
-"use client";
+import ProjectsGridSkeleton from "@/components/Projects/projects-grid-skeleton";
 
-import { motion } from "framer-motion";
-import { useEffect } from "react";
-
-export default function Loading() {
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }, []);
-
+export default function ProjectsLoading() {
   return (
-    <div className="flex h-[101dvh] items-center justify-center bg-transparent w-full">
-      <motion.div
-        className="relative flex space-x-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="h-4 w-4 rounded-full bg-black dark:bg-white"
-            animate={{
-              y: [0, -10, 0],
-            }}
-            transition={{
-              duration: 0.6,
-              repeat: Infinity,
-              repeatDelay: 0.2,
-              delay: i * 0.2,
-            }}
-          />
-        ))}
-      </motion.div>
+    <div className="flex flex-col bg-page w-full mt-[100px] px-5">
+      <div className="w-full max-w-xl h-10 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-md my-4 ms-auto" />
+      <div className="w-full h-12 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-xl mb-4" />
+      <ProjectsGridSkeleton />
     </div>
   );
 }

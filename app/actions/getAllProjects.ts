@@ -33,6 +33,7 @@ export const getAllProjects = async (search: string, order: string, type: string
           technology: true,
         },
       },
+      _count: true,
     },
     orderBy: {
       createdAt: order === "asc" ? "asc" : "desc",

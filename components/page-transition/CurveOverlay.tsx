@@ -121,6 +121,7 @@ export default function CurveOverlay({
       />
       <motion.p
         className={styles.route}
+        style={{ x: "-50%", y: "-50%" }}
         {...motionPhaseProps(routeText, phase, fromCovered, () => {})}
       >
         {routeLabel}
