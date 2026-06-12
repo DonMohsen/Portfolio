@@ -1,5 +1,6 @@
+import { ABOVE_FOLD_PROJECT_CARD_COUNT } from "@/lib/projects/project-card-styles";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
-import ProjectCardItem from "./ProjectCardItem";
+import ProjectListingCard from "./ProjectListingCard";
 
 type ProjectsGridProps = {
   projects: ProjectsWithTechsType[];
@@ -26,14 +27,12 @@ export default function ProjectsGrid({ projects, locale }: ProjectsGridProps) {
       dir={isFa ? "rtl" : "ltr"}
     >
       {projects.map((project, index) => (
-        <div
-          key={project.id}
-          className={index > 2 ? "[content-visibility:auto]" : undefined}
-        >
-          <ProjectCardItem
+        <div key={project.id}>
+          <ProjectListingCard
             project={project}
             locale={locale}
             priorityImage={index === 0}
+            eagerImage={index > 0 && index < ABOVE_FOLD_PROJECT_CARD_COUNT}
           />
         </div>
       ))}

@@ -32,6 +32,7 @@ const nextConfig: NextConfig = {
       "@radix-ui/react-icons",
       "@heroicons/react",
     ],
+    optimizeCss: true,
   },
   turbopack: {
     resolveAlias: {

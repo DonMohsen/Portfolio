@@ -1,5 +1,4 @@
-import { Suspense } from "react";
-import ProjectsFilters from "@/components/Projects/projects-filters";
+import ProjectsFiltersDeferred from "@/components/Projects/projects-filters-deferred";
 import type { Metadata } from "next";
 
 type Params = Promise<{ locale: string }>;
@@ -27,9 +26,7 @@ export default function ProjectsLayout({
     <div className="flex flex-row items-start justify-center px-5 mt-[100px] max-md:mt-[100px] gap-6">
       <div className="flex-1 min-w-0">{children}</div>
       <aside className="w-[275px] shrink-0 max-lg:hidden sticky top-[100px]">
-        <Suspense fallback={<div className="h-48 animate-pulse bg-slate-100 dark:bg-slate-900 rounded-lg" />}>
-          <ProjectsFilters />
-        </Suspense>
+        <ProjectsFiltersDeferred />
       </aside>
     </div>
   );

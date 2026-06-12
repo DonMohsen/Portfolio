@@ -1,7 +1,8 @@
-import { Suspense } from "react";
 import { getProjectsListingData } from "@/lib/projects/get-projects-listing";
-import ProjectsToolbar from "@/components/Projects/projects-toolbar";
+import { resolveListingCoverSrc } from "@/lib/projects/listing-card-image";
 import ProjectsGrid from "@/components/Projects/projects-grid";
+import ProjectsToolbarDeferred from "@/components/Projects/projects-toolbar-deferred";
+import ProjectLcpPreloadLink from "@/components/Projects/project-lcp-preload-link";
 
 export const revalidate = 600;
 
@@ -22,17 +23,22 @@ export default async function ProjectsPage({ params, searchParams }: Props) {
   const type = sp.type ?? "";
 
   const projects = await getProjectsListingData(search, order, type);
+  const lcpCover = resolveListingCoverSrc(projects[0]?.image);
 
   return (
-    <div className="flex flex-col bg-page w-full min-h-[50vh]">
-      <Suspense
-        fallback={
-          <div className="w-full h-32 animate-pulse bg-slate-100 dark:bg-slate-900 rounded-xl my-4" />
-        }
-      >
-        <ProjectsToolbar locale={locale} resultCount={projects.length} />
-      </Suspense>
-      <ProjectsGrid projects={projects} locale={locale} />
-    </div>
+    <>
+      {lcpCover ? <ProjectLcpPreloadLink src={lcpCover} /> : null}
+      <div className="flex flex-col bg-page w-full min-h-[50vh]">
+        {/* Grid first in DOM so LCP images are discoverable before deferred client JS. */}
+        <ProjectsGrid projects={projects} locale={locale} />
+
+        <div className="order-first flex flex-col">
+          <ProjectsToolbarDeferred
+            locale={locale}
+            resultCount={projects.length}
+          />
+        </div>
+      </div>
+    </>
   );
 }

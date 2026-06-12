@@ -1,10 +1,15 @@
 "use client";
 
+import nextDynamic from "next/dynamic";
 import { Layers, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { getPersianNumbers } from "@/utils/numbers";
-import ProjectsFilterDrawer from "./projects-filter-drawer";
+
+const ProjectsFilterDrawer = nextDynamic(
+  () => import("./projects-filter-drawer"),
+  { ssr: false }
+);
 
 type ProjectsToolbarProps = {
   locale: string;
