@@ -1,4 +1,6 @@
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
+import { getProjectSlug } from "@/lib/projects/get-project-slug";
+import { parseProjectImages } from "@/lib/projects/parse-project-images";
 import { ProjectOverviewItem } from "./types";
 
 const PROJECT_TYPE_LABELS: Record<
@@ -11,15 +13,7 @@ const PROJECT_TYPE_LABELS: Record<
   Forked: { en: "Open Fork", fa: "فورک شده" },
 };
 
-/** Supports comma-separated URLs in `image` until a gallery field exists in admin. */
-export function parseProjectImages(image: string | null | undefined): string[] {
-  if (!image?.trim()) return [];
-
-  return image
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter(Boolean);
-}
+export { parseProjectImages } from "@/lib/projects/parse-project-images";
 
 export function mapProjectToOverview(
   project: ProjectsWithTechsType,
@@ -43,7 +37,7 @@ export function mapProjectToOverview(
     isOpenSource: Boolean(project.githubLink),
     githubUrl: project.githubLink || null,
     liveUrl: project.liveLink || null,
-    detailHref: `/${locale}/projects/${project.id}`,
+    detailHref: `/${locale}/projects/${getProjectSlug(project)}`,
     technologies,
   };
 }

@@ -27,6 +27,7 @@ export const getLatestProjectsForHome = unstable_cache(
   },
   ["home-latest-projects"],
   {
-    revalidate: false,
+    revalidate: 600,
+    tags: ["project"],
   }
 );

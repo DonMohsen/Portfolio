@@ -9,6 +9,7 @@ import { getPersianNumbers } from "@/utils/numbers";
 import CompetencyCircle from "../CompetencyMeter";
 import { getProjectCompetencyColor } from "@/lib/getProjectCompetencyColor";
 import { useLocale } from "next-intl";
+import { getProjectSlug } from "@/lib/projects/get-project-slug";
 
 const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
   const locale = useLocale();
@@ -39,7 +40,7 @@ const ProjectCardItem = ({ project }: { project: ProjectsWithTechsType }) => {
   return (
     <>
       <Link
-        href={`/${locale}/projects/${project.id}`}
+        href={`/${locale}/projects/${getProjectSlug(project)}`}
         className="relative   overflow-hidden group border-black/[0.1] dark:border-white/[0.4] border-[0.1px]  dark:bg-black text-white flex flex-col  rounded-[8px]   duration-300"
       >
         {/* Image Container */}

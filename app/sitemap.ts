@@ -1,35 +1,44 @@
-import type { MetadataRoute } from 'next'
- 
-export default function sitemap(): MetadataRoute.Sitemap {
+import type { MetadataRoute } from "next";
+import { getAllProjectSlugs } from "@/lib/projects/get-all-project-slugs";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const locales = ["fa", "en"] as const;
+  const projectSlugs = await getAllProjectSlugs();
+
   const localeEntries = locales.flatMap((locale) => [
     {
       url: `https://donmohsen.ir/${locale}`,
       lastModified: new Date(),
-      changeFrequency: 'daily' as const,
+      changeFrequency: "daily" as const,
       priority: 1,
     },
     {
       url: `https://donmohsen.ir/${locale}/projects`,
       lastModified: new Date(),
-      changeFrequency: 'daily' as const,
+      changeFrequency: "daily" as const,
       priority: 0.8,
     },
     {
       url: `https://donmohsen.ir/${locale}/blogs`,
       lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
+      changeFrequency: "weekly" as const,
       priority: 0.6,
-    }
+    },
+    ...projectSlugs.map((slug) => ({
+      url: `https://donmohsen.ir/${locale}/projects/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
   ]);
 
   return [
     {
-      url: 'https://donmohsen.ir',
+      url: "https://donmohsen.ir",
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: "daily",
       priority: 1,
     },
-    ...localeEntries
-  ]
+    ...localeEntries,
+  ];
 }
