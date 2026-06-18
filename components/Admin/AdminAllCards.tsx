@@ -12,7 +12,12 @@ import ConfirmModal, { ModalEnum } from "../Modals/confirm-modal";
 import useConfirmModal from "@/store/useConfirmModal";
 import { useToast } from "@/hooks/use-toast";
 
-const AdminAllCards = () => {
+type AdminAllCardsProps = {
+  accessToken: string;
+  onUnauthorized: () => void;
+};
+
+const AdminAllCards = ({ accessToken, onUnauthorized }: AdminAllCardsProps) => {
   const [formType, setFormType] = useState<"put" | "post" | "delete">("put");
   const [currentProject, setCurrentProject] = useState<ProjectsWithTechsType>();
   const { isOpen, setFormState, toggleForm } = useProjectForm();
@@ -50,7 +55,9 @@ const AdminAllCards = () => {
       setDeletionLoading(true);
 
       const deletedProject = await axios
-        .delete(`/api/project/${deletingProjectId}`)
+        .delete(`/api/project/${deletingProjectId}`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
 
         .then((response) => {
           const deletedProjectData = response.data.deleted;
@@ -62,6 +69,11 @@ const AdminAllCards = () => {
           console.log("Project deleted:", response);
         })
         .catch((error) => {
+          if (axios.isAxiosError(error) && error.response?.status === 401) {
+            onUnauthorized();
+            return;
+          }
+
           toast({
             title: "Error",
             description: `Failed to delete project. Please try again.`,
@@ -104,7 +116,12 @@ const AdminAllCards = () => {
 
       <AnimatePresence>
         {isOpen === true && (
-          <ProjectForm type={formType} project={currentProject} />
+          <ProjectForm
+            type={formType}
+            project={currentProject}
+            accessToken={accessToken}
+            onUnauthorized={onUnauthorized}
+          />
         )}
       </AnimatePresence>
       {isLoading &&

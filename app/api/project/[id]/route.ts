@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { revalidateTag } from "next/cache";
+import { requireBearerAdmin, unauthorizedResponse } from "@/lib/auth/admin-auth";
+
+export const runtime = "nodejs";
 
 export async function GET(
   request: NextRequest,
@@ -45,6 +48,12 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
+  const admin = await requireBearerAdmin(request);
+
+  if (!admin) {
+    return unauthorizedResponse();
+  }
+
   const { id } = await params;
   const numberId = parseInt(id, 10);
 
@@ -118,6 +127,12 @@ export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
   ): Promise<NextResponse> {     try {
+    const admin = await requireBearerAdmin(request);
+
+    if (!admin) {
+      return unauthorizedResponse();
+    }
+
     const { id } = await params;
     const numberId = parseInt(id, 10);
   

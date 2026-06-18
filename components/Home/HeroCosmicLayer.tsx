@@ -513,7 +513,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
   return (
     <div
       ref={viewportRef}
-      className="cosmic-viewport"
+      className="cosmic-viewport scroll-lock-compensate"
       style={{
         ...dissolveMask,
         opacity: layerOpacity,

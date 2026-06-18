@@ -40,7 +40,7 @@ export default function ProjectTechStackAvatars({
             width={20}
             height={20}
             sizes="20px"
-            className="h-5 w-5 object-contain dark:brightness-0 dark:invert"
+            className="tech-stack-icon h-5 w-5 object-contain"
           />
         </div>
       ))}

@@ -54,6 +54,10 @@
   --cosmic-line: rgba(248, 183, 140, 0.15);
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   background-color: var(--page-bg);
@@ -63,9 +67,52 @@ body {
   transition: background-color 0.45s ease, color 0.45s ease;
 }
 
+html.scroll-locked {
+  overflow: hidden;
+}
+
+html.scroll-locked .scroll-lock-compensate {
+  padding-right: var(--scroll-lock-scrollbar-width, 0px);
+}
+
 body {
   min-height: calc(var(--dvh, 1dvh) * 100);
   font-family: var(--font-iranyekan), Arial, Helvetica, sans-serif;
+}
+
+.site-header-bar {
+  --header-surface: 0;
+  background-color: color-mix(
+    in srgb,
+    var(--page-bg) calc(var(--header-surface) * 100%),
+    transparent
+  );
+  border-bottom: 1px solid color-mix(
+    in srgb,
+    var(--page-text) calc(var(--header-surface) * 20%),
+    transparent
+  );
+  contain: layout style;
+}
+
+/* Monochrome tech logos — matches design tokens in both themes */
+.tech-stack-icon {
+  filter: brightness(0) saturate(100%);
+  opacity: 0.58;
+  transition: opacity 0.3s ease;
+}
+
+.tech-stack-icon:hover {
+  opacity: 0.78;
+}
+
+.dark .tech-stack-icon {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+.dark .tech-stack-icon:hover {
+  opacity: 1;
 }
 
 /* Fixed cosmic + light glow: height locked via --dvh (not live 100dvh) */

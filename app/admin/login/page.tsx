@@ -1,18 +1,16 @@
 import { redirect } from "next/navigation";
 import { getRefreshSessionUser } from "@/lib/auth/admin-auth";
-import AdminPageClient from "./AdminPageClient";
+import AdminLoginForm from "./AdminLoginForm";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-const AdminPage = async () => {
+export default async function AdminLoginPage() {
   const admin = await getRefreshSessionUser();
 
-  if (!admin) {
-    redirect("/admin/login");
+  if (admin) {
+    redirect("/admin");
   }
 
-  return <AdminPageClient username={admin.username} />;
-};
-
-export default AdminPage
+  return <AdminLoginForm />;
+}

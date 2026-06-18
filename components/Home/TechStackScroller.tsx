@@ -77,7 +77,7 @@ function MarqueeRow({
             <div className="flex w-[148px] flex-col items-center justify-center rounded-lg border border-tech-card-border bg-tech-card px-3 py-3 shadow-none transition-colors duration-500 hover:border-page-text/20 max-md:w-[124px] max-md:py-2.5">
               <div className="flex h-9 w-9 items-center justify-center max-md:h-8 max-md:w-8">
                 <Image
-                  className="h-6 w-6 shrink-0 object-contain opacity-90 transition-opacity duration-300 hover:opacity-100 dark:brightness-0 dark:invert dark:opacity-100 max-md:h-5 max-md:w-5"
+                  className="tech-stack-icon h-6 w-6 shrink-0 object-contain max-md:h-5 max-md:w-5"
                   alt=""
                   aria-hidden
                   src={item.src}

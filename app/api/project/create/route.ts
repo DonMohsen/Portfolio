@@ -2,8 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { revalidateTag } from "next/cache"; // Import revalidation
+import { requireBearerAdmin, unauthorizedResponse } from "@/lib/auth/admin-auth";
+
+export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
+  const admin = await requireBearerAdmin(req);
+
+  if (!admin) {
+    return unauthorizedResponse();
+  }
+
   try {
     const projectData: Prisma.ProjectsCreateInput = await req.json();
 

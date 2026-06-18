@@ -1,11 +1,21 @@
-import {  NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
   Prisma,
   Technology,
 } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { revalidateTag } from "next/cache";
-export async function POST(request: Request) {
+import { requireBearerAdmin, unauthorizedResponse } from "@/lib/auth/admin-auth";
+
+export const runtime = "nodejs";
+
+export async function POST(request: NextRequest) {
+  const admin = await requireBearerAdmin(request);
+
+  if (!admin) {
+    return unauthorizedResponse();
+  }
+
   try {
     const body: Prisma.TechnologyCreateInput = await request.json();
     if (!body.name || !body.imageUrl) {

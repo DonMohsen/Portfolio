@@ -5,6 +5,7 @@ import clsx from "clsx";
 import HamburgerMenu from "./hamburger-menu";
 import DeferredThemeToggle from "./DeferredThemeToggle";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
+import SiteHeaderShell from "./SiteHeaderShell";
 
 const LanguageSwitcher = dynamic(() => import("./language-switcher"), {
   ssr: false,
@@ -20,17 +21,17 @@ export default function MobileHeaderBar() {
   const menuOpen = useHamburgerMenu((state) => state.hamburgerMenuState);
 
   return (
-    <div
+    <SiteHeaderShell
       className={clsx(
-        "flex h-[60px] w-full fixed inset-x-0 top-0 z-[7000] mx-auto items-center justify-end bg-page/80 px-3 backdrop-blur-sm transition-colors duration-300 max-md:pt-3 md:hidden",
+        "fixed inset-x-0 top-0 z-[7000] mx-auto flex h-[52px] w-full items-center justify-end px-3 md:hidden",
         menuOpen && "pointer-events-none"
       )}
     >
-      <div className="pointer-events-auto relative z-[7001] flex items-center gap-3 -translate-y-1 translate-x-5">
+      <div className="pointer-events-auto relative z-[7001] flex items-center gap-2.5">
         <LanguageSwitcher />
         <DeferredThemeToggle />
         <HamburgerMenu />
       </div>
-    </div>
+    </SiteHeaderShell>
   );
 }

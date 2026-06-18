@@ -47,7 +47,12 @@ const FormSchema = z.object({
 });
 
 type FormData = z.infer<typeof FormSchema>;
-const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
+const ProjectForm: React.FC<ProjectFormProps> = ({
+  type,
+  project,
+  accessToken,
+  onUnauthorized,
+}) => {
   async function fetchTechs(): Promise<Technology[]> {
     const response = await axios.get("/api/technologies");
     return response.data;
@@ -123,9 +128,13 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
   
       setCreationLoading(true);
   
-      const apiCall = type === "post" 
-        ? axios.post("/api/project/create", formPayload)
-        : axios.put(`/api/project/${project?.id}`, formPayload);
+      const apiCall = type === "post"
+        ? axios.post("/api/project/create", formPayload, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          })
+        : axios.put(`/api/project/${project?.id}`, formPayload, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
   
       apiCall
         .then((response) => {
@@ -136,6 +145,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
           console.log("Project submitted:", response);
         })
         .catch((error) => {
+          if (axios.isAxiosError(error) && error.response?.status === 401) {
+            onUnauthorized();
+            return;
+          }
+
           toast({
             title: "Error",
             description: `Failed to ${type === "post" ? "create" : "update"} project. Please try again.`,
@@ -184,7 +198,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
         setCreationLoading(true);
   
         axios
-          .post("/api/project/create", formPayload)
+          .post("/api/project/create", formPayload, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          })
           .then((response) => {
             toast({
               title: "Success",
@@ -193,6 +209,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
             console.log("Project submitted:", response);
           })
           .catch((error) => {
+            if (axios.isAxiosError(error) && error.response?.status === 401) {
+              onUnauthorized();
+              return;
+            }
+
             toast({
               title: "Error",
               description: "Failed to create project. Please try again.",
@@ -229,7 +250,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
         setCreationLoading(true);
   
         axios
-          .put(`/api/project/${project?.id}`, formPayload)
+          .put(`/api/project/${project?.id}`, formPayload, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          })
           .then((response) => {
             toast({
               title: "Success",
@@ -238,6 +261,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ type, project }) => {
             console.log("Project submitted:", response);
           })
           .catch((error) => {
+            if (axios.isAxiosError(error) && error.response?.status === 401) {
+              onUnauthorized();
+              return;
+            }
+
             toast({
               title: "Error",
               description: "Failed to update project. Please try again.",

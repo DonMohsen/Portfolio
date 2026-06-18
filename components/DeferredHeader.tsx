@@ -6,7 +6,7 @@ const Header = dynamic(
   () => import("@/components/header").then((mod) => mod.Header),
   {
     ssr: false,
-    loading: () => <div className="h-[60px] shrink-0" aria-hidden />,
+    loading: () => <div className="h-[52px] shrink-0" aria-hidden />,
   }
 );
 

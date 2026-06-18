@@ -25,9 +25,10 @@ const HamburgerMenu = () => {
   return (
     <div className="z-[100000]">
     <svg
-      className={clsx(`ham hamRotate ham1`, hamburgerState && "active")}
+      className={clsx("ham hamRotate ham1 h-12 w-12 shrink-0", hamburgerState && "active")}
       viewBox="0 0 100 100"
-      width="80"
+      width="48"
+      height="48"
       onTouchStart={prepareCurveMenuOverlay}
       onPointerDown={(event) => {
         if (event.pointerType === "touch") prepareCurveMenuOverlay();
