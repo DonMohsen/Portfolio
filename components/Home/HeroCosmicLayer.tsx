@@ -10,6 +10,7 @@ import {
 
 type HeroCosmicLayerProps = {
   align?: "left" | "right";
+  active?: boolean;
 };
 
 const DESKTOP_STARS = 48;
@@ -186,14 +187,22 @@ function dissolveMaskStyle(narrowMobile: boolean): CSSProperties {
   };
 }
 
-export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProps) {
+export default function HeroCosmicLayer({
+  align = "right",
+  active = true,
+}: HeroCosmicLayerProps) {
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fadeRef = useRef(0);
+  const activeRef = useRef(active);
   const isDarkRef = useRef(true);
   const [fade, setFade] = useState(0);
   const [veilColor, setVeilColor] = useState("#171a36");
   const [narrowMobile, setNarrowMobile] = useState(false);
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   useEffect(() => {
     const mq = window.matchMedia(`(max-width: ${MAX_SM_BREAKPOINT - 1}px)`);
@@ -408,7 +417,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
 
     const animate = () => {
       if (!running || disposed) return;
-      if (fadeRef.current < 1) {
+      if (activeRef.current && fadeRef.current < 1) {
         drawFrame();
       }
       frameId = requestAnimationFrame(animate);
@@ -504,8 +513,8 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
     };
   }, [align]);
 
-  const layerOpacity = cosmicFadeOpacity(fade);
-  const fullyHidden = fade >= 1;
+  const layerOpacity = active ? cosmicFadeOpacity(fade) : 0;
+  const fullyHidden = !active || fade >= 1;
   const dissolveMask = dissolveMaskStyle(narrowMobile);
   const veilBlend = Math.max(0, Math.min(1, (fade - 0.35) / 0.65));
   const veilOpacity = veilBlend * veilBlend * layerOpacity;
@@ -513,7 +522,7 @@ export default function HeroCosmicLayer({ align = "right" }: HeroCosmicLayerProp
   return (
     <div
       ref={viewportRef}
-      className="cosmic-viewport scroll-lock-compensate"
+      className="cosmic-viewport"
       style={{
         ...dissolveMask,
         opacity: layerOpacity,

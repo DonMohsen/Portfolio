@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSyncExternalStore } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
@@ -93,20 +94,20 @@ function ThemeToggleSkeleton() {
   );
 }
 
+function subscribeNoop() {
+  return () => {};
+}
+
 export default function ThemeToggleTree() {
   const { setTheme, resolvedTheme } = useTheme();
   const reduceMotion = useReducedMotion();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(subscribeNoop, () => true, () => false);
 
   if (!mounted) {
     return <ThemeToggleSkeleton />;
   }
 
-  const isLight = resolvedTheme !== "dark";
+  const isLight = (resolvedTheme ?? "dark") !== "dark";
   const toggle = () => setTheme(isLight ? "dark" : "light");
 
   const animateStars = !isLight && !reduceMotion;

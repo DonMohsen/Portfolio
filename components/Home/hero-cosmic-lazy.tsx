@@ -1,40 +1,41 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { scheduleAfterLoadIdle } from "@/lib/schedule-idle";
-
-const HeroCosmicLayer = dynamic(() => import("./HeroCosmicLayer"), {
-  ssr: false,
-});
+import {
+  isCosmicLayerBooted,
+  markCosmicLayerBooted,
+} from "@/lib/cosmic-layer-session";
+import { scheduleAfterLcp } from "@/lib/schedule-after-lcp";
+import HeroCosmicLayer from "./HeroCosmicLayer";
 
 type HeroCosmicLazyProps = {
   align?: "left" | "right";
+  active?: boolean;
 };
 
-/**
- * Mount after load + idle so LCP (h1) is never blocked by canvas work.
- */
-export default function HeroCosmicLazy({ align = "right" }: HeroCosmicLazyProps) {
-  const [ready, setReady] = useState(false);
+export default function HeroCosmicLazy({
+  align = "right",
+  active = true,
+}: HeroCosmicLazyProps) {
+  const [ready, setReady] = useState(() => isCosmicLayerBooted());
 
   useEffect(() => {
+    if (ready) return;
+
     let cancelled = false;
 
-    scheduleAfterLoadIdle(
-      () => {
-        if (!cancelled) setReady(true);
-      },
-      { minDelayMs: 2500 }
-    );
+    scheduleAfterLcp(() => {
+      if (cancelled) return;
+      markCosmicLayerBooted();
+      setReady(true);
+    });
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [ready]);
 
   if (!ready) return null;
 
-  return <HeroCosmicLayer align={align} />;
+  return <HeroCosmicLayer align={align} active={active} />;
 }
-

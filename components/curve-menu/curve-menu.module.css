@@ -21,8 +21,7 @@
   height: 100vh;
   height: 100dvh;
   max-height: 100dvh;
-  overscroll-behavior: none;
-  touch-action: none;
+  pointer-events: none;
 }
 
 :global(.dark) .menu {
@@ -54,19 +53,6 @@
   margin-top: 80px;
 }
 
-.navHeader {
-  color: rgba(26, 39, 68, 0.48);
-  border-bottom: 1px solid rgba(26, 39, 68, 0.12);
-  text-transform: uppercase;
-  font-size: 11px;
-  margin-bottom: 40px;
-}
-
-:global(.dark) .navHeader {
-  color: rgb(153, 153, 153);
-  border-bottom-color: rgb(153, 153, 153);
-}
-
 .body a {
   text-decoration: none;
   color: inherit;
@@ -81,20 +67,20 @@
   width: 100%;
   min-width: 0;
   font-size: 1rem;
-  margin-top: 48px;
+  margin-top: 0;
   gap: 8px;
 }
 
 @media (max-width: 767px) {
   .body {
-    padding: 88px 28px 32px;
+    padding: 80px 28px 32px;
   }
 
   .portfolioBody {
-    padding-top: 72px;
+    padding-top: 80px;
   }
 
-  .portfolioNav {
-    margin-top: 32px;
+  .nav.portfolioNav {
+    margin-top: 20px;
   }
 }

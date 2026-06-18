@@ -1,21 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import clsx from "clsx";
 import HamburgerMenu from "./hamburger-menu";
 import DeferredThemeToggle from "./DeferredThemeToggle";
+import LanguageSwitcher from "./language-switcher";
 import useHamburgerMenu from "@/store/useHamburgerMenu";
 import SiteHeaderShell from "./SiteHeaderShell";
-
-const LanguageSwitcher = dynamic(() => import("./language-switcher"), {
-  ssr: false,
-  loading: () => (
-    <div
-      className="h-9 w-9 rounded-lg border border-black/10 dark:border-white/20"
-      aria-hidden
-    />
-  ),
-});
 
 export default function MobileHeaderBar() {
   const menuOpen = useHamburgerMenu((state) => state.hamburgerMenuState);

@@ -68,14 +68,6 @@ body {
   transition: background-color 0.45s ease, color 0.45s ease;
 }
 
-html.scroll-locked {
-  overflow: hidden;
-}
-
-html.scroll-locked .scroll-lock-compensate {
-  padding-right: var(--scroll-lock-scrollbar-width, 0px);
-}
-
 body {
   min-height: calc(var(--dvh, 1dvh) * 100);
   font-family: var(--font-iranyekan), Arial, Helvetica, sans-serif;

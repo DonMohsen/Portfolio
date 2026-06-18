@@ -15,7 +15,7 @@ export default function DesktopHeaderNav() {
     useState<webRoutesType | null>(null);
 
   return (
-    <div className="flex items-center justify-center w-full relative gap-[3%] max-md:hidden">
+    <div className="flex w-full items-center justify-center relative gap-[3%] max-md:hidden">
       {webRoutes.map((item: webRoutesType) => (
         <div
           key={item.id}

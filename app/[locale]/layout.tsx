@@ -4,6 +4,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "../providers/theme-provider";
 import DeferredHeader from "@/components/DeferredHeader";
+import PersistentHeroCosmic from "@/components/Home/PersistentHeroCosmic";
 import { getDeferredFontScript } from "@/lib/deferred-font-script";
 import DeferredChrome from "@/components/DeferredChrome";
 import DeferredPageTransition from "@/components/page-transition/DeferredPageTransition";
@@ -126,6 +127,7 @@ export default async function LocaleLayout(props: {
           disableTransitionOnChange
         >
           <DeferredHeader />
+          <PersistentHeroCosmic />
           <main className="bg-page">{children}</main>
           <DeferredChrome />
           <DeferredPageTransition />
