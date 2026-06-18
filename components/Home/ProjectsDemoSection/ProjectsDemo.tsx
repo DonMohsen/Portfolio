@@ -1,7 +1,6 @@
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes"
 import ProjectCardItem from "@/components/Projects/ProjectCardItem"
 import MagicButton from "@/components/ui/magic-button"
-import { toPersianDigits } from "@/utils/format"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
@@ -41,7 +40,7 @@ const ProjectsDemo = ({
     <MagicButton 
               title={
                 isFa
-                  ? ` هر ${toPersianDigits( projectCount)}  پروژه را ببینید `
+                  ? ` هر ${projectCount}  پروژه را ببینید `
                   : `See all ${projectCount} projects`
               }
               icon={<ArrowRight />}

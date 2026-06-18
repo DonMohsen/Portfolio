@@ -45,7 +45,7 @@ const PersonalCard = () => {
         </h2>
         <h3 className="mt-2 flex items-center justify-center gap-2 text-center">
           <p className="font-IRANSansXLight">
-            {isFa ? "تهران منطقه۹" : "Tehran, District 9"}
+            {isFa ? "تهران منطقه 9" : "Tehran, District 9"}
           </p>
           <IoLocationOutline />
         </h3>

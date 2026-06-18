@@ -4,7 +4,6 @@ import nextDynamic from "next/dynamic";
 import { Layers, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
-import { getPersianNumbers } from "@/utils/numbers";
 
 const ProjectsFilterDrawer = nextDynamic(
   () => import("./projects-filter-drawer"),
@@ -82,9 +81,7 @@ export default function ProjectsToolbar({
         <div className="w-full pl-2 max-lg:hidden">
           {typeof resultCount === "number" && (
             <div>
-              {isFa
-                ? `نتیجه \u200E${getPersianNumbers(String(resultCount))}`
-                : `Results ${resultCount}`}
+              {isFa ? `نتیجه \u200E${resultCount}` : `Results ${resultCount}`}
             </div>
           )}
         </div>
@@ -116,9 +113,7 @@ export default function ProjectsToolbar({
       <div className="w-full lg:hidden text-[12px] mt-3 text-right flex items-center justify-end pr-1">
         {typeof resultCount === "number" && (
           <div className="font-IRANSansXLight">
-            {isFa
-              ? `نتیجه \u200E${getPersianNumbers(String(resultCount))}`
-              : `Results ${resultCount}`}
+            {isFa ? `نتیجه \u200E${resultCount}` : `Results ${resultCount}`}
           </div>
         )}
       </div>

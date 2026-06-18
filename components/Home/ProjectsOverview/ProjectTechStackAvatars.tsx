@@ -1,25 +1,20 @@
 import Image from "next/image";
-import { getPersianNumbers } from "@/utils/numbers";
 import { ProjectOverviewTechnology } from "./types";
 
 const VISIBLE_COUNT = 3;
 
 type ProjectTechStackAvatarsProps = {
   technologies: ProjectOverviewTechnology[];
-  isFa?: boolean;
 };
 
 export default function ProjectTechStackAvatars({
   technologies,
-  isFa = false,
 }: ProjectTechStackAvatarsProps) {
   if (technologies.length === 0) return null;
 
   const visible = technologies.slice(0, VISIBLE_COUNT);
   const overflow = technologies.length - VISIBLE_COUNT;
-  const overflowLabel = isFa
-    ? getPersianNumbers(String(overflow))
-    : String(overflow);
+  const overflowLabel = String(overflow);
 
   return (
     <div

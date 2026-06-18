@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
-import { toPersianDigits } from "@/utils/format";
 import ProjectOverviewCard from "./ProjectOverviewCard";
 import { mapProjectToOverview } from "./map-project";
 
@@ -53,7 +52,7 @@ export default function ProjectsOverview({
             className="inline-flex min-h-11 items-center justify-center rounded-xl border border-tech-card-border bg-tech-card px-4 py-2.5 text-sm font-semibold text-page-text transition-colors duration-300 hover:border-accent-cosmic/40 hover:text-accent-cosmic"
           >
             {isFa
-              ? `مشاهده همه ${toPersianDigits(projectCount)} پروژه`
+              ? `مشاهده همه ${projectCount} پروژه`
               : `See all ${projectCount} projects`}
           </Link>
         </div>

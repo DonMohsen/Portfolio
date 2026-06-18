@@ -3,10 +3,12 @@ import { notFound } from "next/navigation";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "../providers/theme-provider";
+import BrowserThemeColor from "@/components/BrowserThemeColor";
 import DeferredHeader from "@/components/DeferredHeader";
 import PersistentHeroCosmic from "@/components/Home/PersistentHeroCosmic";
 import { getDeferredFontScript } from "@/lib/deferred-font-script";
 import DeferredChrome from "@/components/DeferredChrome";
+import SiteFooter from "@/components/footer/SiteFooter";
 import DeferredPageTransition from "@/components/page-transition/DeferredPageTransition";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
@@ -126,9 +128,11 @@ export default async function LocaleLayout(props: {
           enableSystem={false}
           disableTransitionOnChange
         >
+          <BrowserThemeColor />
           <DeferredHeader />
           <PersistentHeroCosmic />
           <main className="bg-page">{children}</main>
+          <SiteFooter locale={locale} />
           <DeferredChrome />
           <DeferredPageTransition />
         </ThemeProvider>

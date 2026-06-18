@@ -6,7 +6,6 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Github } from "lucide-react";
 import { Link as LucideLink } from "lucide-react";
-import { getPersianNumbers } from "@/utils/numbers";
 import CompetencyCircle from "../CompetencyMeter";
 import { getProjectCompetencyColor } from "@/lib/getProjectCompetencyColor";
 import { useLocale } from "next-intl";
@@ -121,12 +120,7 @@ const ProjectCardItem = ({
             {project.techStack.length > 3 && (
               <div className="w-8 h-8 bg-white pr-1 dark:bg-neutral-900 border border-black/[.2] font-IRANSansXDemiBold dark:border-neutral-800 rounded-full flex items-center justify-center text-sm font-medium text-black/[0.7] dark:text-neutral-400">
                 <p className="translate-y-[1px] font-IRANSansXExtraBold">
-                  +
-                  {isFa
-                    ? getPersianNumbers(
-                        (project.techStack.length - 3).toString()
-                      )
-                    : project.techStack.length - 3}
+                  +{project.techStack.length - 3}
                 </p>
               </div>
             )}

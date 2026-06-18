@@ -2,7 +2,6 @@ import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import { getProjectSlug } from "@/lib/projects/get-project-slug";
 import { getListingCardImageProps, resolveListingCoverSrc } from "@/lib/projects/listing-card-image";
 import { PROJECT_CARD_TYPE_STYLES } from "@/lib/projects/project-card-styles";
-import { getPersianNumbers } from "@/utils/numbers";
 import clsx from "clsx";
 import { Github, Link as LucideLink } from "lucide-react";
 import Image from "next/image";
@@ -88,12 +87,7 @@ export default function ProjectListingCard({
             {project.techStack.length > 3 && (
               <div className="w-8 h-8 bg-white pr-1 dark:bg-neutral-900 border border-black/[.2] font-IRANSansXDemiBold dark:border-neutral-800 rounded-full flex items-center justify-center text-sm font-medium text-black/[0.7] dark:text-neutral-400">
                 <p className="translate-y-[1px] font-IRANSansXExtraBold">
-                  +
-                  {isFa
-                    ? getPersianNumbers(
-                        (project.techStack.length - 3).toString()
-                      )
-                    : project.techStack.length - 3}
+                  +{project.techStack.length - 3}
                 </p>
               </div>
             )}

@@ -48,7 +48,6 @@ export default function ProjectOverviewCard({
           {project.technologies.length > 0 ? (
             <ProjectTechStackAvatars
               technologies={project.technologies}
-              isFa={isFa}
             />
           ) : null}
         </div>

@@ -5,6 +5,8 @@
 /* Light: warm cream + right peach glow | Dark: navy galaxy */
 :root {
   --page-bg: #f7f5f0;
+  --browser-theme-color: #f7f5f0;
+  color-scheme: light;
   --dvh: 1svh;
   --page-glow:
     radial-gradient(
@@ -33,11 +35,25 @@
   --galaxy-card-value: #1a2744;
   --galaxy-card-shadow: 0 8px 28px rgba(26, 39, 68, 0.09);
   --cosmic-line: rgba(42, 52, 82, 0.32);
+  /* Hero right peach glow — solid mid-tone from page-glow / HeroCosmicLayer */
+  --page-peach-glow: #ffe1b9;
+  --page-peach-soft: color-mix(in srgb, var(--page-peach-glow) 20%, var(--page-bg));
+  /* Footer — solid peach surface (CTA + links), arc uses same token */
+  --footer-cta-bg: var(--page-peach-soft);
+  --footer-body-bg: var(--page-peach-soft);
+  --footer-cta-text: var(--page-text);
+  --footer-cta-muted: var(--page-text-subtle);
+  --footer-body-border: var(--tech-card-border);
+  --footer-watermark: rgba(26, 39, 68, 0.06);
+  --footer-link: var(--page-text-muted);
+  --footer-social-bg: rgba(26, 39, 68, 0.04);
 }
 
 .dark {
   --page-glow: none;
   --page-bg: #171a36;
+  --browser-theme-color: #171a36;
+  color-scheme: dark;
   --page-text: #dce3ff;
   --page-text-muted: rgba(220, 227, 255, 0.82);
   --page-text-subtle: rgba(220, 227, 255, 0.68);
@@ -53,6 +69,15 @@
   --galaxy-card-value: #e4ebff;
   --galaxy-card-shadow: none;
   --cosmic-line: rgba(248, 183, 140, 0.15);
+  /* Footer — solid tech-card surface */
+  --footer-cta-bg: var(--tech-card-bg);
+  --footer-body-bg: var(--tech-card-bg);
+  --footer-cta-text: var(--page-text);
+  --footer-cta-muted: var(--page-text-subtle);
+  --footer-body-border: var(--tech-card-border);
+  --footer-watermark: rgba(220, 227, 255, 0.05);
+  --footer-link: var(--page-text-muted);
+  --footer-social-bg: rgba(255, 255, 255, 0.04);
 }
 
 html {
