@@ -6,7 +6,7 @@ import SiteHeaderShell from "./SiteHeaderShell";
 
 const DesktopHeaderNav = dynamic(() => import("./DesktopHeaderNav"), {
   ssr: false,
-  loading: () => <div className="h-[52px] w-full" aria-hidden />,
+  loading: () => null,
 });
 
 export const Header = () => {

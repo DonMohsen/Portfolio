@@ -5,6 +5,7 @@
 /* Light: warm cream + right peach glow | Dark: navy galaxy */
 :root {
   --page-bg: #f7f5f0;
+  --dvh: 1svh;
   --page-glow:
     radial-gradient(
       ellipse 80% 95% at 88% 42%,
@@ -269,13 +270,19 @@ body {
   background: rgba(100, 100, 100, 0.6); /* Darker on hover */
 }
 
-/* LCP hero: synthetic bold until real 700 loads on interaction */
+/* LCP hero: reserve final line box before webfonts / container queries settle */
 .hero-lcp {
   container-type: inline-size;
   width: 100%;
   min-height: 7.25rem;
   font-synthesis: weight style;
   font-size-adjust: 0.48;
+}
+
+@media (min-width: 1024px) {
+  .hero-lcp {
+    min-height: 10.5rem;
+  }
 }
 
 [lang="en"] .hero-lcp {

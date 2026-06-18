@@ -110,8 +110,8 @@ export default async function HomePage(props: { params: Params }) {
   return (
     <div className="w-full bg-page transition-colors duration-500">
       <HeroCosmicDynamic align={isFa ? "left" : "right"} />
-      <section className="relative z-10 flex min-h-dvh flex-col overflow-hidden lg:grid lg:grid-cols-2">
-        <div className="relative flex w-full min-w-0 flex-col items-center px-5 pb-4 pt-[4.5rem] text-center transition-colors duration-500 sm:px-6 lg:items-start lg:justify-center lg:px-12 lg:py-12 lg:pt-12 lg:text-start xl:px-16">
+      <section className="relative z-10 flex min-h-svh flex-col overflow-hidden lg:grid lg:grid-cols-2">
+        <div className="relative flex w-full min-w-0 flex-col items-center px-5 pb-4 pt-[52px] text-center transition-colors duration-500 sm:px-6 lg:items-start lg:justify-center lg:px-12 lg:py-12 lg:pt-12 lg:text-start xl:px-16">
           <h1 className="hero-lcp flex w-full min-w-0 max-w-full flex-col items-center gap-1.5 sm:gap-2 lg:items-start">
             <span className="hero-lcp-given block text-page-text">
               {isFa ? "محسن" : "Mohsen"}
