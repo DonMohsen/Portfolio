@@ -45,3 +45,9 @@ next-env.d.ts
 
 # lighthouse audit reports (local only)
 lighthouse*.json
+
+# generated TinyMCE assets (npm run copy:tinymce / postinstall)
+/public/tinymce
+
+# local temp
+.tmp-curved-menu/

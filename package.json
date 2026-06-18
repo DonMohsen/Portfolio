@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "scrape:site": "node scripts/scrape-site.mjs",
-    "postinstall": "prisma generate"
+    "copy:tinymce": "node scripts/copy-tinymce.mjs",
+    "postinstall": "prisma generate && node scripts/copy-tinymce.mjs"
   },
   "dependencies": {
     "@ai-sdk/deepseek": "^0.1.11",
@@ -28,11 +29,13 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-toast": "^1.2.5",
     "@tanstack/react-query": "^5.64.2",
+    "@tinymce/tinymce-react": "^6.3.0",
     "ai": "^4.1.45",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.16.1",
+    "isomorphic-dompurify": "^3.17.0",
     "lucide": "^0.469.0",
     "lucide-react": "^0.469.0",
     "mini-svg-data-uri": "^1.4.4",
@@ -54,10 +57,14 @@
     "styled-components": "^6.1.14",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "tinymce": "^8.6.0",
     "vaul": "^1.1.2",
     "zod": "^3.24.1",
     "zod-to-ts": "^1.2.0",
     "zustand": "^5.0.2"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -70,6 +77,7 @@
     "postcss": "^8",
     "prisma": "^6.2.1",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.22.4",
     "typescript": "^5",
     "zod-prisma-types": "^3.2.1"
   }

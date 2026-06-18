@@ -58,6 +58,7 @@ export default function ProjectOverviewCard({
         <div className="mt-auto flex flex-col gap-2.5 pt-4 sm:flex-row sm:items-center">
           <Link
             href={project.detailHref}
+            data-transition-label={project.title}
             className="inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-xl border border-tech-card-border bg-page/30 px-4 py-2.5 text-sm font-semibold text-page-text transition-colors duration-300 hover:border-accent-cosmic/40 hover:text-accent-cosmic"
           >
             {isFa ? "مشاهده جزئیات پروژه" : "View project details"}

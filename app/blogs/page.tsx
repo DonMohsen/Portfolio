@@ -1,19 +1,5 @@
-import React from 'react'
+import { redirect } from "next/navigation";
 
-const BlogPage =async () => {
-  return (
-    <div>
-        <h1>
-            محسن خجسته نژاد
-        </h1>
-        <p>
-            من محسن خجسته نژاد هستم. برنامه نویس تحت وب. فرانت اند دولوپر.
-        </p>
-        
-    </div>
-  )
+export default function LegacyBlogPage() {
+  redirect("/fa/blogs");
 }
-
-export default BlogPage
-
-export const revalidate=600;

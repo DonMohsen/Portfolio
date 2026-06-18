@@ -33,6 +33,10 @@ export function buildBreadcrumbJsonLd(
   };
 }
 
+function toIsoDate(value: Date | string): string {
+  return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+}
+
 export function buildSoftwareApplicationJsonLd(
   locale: string,
   project: ProjectDetail
@@ -57,7 +61,7 @@ export function buildSoftwareApplicationJsonLd(
       name: "Mohsen Khojasteh Nezhad",
       url: SITE_URL,
     },
-    datePublished: project.createdAt.toISOString(),
-    dateModified: project.lastUpdatedAt.toISOString(),
+    datePublished: toIsoDate(project.createdAt),
+    dateModified: toIsoDate(project.lastUpdatedAt),
   };
 }

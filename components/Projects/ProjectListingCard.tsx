@@ -35,6 +35,7 @@ export default function ProjectListingCard({
   return (
     <Link
       href={`/${locale}/projects/${getProjectSlug(project)}`}
+      data-transition-label={project.name}
       className="relative overflow-hidden group border-black/[0.1] dark:border-white/[0.4] border-[0.1px] dark:bg-black text-white flex flex-col rounded-[8px] duration-300"
     >
       {imageProps && (

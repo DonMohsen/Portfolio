@@ -100,36 +100,23 @@ const useWebRoutes = () => {
         isAChild:false,
         routesChildren:[
             {
-                text:isFa ? "بلاگ های شخصی" : "Personal Blogs",
-                route:withLocale("/blogs"),
+                text:isFa ? "بلاگ‌های شخصی" : "Personal Blogs",
+                route:`${withLocale("/blogs")}?category=personal`,
                 emptyIcon:Linkedin,
                 filledIcon:Linkedin,
-                isActive:pathName==="/blogs?type=Personal",
+                isActive:pathName.includes("category=personal"),
                 id:6,
                 isAChild:true
-               
             },
             {
-                text:isFa ? "بلاگ های تکنولوژی" : "Tech Blogs",
-
-                route:`${withLocale("/blogs")}?type=Tech`,
+                text:isFa ? "بلاگ‌های فنی" : "Tech Blogs",
+                route:`${withLocale("/blogs")}?category=tech`,
                 emptyIcon:Mail,
                 filledIcon:Mail,
-                isActive:pathName==="/blogs?type=Tech",
+                isActive:pathName.includes("category=tech"),
                 id:9,
                 isAChild:true
             },
-            {
-                text:isFa ? "بلاگ های متفرقه" : "Other Blogs",
-
-                route:`${withLocale("/blogs")}?type=Others`,
-                emptyIcon:Mail,
-                filledIcon:Mail,
-                isActive:pathName==="/blogs?type=Others",
-
-                id:10,
-                isAChild:true
-            }
         ]
     }
 ],[isFa, pathName, locale])

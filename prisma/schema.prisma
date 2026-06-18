@@ -14,6 +14,16 @@ enum ProjectTypes {
   Real
 }
 
+enum BlogCategory {
+  tech
+  personal
+}
+
+enum BlogStatus {
+  draft
+  published
+}
+
 model Technology {
   id       Int                      @id @default(autoincrement())
   name     String
@@ -53,6 +63,33 @@ model AdminUser {
   createdAt      DateTime            @default(now())
   updatedAt      DateTime            @updatedAt
   refreshTokens  AdminRefreshToken[]
+}
+
+model BlogPost {
+  id               Int          @id @default(autoincrement())
+  slug             String       @unique
+  status           BlogStatus   @default(draft)
+  category         BlogCategory
+  publishedAt      DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  titleEn          String
+  titleFa          String
+  excerptEn        String
+  excerptFa        String
+  contentHtmlEn    String       @db.Text
+  contentHtmlFa    String       @db.Text
+  conclusionHtmlEn String?      @db.Text
+  conclusionHtmlFa String?      @db.Text
+  heroImage        String?
+  readTimeMinutes  Int?
+  views            Int          @default(0)
+  likes            Int          @default(0)
+  faq              Json?
+  headings         Json?
+
+  @@index([status, publishedAt(sort: Desc)])
+  @@index([category])
 }
 
 model AdminRefreshToken {

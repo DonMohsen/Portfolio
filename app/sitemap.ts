@@ -5,7 +5,7 @@ import { getAllProjectSlugs } from "@/lib/projects/get-all-project-slugs";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const locales = ["fa", "en"] as const;
   const projectSlugs = await getAllProjectSlugs();
-  const blogSlugs = getAllBlogSlugs();
+  const blogSlugs = await getAllBlogSlugs();
 
   const localeEntries = locales.flatMap((locale) => [
     {

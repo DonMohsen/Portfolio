@@ -14,7 +14,9 @@ import { consumePendingTransition } from "./pending-navigation";
 import {
   getRouteLabelFromHref,
   getRouteLabelFromPathname,
+  getTransitionLabelFromAnchor,
 } from "./route-label";
+import { fetchBlogLabelsCache } from "@/lib/blogs/blog-labels-cache";
 
 type NavigationSource = "click" | "history" | null;
 
@@ -85,7 +87,7 @@ export default function PageTransitionProvider() {
   }, []);
 
   const startClickTransition = useCallback(
-    (href: string) => {
+    (href: string, labelOverride?: string | null) => {
       if (busyRef.current) return;
       if (prefersReducedMotion()) {
         router.push(href);
@@ -97,12 +99,16 @@ export default function PageTransitionProvider() {
       pendingHrefRef.current = href;
       useHamburgerMenu.getState().closeHamburgerMenuState();
       setFromCovered(false);
-      setRouteLabel(getRouteLabelFromHref(href));
+      setRouteLabel(labelOverride || getRouteLabelFromHref(href));
       setPhase("cover");
       setActive(true);
     },
     [router]
   );
+
+  useEffect(() => {
+    void fetchBlogLabelsCache();
+  }, []);
 
   useEffect(() => {
     const pendingHref = consumePendingTransition();
@@ -158,9 +164,11 @@ export default function PageTransitionProvider() {
       const href = getTransitionHrefFromAnchor(anchor, pathnameRef.current);
       if (!href) return;
 
+      const labelOverride = getTransitionLabelFromAnchor(anchor);
+
       event.preventDefault();
       event.stopPropagation();
-      startClickTransition(href);
+      startClickTransition(href, labelOverride);
     };
 
     document.addEventListener("click", onClick, true);

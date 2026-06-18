@@ -3,8 +3,10 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import clsx from "clsx";
 import ReactQueryProvider from "../providers/react-query-provider";
 import AdminAllCards from "@/components/Admin/AdminAllCards";
+import AdminBlogCards from "@/components/cms/blog/AdminBlogCards";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -12,10 +14,13 @@ type AdminPageClientProps = {
   username: string;
 };
 
+type AdminTab = "projects" | "blogs";
+
 export default function AdminPageClient({ username }: AdminPageClientProps) {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(true);
+  const [tab, setTab] = useState<AdminTab>("projects");
 
   const handleUnauthorized = async () => {
     setAccessToken(null);
@@ -63,17 +68,41 @@ export default function AdminPageClient({ username }: AdminPageClientProps) {
             <p className="text-xs text-white/50">Admin</p>
             <p className="font-medium">{username}</p>
           </div>
-          <Button type="button" variant="outline" onClick={handleLogout}>
-            Logout
-          </Button>
+          <div className="flex items-center gap-3">
+            <div className="flex rounded-lg border border-white/10 p-0.5">
+              {(["projects", "blogs"] as const).map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setTab(item)}
+                  className={clsx(
+                    "rounded-md px-3 py-1.5 text-sm capitalize transition",
+                    tab === item
+                      ? "bg-white text-black"
+                      : "text-white/60 hover:text-white"
+                  )}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+            <Button type="button" variant="outline" onClick={handleLogout}>
+              Logout
+            </Button>
+          </div>
         </div>
 
         {isRefreshing || !accessToken ? (
           <div className="flex min-h-screen items-center justify-center text-white/70">
             Checking admin session...
           </div>
-        ) : (
+        ) : tab === "projects" ? (
           <AdminAllCards
+            accessToken={accessToken}
+            onUnauthorized={handleUnauthorized}
+          />
+        ) : (
+          <AdminBlogCards
             accessToken={accessToken}
             onUnauthorized={handleUnauthorized}
           />
