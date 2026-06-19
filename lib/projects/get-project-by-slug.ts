@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
 import { getMockProjectById, getMockProjectBySlug } from "./mock-projects";
 import { parseProjectImages } from "./parse-project-images";
+import { normalizeProjectDates } from "./project-dates";
 import { slugify } from "./slugify";
 import { ProjectDetail } from "./types";
 
@@ -57,7 +58,8 @@ export async function getProjectBySlug(
   const mock = getMockProjectBySlug(slug);
   if (mock) return mock;
 
-  return getCachedDbProjectBySlug(slug);
+  const project = await getCachedDbProjectBySlug(slug);
+  return project ? normalizeProjectDates(project) : null;
 }
 
 export async function getProjectSlugById(

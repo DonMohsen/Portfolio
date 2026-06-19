@@ -1,5 +1,6 @@
 import { ProjectDetail } from "./types";
 import { resolveSiteUrl } from "@/lib/metadata-base";
+import { toProjectIsoDate } from "./project-dates";
 
 const SITE_URL = resolveSiteUrl();
 
@@ -33,10 +34,6 @@ export function buildBreadcrumbJsonLd(
   };
 }
 
-function toIsoDate(value: Date | string): string {
-  return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
-}
-
 export function buildSoftwareApplicationJsonLd(
   locale: string,
   project: ProjectDetail
@@ -61,7 +58,7 @@ export function buildSoftwareApplicationJsonLd(
       name: "Mohsen Khojasteh Nezhad",
       url: SITE_URL,
     },
-    datePublished: toIsoDate(project.createdAt),
-    dateModified: toIsoDate(project.lastUpdatedAt),
+    datePublished: toProjectIsoDate(project.createdAt),
+    dateModified: toProjectIsoDate(project.lastUpdatedAt),
   };
 }
