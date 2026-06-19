@@ -4,7 +4,7 @@ import { getListingCardImageProps, resolveListingCoverSrc } from "@/lib/projects
 import { PROJECT_CARD_TYPE_STYLES } from "@/lib/projects/project-card-styles";
 import clsx from "clsx";
 import { Github, Link as LucideLink } from "lucide-react";
-import Image from "next/image";
+import TechStackIcon from "@/components/TechStackIcon";
 import Link from "next/link";
 import ProjectCompetencyRing from "./ProjectCompetencyRing";
 
@@ -74,14 +74,11 @@ export default function ProjectListingCard({
                 key={tech.technology.id}
                 className="w-8 h-8 bg-white dark:bg-neutral-900 border border-black/[.2] dark:border-neutral-800 rounded-full flex items-center justify-center"
               >
-                <Image
+                <TechStackIcon
                   src={tech.technology.imageUrl}
                   alt={tech.technology.name}
-                  width={24}
-                  height={24}
-                  sizes="24px"
+                  size={24}
                   className="w-6 h-6 object-contain"
-                  loading="lazy"
                 />
               </div>
             ))}

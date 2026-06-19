@@ -7,6 +7,10 @@ import {
   cosmicConnectionStroke,
   pickCosmicStarColor,
 } from "@/lib/cosmic-palette";
+import {
+  bounceParticleInRect,
+  integrateParticleWithBounce,
+} from "@/lib/cosmic-particle-bounds";
 
 const DESKTOP_STARS = 28;
 const MOBILE_STARS = 18;
@@ -167,11 +171,17 @@ export default function FooterCosmicLayer() {
 
       for (const star of stars) {
         if (!reducedMotion) {
-          star.x += star.vx;
-          star.y += star.vy;
-          if (star.x < 0 || star.x > width) star.vx *= -1;
-          if (star.y < 0 || star.y > height) star.vy *= -1;
+          integrateParticleWithBounce(
+            star,
+            { minX: 0, maxX: width, minY: 0, maxY: height },
+            star.size + 1
+          );
           keepStarOutsideCenter(star);
+          bounceParticleInRect(
+            star,
+            { minX: 0, maxX: width, minY: 0, maxY: height },
+            star.size + 1
+          );
         }
         drawStar(ctx, star);
       }

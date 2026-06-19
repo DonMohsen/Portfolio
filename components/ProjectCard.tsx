@@ -2,6 +2,7 @@ import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import { getProjectSlug } from "@/lib/projects/get-project-slug";
 import Image from "next/image";
 import Link from "next/link";
+import TechStackIcon from "@/components/TechStackIcon";
 import ImageModal from "./Modals/image-modal";
 import { Button } from "@mui/material";
 import { FaGithub } from "react-icons/fa";
@@ -83,12 +84,10 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
               key={tech.technology.id}
               className="w-10 h-10 bg-white dark:bg-neutral-900 border border-black/[.2] dark:border-neutral-800 rounded-full flex items-center justify-center shadow-sm"
             >
-              <Image
+              <TechStackIcon
                 src={tech.technology.imageUrl}
                 alt={`${tech.technology.name} image`}
-                width={24}
-                height={24}
-                sizes="24px"
+                size={24}
                 className="w-6 h-6 object-contain"
               />
             </div>

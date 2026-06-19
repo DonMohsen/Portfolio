@@ -19,6 +19,7 @@ import {
 } from "@/lib/blogs/get-blog-data";
 import { Suspense } from "react";
 import { Calendar } from "lucide-react";
+import { buildLocaleAlternates } from "@/lib/site-alternates";
 
 const BlogScrollProgressBar = dynamic(
   () => import("@/components/blog/BlogScrollProgressBar"),
@@ -62,9 +63,7 @@ export async function generateMetadata(props: {
   return {
     title: isFa ? `${title} | بلاگ` : `${title} | Blog`,
     description,
-    alternates: {
-      canonical: `/${locale}/blogs/${slug}`,
-    },
+    alternates: await buildLocaleAlternates(locale, `blogs/${slug}`),
   };
 }
 

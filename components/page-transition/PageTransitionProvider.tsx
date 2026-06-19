@@ -16,7 +16,7 @@ import {
   getRouteLabelFromPathname,
   getTransitionLabelFromAnchor,
 } from "./route-label";
-import { fetchBlogLabelsCache } from "@/lib/blogs/blog-labels-cache";
+import { prefetchBlogLabelsCache } from "@/lib/blogs/blog-labels-cache";
 
 type NavigationSource = "click" | "history" | null;
 
@@ -107,7 +107,15 @@ export default function PageTransitionProvider() {
   );
 
   useEffect(() => {
-    void fetchBlogLabelsCache();
+    const onPointerOver = (event: Event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const anchor = target.closest('a[href*="/blogs/"]');
+      if (anchor) prefetchBlogLabelsCache();
+    };
+
+    document.addEventListener("mouseover", onPointerOver, { passive: true });
+    return () => document.removeEventListener("mouseover", onPointerOver);
   }, []);
 
   useEffect(() => {

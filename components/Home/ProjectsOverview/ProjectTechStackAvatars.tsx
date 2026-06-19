@@ -1,4 +1,4 @@
-import Image from "next/image";
+import TechStackIcon from "@/components/TechStackIcon";
 import { ProjectOverviewTechnology } from "./types";
 
 const VISIBLE_COUNT = 3;
@@ -28,13 +28,10 @@ export default function ProjectTechStackAvatars({
           className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white dark:border-white/10 dark:bg-neutral-900"
           title={tech.name}
         >
-          <Image
+          <TechStackIcon
             src={tech.imageUrl}
             alt=""
-            aria-hidden
-            width={20}
-            height={20}
-            sizes="20px"
+            size={20}
             className="tech-stack-icon h-5 w-5 object-contain"
           />
         </div>

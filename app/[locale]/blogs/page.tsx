@@ -9,6 +9,7 @@ import {
   getBlogListingPosts,
   getSidebarPosts,
 } from "@/lib/blogs/get-blog-data";
+import { buildLocaleAlternates } from "@/lib/site-alternates";
 import type { BlogCategory } from "@/lib/blogs/types";
 
 type Params = Promise<{ locale: string }>;
@@ -28,9 +29,7 @@ export async function generateMetadata(props: {
     description: isFa
       ? "نوشته‌های شخصی و فنی محسن خجسته نژاد."
       : "Personal and technical articles by Mohsen Khojasteh Nezhad.",
-    alternates: {
-      canonical: `/${locale}/blogs`,
-    },
+    alternates: await buildLocaleAlternates(locale, "blogs"),
   };
 }
 

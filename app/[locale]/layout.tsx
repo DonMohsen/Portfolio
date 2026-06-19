@@ -12,6 +12,8 @@ import SiteFooter from "@/components/footer/SiteFooter";
 import DeferredPageTransition from "@/components/page-transition/DeferredPageTransition";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
+import { resolveMetadataBase, resolveSiteUrlForMetadata } from "@/lib/metadata-base";
+import { buildLocaleAlternates } from "@/lib/site-alternates";
 
 type Params = Promise<{ locale: string }>;
 
@@ -19,7 +21,7 @@ export async function generateMetadata(props: {
   params: Params;
 }): Promise<Metadata> {
   const { locale } = await props.params;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = await resolveSiteUrlForMetadata();
   const isFa = locale === "fa";
   const title = isFa
     ? "محسن خجسته نژاد | برنامه نویس فرانت اند"
@@ -29,7 +31,7 @@ export async function generateMetadata(props: {
     : "Official portfolio of Mohsen Khojasteh Nezhad, web and front-end developer focused on Next.js and React.";
 
   return {
-    metadataBase: new URL(siteUrl),
+    metadataBase: await resolveMetadataBase(),
     title,
     description,
     applicationName: "Mohsen Khojasteh Nezhad Portfolio",
@@ -53,18 +55,11 @@ export async function generateMetadata(props: {
         "max-image-preview": "large",
       },
     },
-    alternates: {
-      canonical: "/",
-      languages: {
-        fa: "/fa",
-        en: "/en",
-        "x-default": "/fa",
-      },
-    },
+    alternates: await buildLocaleAlternates(locale),
     openGraph: {
       title,
       description,
-      url: `https://donmohsen.ir/${locale}`,
+      url: `${siteUrl}/${locale}`,
       siteName: "Mohsen Khojasteh Nezhad Portfolio",
       locale: isFa ? "fa_IR" : "en_US",
       type: "website",
@@ -94,13 +89,14 @@ export default async function LocaleLayout(props: {
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  const siteUrl = await resolveSiteUrlForMetadata();
 
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Mohsen Khojasteh Nezhad",
     alternateName: "محسن خجسته نژاد",
-    url: "https://donmohsen.ir",
+    url: siteUrl,
     jobTitle: "Front-End Developer",
     sameAs: [
       "https://github.com/DonMohsen",

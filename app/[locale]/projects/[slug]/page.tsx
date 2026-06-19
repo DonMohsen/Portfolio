@@ -18,8 +18,8 @@ type Props = {
   params: Promise<{ slug: string; locale: string }>;
 };
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://donmohsen.ir";
+import { buildLocaleAlternates } from "@/lib/site-alternates";
+import { resolveSiteUrlForMetadata } from "@/lib/metadata-base";
 
 export const revalidate = 600;
 export const dynamicParams = true;
@@ -41,11 +41,13 @@ export async function generateMetadata(
 
   const isFa = locale === "fa";
   const title = `${project.name} | ${isFa ? "پروژه‌ها" : "Projects"}`;
+  const siteUrl = await resolveSiteUrlForMetadata();
   const heroImage = project.images[0] ?? "/image-placeholder.webp";
   const absoluteImage = heroImage.startsWith("http")
     ? heroImage
-    : `${SITE_URL}${heroImage}`;
-  const canonicalPath = `/${locale}/projects/${project.slug}`;
+    : `${siteUrl}${heroImage}`;
+  const projectPath = `projects/${project.slug}`;
+  const alternates = await buildLocaleAlternates(locale, projectPath);
   const keywords = [
     ...project.seoKeywords,
     ...project.techStack.map((entry) => entry.technology.name),
@@ -55,18 +57,11 @@ export async function generateMetadata(
     title,
     description: project.summary,
     keywords,
-    alternates: {
-      canonical: canonicalPath,
-      languages: {
-        fa: `/fa/projects/${project.slug}`,
-        en: `/en/projects/${project.slug}`,
-        "x-default": `/fa/projects/${project.slug}`,
-      },
-    },
+    alternates,
     openGraph: {
       title,
       description: project.summary,
-      url: `${SITE_URL}${canonicalPath}`,
+      url: alternates.canonical,
       type: "article",
       locale: isFa ? "fa_IR" : "en_US",
       images: [

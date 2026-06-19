@@ -3,6 +3,7 @@
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import Link from "next/link";
 import Image from "next/image";
+import TechStackIcon from "@/components/TechStackIcon";
 import clsx from "clsx";
 import { Github } from "lucide-react";
 import { Link as LucideLink } from "lucide-react";
@@ -107,14 +108,11 @@ const ProjectCardItem = ({
                 key={tech.technology.id}
                 className="w-8 h-8 bg-white dark:bg-neutral-900 border border-black/[.2] dark:border-neutral-800 rounded-full flex items-center justify-center"
               >
-                <Image
+                <TechStackIcon
                   src={tech.technology.imageUrl}
                   alt={`${tech.technology.name} image`}
-                  width={24}
-                  height={24}
-                  sizes="24px"
+                  size={24}
                   className="w-6 h-6 object-contain"
-                  loading="lazy"
                 />
               </div>
             ))}

@@ -14,16 +14,28 @@ const securityHeaders = [
   },
 ];
 
+const isDev = process.env.NODE_ENV === "development";
+
+const productionHeaders = isDev
+  ? []
+  : [
+      {
+        key: "Strict-Transport-Security",
+        value: "max-age=63072000; includeSubDomains; preload",
+      },
+    ];
+
 const nextConfig: NextConfig = {
+  productionBrowserSourceMaps: true,
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
-        port: "",
-        pathname: "**",
+        hostname: "res.cloudinary.com",
+        pathname: "/donmohsen/**",
       },
     ],
+    ...(isDev ? { dangerouslyAllowLocalIP: true } : {}),
   },
   experimental: {
     optimizePackageImports: [
@@ -54,7 +66,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/(.*)",
-        headers: securityHeaders,
+        headers: [...securityHeaders, ...productionHeaders],
       },
     ];
   },

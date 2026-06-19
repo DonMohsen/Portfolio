@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getFooterData } from "@/lib/footer-data";
+import { resolveSiteUrl } from "@/lib/metadata-base";
 import {
   SITE_EMAIL,
   SITE_LOCATION_EN,
@@ -39,7 +40,7 @@ export default async function SiteFooter({ locale }: SiteFooterProps) {
   const copy = isFa ? CTA_COPY.fa : CTA_COPY.en;
   const brandCopy = isFa ? BRAND_COPY.fa : BRAND_COPY.en;
   const { blogs, projects } = await getFooterData(locale);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://donmohsen.ir";
+  const siteUrl = resolveSiteUrl();
 
   const footerSchema = {
     "@context": "https://schema.org",

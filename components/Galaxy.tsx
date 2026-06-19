@@ -7,6 +7,7 @@
  */
 
 import { useEffect, useRef, type CSSProperties } from "react";
+import { bounceParticleInRect } from "@/lib/cosmic-particle-bounds";
 
 /** Exact `n` array from shipped HeroCanvas */
 const NODE_COLORS = [
@@ -21,7 +22,7 @@ const PEACH = "#fab387";
 const MOUSE_RADIUS = 90;
 const LINK_DISTANCE = 120;
 const LINE_ALPHA_MAX = 0.3;
-const MOUSE_PULL = 0.3;
+const MOUSE_PULL = 0.08;
 const DAMPING = 0.99;
 const PARTICLE_COUNT = 60;
 const VELOCITY_SCALE = 0.7;
@@ -136,20 +137,11 @@ function HeroCanvas() {
         a.x += a.vx;
         a.y += a.vy;
 
-        if (a.x < 0) {
-          a.x = 0;
-          a.vx *= -1;
-        } else if (a.x > t.width) {
-          a.x = t.width;
-          a.vx *= -1;
-        }
-        if (a.y < 0) {
-          a.y = 0;
-          a.vy *= -1;
-        } else if (a.y > t.height) {
-          a.y = t.height;
-          a.vy *= -1;
-        }
+        bounceParticleInRect(
+          a,
+          { minX: 0, maxX: t.width, minY: 0, maxY: t.height },
+          a.radius + 0.5
+        );
 
         for (let j = n + 1; j < pts.length; j++) {
           const b = pts[j]!;

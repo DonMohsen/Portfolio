@@ -9,6 +9,7 @@ import {
   useScroll,
 } from "framer-motion";
 import Image from "next/image";
+import TechStackIcon from "@/components/TechStackIcon";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "../ui/button";
 import { techColors } from "./client-project-card";
@@ -202,12 +203,11 @@ export default function ProjectDetailsInteractive({
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Image
-                  className="w-8 h-8"
+                <TechStackIcon
                   src={technology.imageUrl}
                   alt={technology.name}
-                  width={32}
-                  height={32}
+                  size={32}
+                  className="w-8 h-8"
                 />
                 {technology.name}
               </motion.span>

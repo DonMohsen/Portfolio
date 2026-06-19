@@ -25,3 +25,17 @@ export async function fetchBlogLabelsCache() {
     // ignore — fallback labels still work
   }
 }
+
+/** Low-priority prefetch — only when user may open a blog post. */
+export function prefetchBlogLabelsCache() {
+  if (typeof window === "undefined") return;
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(() => {
+      void fetchBlogLabelsCache();
+    });
+    return;
+  }
+  window.setTimeout(() => {
+    void fetchBlogLabelsCache();
+  }, 0);
+}

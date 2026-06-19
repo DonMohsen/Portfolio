@@ -25,8 +25,8 @@ export const PROJECT_CARD_TYPE_STYLES: Record<
   Real: {
     en: "Production",
     fa: "واقعی",
-    bgColor: "bg-red-700",
-    textColor: "text-red-50",
+    bgColor: "bg-red-800",
+    textColor: "text-white",
   },
 };
 

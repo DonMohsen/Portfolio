@@ -21,7 +21,7 @@ const iranYekan = localFont({
   style: "normal",
   variable: "--font-iranyekan",
   display: "swap",
-  preload: true,
+  preload: false,
   adjustFontFallback: "Arial",
   fallback: ["Arial", "Helvetica", "sans-serif"],
 });
@@ -33,11 +33,15 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
       suppressHydrationWarning
       className={`${iranYekan.variable} dark`}
     >
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=location.pathname;var l=p.indexOf('/en')===0?'en':'fa';document.documentElement.lang=l;document.documentElement.dir=l==='fa'?'rtl':'ltr'}catch(e){}})();`,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var u=window.innerHeight*0.01;document.documentElement.style.setProperty("--dvh",u+"px")}catch(e){}})();`,
@@ -49,7 +53,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${iranYekan.className} antialiased`}>
+      <body className="antialiased">
         <ViewportLock />
         {children}
       </body>

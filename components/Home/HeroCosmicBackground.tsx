@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import {
+  applyMouseRepulsion,
+  integrateParticleWithBounce,
+} from "@/lib/cosmic-particle-bounds";
 
 type HeroCosmicBackgroundProps = {
   /** Star cluster sits on the right for LTR, left for RTL hero layouts. */
@@ -50,24 +54,16 @@ function createStar(
     vy,
     color,
     update(bounds) {
-      this.x += this.vx;
-      this.y += this.vy;
-
-      if (this.x < bounds.minX) {
-        this.vx = Math.abs(this.vx);
-        this.x = bounds.minX + 1;
-      } else if (this.x > bounds.maxX) {
-        this.vx = -Math.abs(this.vx);
-        this.x = bounds.maxX - 1;
-      }
-
-      if (this.y < 0) {
-        this.vy = Math.abs(this.vy);
-        this.y = 1;
-      } else if (this.y > bounds.height) {
-        this.vy = -Math.abs(this.vy);
-        this.y = bounds.height - 1;
-      }
+      integrateParticleWithBounce(
+        this,
+        {
+          minX: bounds.minX,
+          maxX: bounds.maxX,
+          minY: 0,
+          maxY: bounds.height,
+        },
+        this.size + 1
+      );
     },
     draw(context) {
       context.beginPath();
@@ -176,15 +172,7 @@ export default function HeroCosmicBackground({
       ctx.clearRect(0, 0, width, height);
 
       for (const star of stars) {
-        const dx = mouse.x - star.x;
-        const dy = mouse.y - star.y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < MOUSE_RADIUS && dist > 0) {
-          const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-          star.x -= (dx / dist) * force * 1.5;
-          star.y -= (dy / dist) * force * 1.5;
-        }
-
+        applyMouseRepulsion(star, mouse.x, mouse.y, MOUSE_RADIUS);
         star.update({ ...bounds, height });
         star.draw(ctx);
       }

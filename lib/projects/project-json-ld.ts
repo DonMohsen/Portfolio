@@ -1,7 +1,7 @@
 import { ProjectDetail } from "./types";
+import { resolveSiteUrl } from "@/lib/metadata-base";
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://donmohsen.ir";
+const SITE_URL = resolveSiteUrl();
 
 export function buildBreadcrumbJsonLd(
   locale: string,

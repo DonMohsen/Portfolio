@@ -1,5 +1,6 @@
 import ProjectsFiltersDeferred from "@/components/Projects/projects-filters-deferred";
 import type { Metadata } from "next";
+import { buildLocaleAlternates } from "@/lib/site-alternates";
 
 type Params = Promise<{ locale: string }>;
 
@@ -13,9 +14,7 @@ export async function generateMetadata(props: {
     description: isFa
       ? "پروژه‌های تمرینی و واقعی محسن خجسته نژاد"
       : "Practice and production projects by Mohsen Khojasteh Nezhad.",
-    alternates: {
-      canonical: `/${locale}/projects`,
-    },
+    alternates: await buildLocaleAlternates(locale, "projects"),
   };
 }
 
