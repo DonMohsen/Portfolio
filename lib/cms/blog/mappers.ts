@@ -7,10 +7,18 @@ function parseJsonArray<T>(value: unknown): T[] | undefined {
   return undefined;
 }
 
+function toBlogDateString(value: Date | string | number | null | undefined): string {
+  if (!value) return new Date().toISOString().slice(0, 10);
+  const date = value instanceof Date ? value : new Date(value);
+  return date.toISOString().slice(0, 10);
+}
+
 export function mapPrismaToBlogPost(row: PrismaBlogPost): BlogPost {
   return {
     slug: row.slug,
-    publishedAt: row.publishedAt?.toISOString().slice(0, 10) ?? row.createdAt.toISOString().slice(0, 10),
+    publishedAt: row.publishedAt
+      ? toBlogDateString(row.publishedAt)
+      : toBlogDateString(row.createdAt),
     category: row.category,
     title: { en: row.titleEn, fa: row.titleFa },
     excerpt: { en: row.excerptEn, fa: row.excerptFa },

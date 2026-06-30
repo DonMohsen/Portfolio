@@ -63,7 +63,7 @@ export async function generateMetadata(props: {
   return {
     title: isFa ? `${title} | بلاگ` : `${title} | Blog`,
     description,
-    alternates: await buildLocaleAlternates(locale, `blogs/${slug}`),
+    alternates: buildLocaleAlternates(locale, `blogs/${slug}`),
   };
 }
 

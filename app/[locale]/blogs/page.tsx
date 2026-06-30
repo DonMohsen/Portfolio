@@ -29,7 +29,7 @@ export async function generateMetadata(props: {
     description: isFa
       ? "نوشته‌های شخصی و فنی محسن خجسته نژاد."
       : "Personal and technical articles by Mohsen Khojasteh Nezhad.",
-    alternates: await buildLocaleAlternates(locale, "blogs"),
+    alternates: buildLocaleAlternates(locale, "blogs"),
   };
 }
 

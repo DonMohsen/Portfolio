@@ -14,7 +14,7 @@ export async function generateMetadata(props: {
     description: isFa
       ? "پروژه‌های تمرینی و واقعی محسن خجسته نژاد"
       : "Practice and production projects by Mohsen Khojasteh Nezhad.",
-    alternates: await buildLocaleAlternates(locale, "projects"),
+    alternates: buildLocaleAlternates(locale, "projects"),
   };
 }
 

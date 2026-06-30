@@ -12,7 +12,7 @@ import SiteFooter from "@/components/footer/SiteFooter";
 import DeferredPageTransition from "@/components/page-transition/DeferredPageTransition";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
-import { resolveMetadataBase, resolveSiteUrlForMetadata } from "@/lib/metadata-base";
+import { resolveMetadataBase, resolveSiteUrl } from "@/lib/metadata-base";
 import { buildLocaleAlternates } from "@/lib/site-alternates";
 
 type Params = Promise<{ locale: string }>;
@@ -21,7 +21,7 @@ export async function generateMetadata(props: {
   params: Params;
 }): Promise<Metadata> {
   const { locale } = await props.params;
-  const siteUrl = await resolveSiteUrlForMetadata();
+  const siteUrl = resolveSiteUrl();
   const isFa = locale === "fa";
   const title = isFa
     ? "محسن خجسته نژاد | برنامه نویس فرانت اند"
@@ -31,7 +31,7 @@ export async function generateMetadata(props: {
     : "Official portfolio of Mohsen Khojasteh Nezhad, web and front-end developer focused on Next.js and React.";
 
   return {
-    metadataBase: await resolveMetadataBase(),
+    metadataBase: resolveMetadataBase(),
     title,
     description,
     applicationName: "Mohsen Khojasteh Nezhad Portfolio",
@@ -55,7 +55,7 @@ export async function generateMetadata(props: {
         "max-image-preview": "large",
       },
     },
-    alternates: await buildLocaleAlternates(locale),
+    alternates: buildLocaleAlternates(locale),
     openGraph: {
       title,
       description,
@@ -89,7 +89,7 @@ export default async function LocaleLayout(props: {
 
   setRequestLocale(locale);
   const messages = await getMessages();
-  const siteUrl = await resolveSiteUrlForMetadata();
+  const siteUrl = resolveSiteUrl();
 
   const personSchema = {
     "@context": "https://schema.org",

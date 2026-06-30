@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { BlogCategory, BlogStatus, Prisma } from "@prisma/client";
 import { unstable_cache } from "next/cache";
 import { BLOG_CACHE_TAG } from "@/lib/cms/core/cache-tag";
-import { sanitizeBlogHtml } from "@/lib/cms/core/sanitize-html";
 import { slugifyText } from "@/lib/cms/core/slug";
 import { extractHeadingsFromHtml } from "./headings-extractor";
 import { mapPrismaToBlogPost, type BlogPostRecord } from "./mappers";
@@ -17,7 +16,8 @@ function getPublishedWhere(): Prisma.BlogPostWhereInput {
   };
 }
 
-function prepareBlogData(input: BlogPostInput) {
+async function prepareBlogData(input: BlogPostInput) {
+  const { sanitizeBlogHtml } = await import("@/lib/cms/core/sanitize-html");
   const contentHtmlEn = sanitizeBlogHtml(input.contentHtmlEn);
   const contentHtmlFa = sanitizeBlogHtml(input.contentHtmlFa);
   const conclusionHtmlEn = input.conclusionHtmlEn
@@ -146,7 +146,7 @@ export async function getPublishedSlugLabels(): Promise<
 }
 
 export async function createBlogPost(input: BlogPostInput) {
-  const data = prepareBlogData(input);
+  const data = await prepareBlogData(input);
   if (await isSlugTaken(data.slug)) {
     throw new Error("SLUG_TAKEN");
   }
@@ -154,7 +154,7 @@ export async function createBlogPost(input: BlogPostInput) {
 }
 
 export async function updateBlogPost(id: number, input: BlogPostInput) {
-  const data = prepareBlogData(input);
+  const data = await prepareBlogData(input);
   if (await isSlugTaken(data.slug, id)) {
     throw new Error("SLUG_TAKEN");
   }

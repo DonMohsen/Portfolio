@@ -1,4 +1,4 @@
-import { resolveSiteUrlForMetadata } from "./metadata-base";
+import { resolveSiteUrl } from "./metadata-base";
 
 function absoluteSiteUrl(base: string, path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
@@ -6,14 +6,14 @@ function absoluteSiteUrl(base: string, path: string): string {
 }
 
 /** Absolute canonical + hreflang alternates for Lighthouse / Google. */
-export async function buildLocaleAlternates(
+export function buildLocaleAlternates(
   locale: string,
   pathSuffix = ""
-): Promise<{
+): {
   canonical: string;
   languages: Record<string, string>;
-}> {
-  const siteUrl = await resolveSiteUrlForMetadata();
+} {
+  const siteUrl = resolveSiteUrl();
   const suffix = pathSuffix
     ? pathSuffix.startsWith("/")
       ? pathSuffix

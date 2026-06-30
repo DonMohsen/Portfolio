@@ -49,5 +49,8 @@ lighthouse*.json
 # generated TinyMCE assets (npm run copy:tinymce / postinstall)
 /public/tinymce
 
+# release artifacts (VPS packaging)
+/release/
+
 # local temp
 .tmp-curved-menu/

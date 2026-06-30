@@ -19,7 +19,7 @@ type Props = {
 };
 
 import { buildLocaleAlternates } from "@/lib/site-alternates";
-import { resolveSiteUrlForMetadata } from "@/lib/metadata-base";
+import { resolveSiteUrl } from "@/lib/metadata-base";
 
 export const revalidate = 600;
 export const dynamicParams = true;
@@ -41,13 +41,13 @@ export async function generateMetadata(
 
   const isFa = locale === "fa";
   const title = `${project.name} | ${isFa ? "پروژه‌ها" : "Projects"}`;
-  const siteUrl = await resolveSiteUrlForMetadata();
+  const siteUrl = resolveSiteUrl();
   const heroImage = project.images[0] ?? "/image-placeholder.webp";
   const absoluteImage = heroImage.startsWith("http")
     ? heroImage
     : `${siteUrl}${heroImage}`;
   const projectPath = `projects/${project.slug}`;
-  const alternates = await buildLocaleAlternates(locale, projectPath);
+  const alternates = buildLocaleAlternates(locale, projectPath);
   const keywords = [
     ...project.seoKeywords,
     ...project.techStack.map((entry) => entry.technology.name),
