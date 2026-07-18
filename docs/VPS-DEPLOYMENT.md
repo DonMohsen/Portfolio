@@ -250,6 +250,7 @@ npx prisma migrate deploy
 | مشکل | راه‌حل |
 |------|--------|
 | `P1001` اتصال دیتابیس | `DATABASE_URL`، فایروال، وضعیت PostgreSQL را بررسی کنید |
+| `P1002` advisory lock / migrate timeout روی Neon | `DATABASE_URL` نباید فقط pooler باشد؛ `DIRECT_URL` (بدون `-pooler`) را ست کنید یا بگذارید اسکریپت بیلد از روی `DATABASE_URL` بسازد |
 | `ADMIN_PASSWORD must be at least 12 characters` | رمز ادمین در `.env` کوتاه است |
 | تصاویر لود نمی‌شوند | Cloudinary و `remotePatterns` در `next.config.ts` را بررسی کنید |
 | 502 از nginx | `pm2 status` — اپ روی 3000 باید Running باشد |

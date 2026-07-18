@@ -6,7 +6,7 @@
   "scripts": {
     "generate:zod": "zod-prisma-types",
     "dev": "next dev --turbopack",
-    "build": "prisma migrate deploy && next build",
+    "build": "node scripts/with-direct-url.mjs npx prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
     "scrape:site": "node scripts/scrape-site.mjs",
@@ -14,7 +14,7 @@
     "db:dump": "node scripts/dump-database.mjs",
     "db:backfill-slugs": "node scripts/backfill-project-slugs.mjs",
     "package:vps": "node scripts/package-vps-release.mjs",
-    "postinstall": "prisma generate && node scripts/copy-tinymce.mjs"
+    "postinstall": "node scripts/with-direct-url.mjs npx prisma generate && node scripts/copy-tinymce.mjs"
   },
   "dependencies": {
     "@ai-sdk/deepseek": "^0.1.11",
