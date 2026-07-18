@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { ProjectDetail } from "@/lib/projects/types";
+import { resolveProjectYear } from "@/lib/projects/map-project-detail";
+import IndustryBadge from "@/components/CaseStudy/IndustryBadge";
 
 type ProjectHeroProps = {
   project: ProjectDetail;
@@ -12,6 +14,7 @@ const BLUR_DATA_URL =
 export default function ProjectHero({ project, locale }: ProjectHeroProps) {
   const isFa = locale === "fa";
   const heroImage = project.images[0] ?? "/image-placeholder.webp";
+  const displayYear = resolveProjectYear(project);
 
   const projectTypeLabel =
     project.projectType === "Practice"
@@ -67,11 +70,21 @@ export default function ProjectHero({ project, locale }: ProjectHeroProps) {
             {projectTypeLabel}
           </span>
           <span className="text-sm text-muted-foreground font-IRANSansXMedium">
-            {project.year}
+            {displayYear}
           </span>
-          <span className="text-sm text-muted-foreground font-IRANSansXMedium">
-            {project.role}
-          </span>
+          {project.role ? (
+            <span className="text-sm text-muted-foreground font-IRANSansXMedium">
+              {project.role}
+            </span>
+          ) : null}
+          {project.industry ? (
+            <IndustryBadge industry={project.industry} locale={locale} />
+          ) : null}
+          {project.outcomeMetric ? (
+            <span className="text-sm text-emerald-700 dark:text-emerald-300 font-IRANSansXMedium">
+              {project.outcomeMetric}
+            </span>
+          ) : null}
           {project.competency === 100 && (
             <span className="px-3 py-1 rounded-md bg-yellow-200 text-yellow-950 font-bold text-sm">
               {isFa ? "تکمیل شده" : "Completed"}

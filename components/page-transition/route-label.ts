@@ -1,19 +1,25 @@
-import { getMockProjectBySlug } from "@/lib/projects/mock-projects";
+import { getMockProjectTitleBySlug } from "@/lib/projects/mock-project-titles";
 import { getBlogLabelFromCache } from "@/lib/blogs/blog-labels-cache";
 
 const LABELS = {
   en: {
     home: "Home",
-    projects: "Projects",
-    project: "Project",
+    work: "Case studies",
+    project: "Case study",
     blogs: "Blog",
+    stats: "Stats",
+    tools: "Tools",
+    ask: "Ask",
     page: "Page",
   },
   fa: {
     home: "خانه",
-    projects: "پروژه‌ها",
-    project: "پروژه",
+    work: "مطالعات موردی",
+    project: "مطالعه موردی",
     blogs: "بلاگ",
+    stats: "آمار",
+    tools: "ابزارها",
+    ask: "پرسش و پاسخ",
     page: "صفحه",
   },
 } as const;
@@ -44,9 +50,9 @@ function resolveBlogPostLabel(slug: string, locale: Locale): string {
   return humanizeSlug(slug);
 }
 
-function resolveProjectLabel(slug: string, locale: Locale): string {
-  const project = getMockProjectBySlug(slug);
-  if (project?.name) return project.name;
+function resolveProjectLabel(slug: string): string {
+  const title = getMockProjectTitleBySlug(slug);
+  if (title) return title;
   return humanizeSlug(slug);
 }
 
@@ -57,13 +63,25 @@ export function getRouteLabelFromPathname(pathname: string): string {
 
   if (path === "/" || path === "") return labels.home;
 
-  if (path === "/projects" || path.startsWith("/projects?")) {
-    return labels.projects;
+  if (path === "/stats" || path.startsWith("/stats?")) {
+    return labels.stats;
   }
 
-  const projectMatch = path.match(/^\/projects\/([^/?#]+)/);
+  if (path === "/tools" || path.startsWith("/tools")) {
+    return labels.tools;
+  }
+
+  if (path === "/ask" || path.startsWith("/ask?")) {
+    return labels.ask;
+  }
+
+  if (path === "/work" || path.startsWith("/work?")) {
+    return labels.work;
+  }
+
+  const projectMatch = path.match(/^\/work\/([^/?#]+)/);
   if (projectMatch?.[1]) {
-    return resolveProjectLabel(projectMatch[1], locale);
+    return resolveProjectLabel(projectMatch[1]);
   }
 
   if (path === "/blogs" || path === "/blogs/" || path.startsWith("/blogs?")) {

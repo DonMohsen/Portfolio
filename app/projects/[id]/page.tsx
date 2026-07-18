@@ -14,5 +14,5 @@ export default async function LegacyProjectPage({ params }: Props) {
   const slug = await getProjectSlugById(numericId);
   if (!slug) return notFound();
 
-  permanentRedirect(`/fa/projects/${slug}`);
+  permanentRedirect(`/fa/work/${slug}`);
 }

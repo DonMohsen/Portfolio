@@ -1,5 +1,6 @@
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import { getProjectSlug } from "@/lib/projects/get-project-slug";
+import { PROJECT_INDUSTRY_LABELS } from "@/lib/projects/project-industry-labels";
 import { parseProjectImages } from "@/lib/projects/parse-project-images";
 import { ProjectOverviewItem } from "./types";
 
@@ -37,7 +38,17 @@ export function mapProjectToOverview(
     isOpenSource: Boolean(project.githubLink),
     githubUrl: project.githubLink || null,
     liveUrl: project.liveLink || null,
-    detailHref: `/${locale}/projects/${getProjectSlug(project)}`,
+    detailHref: `/${locale}/work/${getProjectSlug(project)}`,
     technologies,
+    industryLabel: project.industry
+      ? isFa
+        ? PROJECT_INDUSTRY_LABELS[project.industry].fa
+        : PROJECT_INDUSTRY_LABELS[project.industry].en
+      : isFa
+        ? "صنعت نامشخص"
+        : "Industry TBD",
+    outcomeLabel:
+      project.outcomeMetric ??
+      (isFa ? "متریک در حال تکمیل" : "Metric coming soon"),
   };
 }

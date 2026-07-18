@@ -37,7 +37,7 @@ export default function ProjectsToolbar({
     });
 
     startTransition(() => {
-      router.replace(`/${locale}/projects?${params.toString()}`, {
+      router.replace(`/${locale}/work?${params.toString()}`, {
         scroll: false,
       });
     });

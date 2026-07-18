@@ -16,4 +16,6 @@ export type ProjectOverviewItem = {
   liveUrl: string | null;
   detailHref: string;
   technologies: ProjectOverviewTechnology[];
+  industryLabel: string;
+  outcomeLabel: string;
 };

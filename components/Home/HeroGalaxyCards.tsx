@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 
 export type HeroInfoCard = {
-  id: "currently" | "stack" | "location" | "available";
+  id: "currently" | "focus" | "location" | "available";
   label: string;
   value: string;
   delay?: number;
@@ -32,7 +32,7 @@ const CARD_ICONS: Record<HeroInfoCard["id"], ReactNode> = {
       <path d="M10 18h4" />
     </svg>
   ),
-  stack: (
+  focus: (
     <svg
       className="absolute bottom-3.5 right-3.5 h-[18px] w-[18px] opacity-55"
       style={{ color: "var(--galaxy-card-value)" }}

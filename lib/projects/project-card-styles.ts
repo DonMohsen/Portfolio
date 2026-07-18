@@ -1,4 +1,4 @@
-import { ProjectTypes } from "@prisma/client";
+import type { ProjectTypes } from "@prisma/client";
 
 export const PROJECT_CARD_TYPE_STYLES: Record<
   ProjectTypes,

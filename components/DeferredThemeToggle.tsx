@@ -9,10 +9,13 @@ import {
   prefetchThemeToggleTree,
 } from "@/lib/theme-toggle-session";
 
-const ThemeToggleTree = dynamic(() => import("./ThemeToggleTree"), {
-  ssr: false,
-  loading: () => null,
-});
+const ThemeToggleTree = dynamic(
+  () => import("./motion-chrome-bundle").then((mod) => mod.ThemeToggleTree),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 const SKELETON = (
   <div

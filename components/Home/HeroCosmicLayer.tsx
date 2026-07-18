@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { isDarkTheme, readPageBg } from "@/lib/brand";
+import { isDarkTheme } from "@/lib/brand";
 import {
   DVH_SYNC_EVENT,
   readViewportHeight,
@@ -23,6 +23,13 @@ const CONNECTION_DISTANCE_DESKTOP = 110;
 const CONNECTION_DISTANCE_MOBILE = 92;
 const MOUSE_RADIUS = 150;
 const MAX_SM_BREAKPOINT = 640;
+
+// Particles barely move — capping well below 60fps is visually seamless but
+// cuts the continuous main-thread cost roughly in half to two-thirds. This
+// loop runs indefinitely while the hero is visible (no scroll = no fade), so
+// its per-frame cost accumulates across the whole session/audit trace.
+const FRAME_INTERVAL_MOBILE_MS = 1000 / 24;
+const FRAME_INTERVAL_DESKTOP_MS = 1000 / 30;
 
 type StarParticle = {
   x: number;
@@ -144,14 +151,17 @@ function createStar(
 
 const TECH_STACK_SELECTOR = "[data-tech-stack-section]";
 
-function getFadeProgress(viewportHeight: number) {
+function getFadeProgress(viewportHeight: number, mobile: boolean) {
   const el = document.querySelector(TECH_STACK_SELECTOR);
   const vh = viewportHeight;
   if (!el || vh <= 0) return 0;
 
   const top = el.getBoundingClientRect().top;
-  const fadeStart = vh * 0.92;
-  const fadeEnd = -vh * 0.45;
+
+  // Desktop: long travel. Mobile: ~2× shorter travel → gone before Process,
+  // still smoothstepped (not a hard cut).
+  const fadeStart = mobile ? vh * 0.9 : vh * 0.98;
+  const fadeEnd = mobile ? vh * 0.08 : -vh * 0.75;
 
   if (top >= fadeStart) return 0;
   if (top <= fadeEnd) return 1;
@@ -160,19 +170,20 @@ function getFadeProgress(viewportHeight: number) {
   return linear * linear * (3 - 2 * linear);
 }
 
-/** Opacity curve: stays visible longer, fades gently at the very end. */
+/** Soft dissolve — ease-out so it feels gradual, not a sudden drop. */
 function cosmicFadeOpacity(fade: number) {
   const remaining = Math.max(0, 1 - fade);
-  return remaining * remaining * remaining;
+  return remaining * remaining;
 }
 
-/** Static bottom feather — scroll fade handled only via opacity (no mask cliff). */
+/** Soft bottom feather only — avoid a hard horizontal cliff mid-viewport. */
 function buildCosmicDissolveMask(narrowMobile: boolean) {
   if (narrowMobile) {
-    return "linear-gradient(to bottom, transparent 0%, transparent 38%, black 50%, black 76%, transparent 100%)";
+    // Stronger lower fade on phones so galaxy doesn't sit under Trust/Process
+    return "linear-gradient(to bottom, transparent 0%, transparent 30%, black 44%, black 50%, transparent 78%)";
   }
 
-  return "linear-gradient(to bottom, black 0%, black 76%, transparent 100%)";
+  return "linear-gradient(to bottom, black 0%, black 42%, rgba(0,0,0,0.75) 62%, rgba(0,0,0,0.35) 80%, transparent 100%)";
 }
 
 function dissolveMaskStyle(narrowMobile: boolean): CSSProperties {
@@ -191,14 +202,20 @@ export default function HeroCosmicLayer({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fadeRef = useRef(0);
   const activeRef = useRef(active);
+  const alignRef = useRef(align);
+  const reinitStarsRef = useRef<(() => void) | null>(null);
   const isDarkRef = useRef(true);
   const [fade, setFade] = useState(0);
-  const [veilColor, setVeilColor] = useState("#171a36");
   const [narrowMobile, setNarrowMobile] = useState(false);
 
   useEffect(() => {
     activeRef.current = active;
   }, [active]);
+
+  useEffect(() => {
+    alignRef.current = align;
+    reinitStarsRef.current?.();
+  }, [align]);
 
   useEffect(() => {
     const mq = window.matchMedia(`(max-width: ${MAX_SM_BREAKPOINT - 1}px)`);
@@ -209,26 +226,15 @@ export default function HeroCosmicLayer({
   }, []);
 
   useEffect(() => {
-    const syncThemeTokens = () => {
-      setVeilColor(readPageBg());
-      isDarkRef.current = isDarkTheme();
-    };
-
-    syncThemeTokens();
-    const themeObserver = new MutationObserver(syncThemeTokens);
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => themeObserver.disconnect();
-  }, []);
-
-  useEffect(() => {
     let frame = 0;
 
     const updateFade = () => {
-      const next = getFadeProgress(readViewportHeight(viewportRef.current));
+      const next = activeRef.current
+        ? getFadeProgress(
+            readViewportHeight(viewportRef.current),
+            isMobileLayout()
+          )
+        : 0;
       fadeRef.current = next;
       setFade(next);
     };
@@ -285,7 +291,7 @@ export default function HeroCosmicLayer({
     let lastHeight = 0;
 
     const initStars = (width: number, height: number) => {
-      const { minX, maxX, minY } = getBounds(width, height, align);
+      const { minX, maxX, minY } = getBounds(width, height, alignRef.current);
       const isDark = isDarkTheme();
       isDarkRef.current = isDark;
       const dense = isMobileLayout(width);
@@ -348,7 +354,7 @@ export default function HeroCosmicLayer({
       const { width, height } = readViewportSize(viewportRef.current);
       if (width <= 0 || height <= 0) return;
 
-      const { minX, maxX, minY } = getBounds(width, height, align);
+      const { minX, maxX, minY } = getBounds(width, height, alignRef.current);
       const distance = linkDistance();
       const mobile = isMobileLayout();
       const starBounds: StarBounds = { minX, maxX, minY, height };
@@ -356,6 +362,38 @@ export default function HeroCosmicLayer({
       // Clear the full canvas — partial clear above minY left ghost dots when
       // particles bounced at the ceiling (arc + shadow paint above minY).
       ctx.clearRect(0, 0, width, height);
+
+      // Peach atmosphere is painted on the canvas (not a DOM background layer).
+      // Full-viewport CSS background divs were stealing LCP after cosmic mount.
+      if (!isDarkRef.current) {
+        const gx = alignRef.current === "left" ? width * 0.1 : width * 0.9;
+        const g1 = ctx.createRadialGradient(
+          gx,
+          height * 0.48,
+          0,
+          gx,
+          height * 0.48,
+          Math.max(width, height) * 0.7
+        );
+        g1.addColorStop(0, "rgba(255, 205, 130, 0.42)");
+        g1.addColorStop(0.48, "rgba(255, 222, 175, 0.16)");
+        g1.addColorStop(1, "rgba(255, 222, 175, 0)");
+        ctx.fillStyle = g1;
+        ctx.fillRect(0, 0, width, height);
+
+        const g2 = ctx.createRadialGradient(
+          alignRef.current === "left" ? width * 0.08 : width * 0.92,
+          height * 0.9,
+          0,
+          alignRef.current === "left" ? width * 0.08 : width * 0.92,
+          height * 0.9,
+          Math.max(width, height) * 0.55
+        );
+        g2.addColorStop(0, "rgba(255, 195, 115, 0.28)");
+        g2.addColorStop(1, "rgba(255, 195, 115, 0)");
+        ctx.fillStyle = g2;
+        ctx.fillRect(0, 0, width, height);
+      }
 
       const clipCeiling = isMaxSm(width);
       if (clipCeiling) {
@@ -403,10 +441,18 @@ export default function HeroCosmicLayer({
       }
     };
 
-    const animate = () => {
+    let lastFrameTime = 0;
+
+    const animate = (timestamp: number) => {
       if (!running || disposed) return;
-      if (activeRef.current && fadeRef.current < 1) {
-        drawFrame();
+      const minInterval = isMobileLayout()
+        ? FRAME_INTERVAL_MOBILE_MS
+        : FRAME_INTERVAL_DESKTOP_MS;
+      if (timestamp - lastFrameTime >= minInterval) {
+        lastFrameTime = timestamp;
+        if (activeRef.current && fadeRef.current < 1) {
+          drawFrame();
+        }
       }
       frameId = requestAnimationFrame(animate);
     };
@@ -419,7 +465,12 @@ export default function HeroCosmicLayer({
         return;
       }
       running = true;
-      animate();
+      frameId = requestAnimationFrame(animate);
+    };
+
+    reinitStarsRef.current = () => {
+      resize(true);
+      if (reducedMotion) drawFrame();
     };
 
     const scheduleId = requestAnimationFrame(start);
@@ -463,7 +514,7 @@ export default function HeroCosmicLayer({
       }
       if (!reducedMotion && !running && fadeRef.current < 1) {
         running = true;
-        animate();
+        frameId = requestAnimationFrame(animate);
       }
     };
 
@@ -498,14 +549,13 @@ export default function HeroCosmicLayer({
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
       document.removeEventListener("visibilitychange", onVisibility);
+      reinitStarsRef.current = null;
     };
-  }, [align]);
+  }, []);
 
   const layerOpacity = active ? cosmicFadeOpacity(fade) : 0;
   const fullyHidden = !active || fade >= 1;
   const dissolveMask = dissolveMaskStyle(narrowMobile);
-  const veilBlend = Math.max(0, Math.min(1, (fade - 0.35) / 0.65));
-  const veilOpacity = veilBlend * veilBlend * layerOpacity;
 
   return (
     <div
@@ -515,33 +565,11 @@ export default function HeroCosmicLayer({
         ...dissolveMask,
         opacity: layerOpacity,
         visibility: fullyHidden ? "hidden" : "visible",
+        // Canvas-only atmosphere — avoid DOM backgrounds that become LCP.
+        backgroundColor: "transparent",
       }}
     >
-      <div
-        className="absolute inset-0 dark:hidden"
-        style={{
-          background: `
-            radial-gradient(ellipse 90% 115% at 90% 48%, rgba(255, 205, 130, 0.42) 0%, rgba(255, 222, 175, 0.16) 48%, transparent 88%),
-            radial-gradient(ellipse 75% 70% at 92% 90%, rgba(255, 195, 115, 0.28) 0%, transparent 82%)
-          `,
-        }}
-        aria-hidden
-      />
-
-      <div className="absolute inset-0" aria-hidden>
-        <canvas ref={canvasRef} className="h-full w-full" />
-      </div>
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-[2]"
-        style={{
-          opacity: veilOpacity,
-          visibility: veilOpacity > 0.004 ? "visible" : "hidden",
-          background: `linear-gradient(to bottom, transparent 0%, transparent 58%, ${veilColor} 100%)`,
-          transition: "background-color 0.45s ease",
-        }}
-      />
+      <canvas ref={canvasRef} className="h-full w-full" aria-hidden />
     </div>
   );
 }

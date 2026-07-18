@@ -30,7 +30,7 @@ export default function ProjectsFilterNav() {
     }
 
     startTransition(() => {
-      router.replace(`/projects?${params.toString()}`);
+      router.replace(`/work?${params.toString()}`);
     });
   };
 

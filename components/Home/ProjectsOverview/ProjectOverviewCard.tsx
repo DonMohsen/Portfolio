@@ -51,6 +51,11 @@ export default function ProjectOverviewCard({
             />
           ) : null}
         </div>
+        <p className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-medium uppercase tracking-[0.14em] text-page-muted">
+          <span>{project.industryLabel}</span>
+          <span aria-hidden>·</span>
+          <span>{project.outcomeLabel}</span>
+        </p>
         <p className="mt-3 line-clamp-2 text-sm leading-6 text-page-subtle">
           {project.description}
         </p>
@@ -61,7 +66,7 @@ export default function ProjectOverviewCard({
             data-transition-label={project.title}
             className="inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-xl border border-tech-card-border bg-page/30 px-4 py-2.5 text-sm font-semibold text-page-text transition-colors duration-300 hover:border-accent-cosmic/40 hover:text-accent-cosmic"
           >
-            {isFa ? "مشاهده جزئیات پروژه" : "View project details"}
+            {isFa ? "مشاهده مطالعه موردی" : "View case study"}
             <span aria-hidden>›</span>
           </Link>
 

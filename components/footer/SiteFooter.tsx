@@ -2,15 +2,21 @@ import Link from "next/link";
 import { getFooterData } from "@/lib/footer-data";
 import { resolveSiteUrl } from "@/lib/metadata-base";
 import {
+  SITE_AVAILABILITY_EN,
+  SITE_AVAILABILITY_FA,
   SITE_EMAIL,
   SITE_LOCATION_EN,
   SITE_LOCATION_FA,
   SITE_NAME,
   SITE_NAME_FA,
+  SITE_RESPONSE_TIME_EN,
+  SITE_RESPONSE_TIME_FA,
   SOCIAL_LINKS,
 } from "@/lib/site";
 import FooterCosmicDefer from "./FooterCosmicDefer";
 import FooterSocialIcon from "./FooterSocialIcon";
+import LiveProofBar from "@/components/proof/LiveProofBar";
+import LighthouseBadge from "@/components/proof/LighthouseBadge";
 import styles from "./footer.module.css";
 
 type SiteFooterProps = {
@@ -19,20 +25,20 @@ type SiteFooterProps = {
 
 const CTA_COPY = {
   en: {
-    heading: "Ready to build something reliable together?",
-    sub: "I help teams ship polished web products with React, Next.js, and performance-first engineering.",
-    button: "Start a conversation",
+    heading: "Ready to build a product that scales?",
+    sub: "From discovery to production — fixed scope, weekly demos, and architecture docs you own.",
+    button: "Book a discovery call",
   },
   fa: {
-    heading: "آماده‌اید یک محصول قابل اعتماد بسازیم؟",
-    sub: "به تیم‌ها کمک می‌کنم محصولات وب دقیق و سریع با React، Next.js و مهندسی مبتنی بر عملکرد بسازند.",
-    button: "شروع گفتگو",
+    heading: "آماده‌اید محصولی بسازید که مقیاس بگیرد؟",
+    sub: "از کشف تا production — محدوده مشخص، دمو هفتگی و مستندات معماری متعلق به شما.",
+    button: "رزرو تماس",
   },
 } as const;
 
 const BRAND_COPY = {
-  en: "Front-end engineer focused on fast, accessible interfaces and production-grade Next.js architecture.",
-  fa: "مهندس فرانت‌اند با تمرکز روی رابط‌های سریع، در دسترس و معماری Next.js در سطح پروداکشن.",
+  en: "Software Product Engineer — scalable products from idea to production. SaaS, automation, and AI integrations.",
+  fa: "مهندس محصول نرم‌افزار — محصولات مقیاس‌پذیر از ایده تا production. SaaS، اتوماسیون و یکپارچه‌سازی AI.",
 } as const;
 
 export default async function SiteFooter({ locale }: SiteFooterProps) {
@@ -101,18 +107,27 @@ export default async function SiteFooter({ locale }: SiteFooterProps) {
             >
               {copy.sub}
             </p>
-            <div className="mt-6">
-              <a
-                href={`mailto:${SITE_EMAIL}`}
+            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Link
+                href={`/${locale}/contact?tab=schedule`}
                 className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent-cosmic px-7 py-3 text-sm font-bold uppercase tracking-[0.16em] text-accent-cosmic-fg transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
                 {copy.button}
-              </a>
+              </Link>
+              <p className="text-xs leading-5 text-page-subtle sm:text-sm">
+                {isFa ? SITE_AVAILABILITY_FA : SITE_AVAILABILITY_EN}
+                <span className="mx-2 opacity-40" aria-hidden>
+                  ·
+                </span>
+                {isFa ? SITE_RESPONSE_TIME_FA : SITE_RESPONSE_TIME_EN}
+              </p>
             </div>
           </div>
         </div>
         </div>
       </section>
+
+      <LiveProofBar locale={locale} />
 
       <div className={styles.footerBody}>
         <div className={styles.footerBodyInner}>
@@ -134,6 +149,9 @@ export default async function SiteFooter({ locale }: SiteFooterProps) {
               </Link>
               <p className={`${styles.footerBrandBio} mt-4 text-sm leading-7`}>
                 {brandCopy}
+              </p>
+              <p className={`${styles.footerBrandBio} mt-2 text-xs leading-6 opacity-80`}>
+                {isFa ? SITE_AVAILABILITY_FA : SITE_AVAILABILITY_EN}
               </p>
               <nav
                 aria-label={isFa ? "شبکه‌های اجتماعی" : "Social links"}
@@ -195,7 +213,7 @@ export default async function SiteFooter({ locale }: SiteFooterProps) {
                 id="footer-projects-heading"
                 className={`${styles.footerColumnTitle} text-sm font-semibold`}
               >
-                {isFa ? "پروژه‌های برتر" : "Projects"}
+                {isFa ? "مطالعات موردی" : "Case studies"}
               </h2>
               <ul className="mt-4 space-y-2.5">
                 {projects.map((project) => (
@@ -210,10 +228,10 @@ export default async function SiteFooter({ locale }: SiteFooterProps) {
                 ))}
                 <li>
                   <Link
-                    href={`/${locale}/projects`}
+                    href={`/${locale}/work`}
                     className={`${styles.footerLink} text-sm font-medium transition-colors duration-300`}
                   >
-                    {isFa ? "همه پروژه‌ها" : "All projects"}
+                    {isFa ? "همه مطالعات موردی" : "All case studies"}
                   </Link>
                 </li>
               </ul>
@@ -233,6 +251,17 @@ export default async function SiteFooter({ locale }: SiteFooterProps) {
                 <p className={`${styles.footerLink} text-sm leading-6`}>
                   {isFa ? SITE_LOCATION_FA : SITE_LOCATION_EN}
                 </p>
+                <p className={`${styles.footerLink} text-sm leading-6`}>
+                  {isFa ? SITE_RESPONSE_TIME_FA : SITE_RESPONSE_TIME_EN}
+                </p>
+                <p>
+                  <Link
+                    href={`/${locale}/stack`}
+                    className={`${styles.footerLink} text-sm leading-6 transition-colors duration-300`}
+                  >
+                    {isFa ? "استک فنی" : "Technical stack"}
+                  </Link>
+                </p>
                 <p>
                   <a
                     href={`mailto:${SITE_EMAIL}`}
@@ -247,20 +276,47 @@ export default async function SiteFooter({ locale }: SiteFooterProps) {
 
           <div className={`${styles.footerDivider} mt-6 pt-4`}>
             <div className="flex flex-col gap-4 text-sm sm:flex-row sm:items-center sm:justify-between">
-              <p className={styles.footerMeta}>
-                © {new Date().getFullYear()}{" "}
-                {isFa ? SITE_NAME_FA : "Mohsen"}.{" "}
-                {isFa ? "تمامی حقوق محفوظ است." : "All rights reserved."}
-              </p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <p className={styles.footerMeta}>
+                  © {new Date().getFullYear()}{" "}
+                  {isFa ? SITE_NAME_FA : "Mohsen"}.{" "}
+                  {isFa ? "تمامی حقوق محفوظ است." : "All rights reserved."}
+                </p>
+                <LighthouseBadge locale={locale} />
+              </div>
               <nav
                 aria-label={isFa ? "لینک‌های قانونی" : "Legal links"}
                 className="flex flex-wrap gap-x-5 gap-y-2"
               >
                 <Link
-                  href={`/${locale}/projects`}
+                  href={`/${locale}/work`}
                   className={`${styles.footerMeta} ${styles.footerMetaLink} transition-colors duration-300`}
                 >
-                  {isFa ? "پروژه‌ها" : "Projects"}
+                  {isFa ? "مطالعات موردی" : "Case studies"}
+                </Link>
+                <Link
+                  href={`/${locale}/tools`}
+                  className={`${styles.footerMeta} ${styles.footerMetaLink} transition-colors duration-300`}
+                >
+                  {isFa ? "ابزارها" : "Tools"}
+                </Link>
+                <Link
+                  href={`/${locale}/stats`}
+                  className={`${styles.footerMeta} ${styles.footerMetaLink} transition-colors duration-300`}
+                >
+                  {isFa ? "آمار" : "Stats"}
+                </Link>
+                <Link
+                  href={`/${locale}/stack`}
+                  className={`${styles.footerMeta} ${styles.footerMetaLink} transition-colors duration-300`}
+                >
+                  {isFa ? "استک" : "Stack"}
+                </Link>
+                <Link
+                  href={`/${locale}/contact`}
+                  className={`${styles.footerMeta} ${styles.footerMetaLink} transition-colors duration-300`}
+                >
+                  {isFa ? "تماس" : "Contact"}
                 </Link>
                 <Link
                   href={`/${locale}/blogs`}
@@ -268,12 +324,6 @@ export default async function SiteFooter({ locale }: SiteFooterProps) {
                 >
                   {isFa ? "بلاگ" : "Blog"}
                 </Link>
-                <a
-                  href={`mailto:${SITE_EMAIL}`}
-                  className={`${styles.footerMeta} ${styles.footerMetaLink} transition-colors duration-300`}
-                >
-                  {isFa ? "تماس" : "Contact"}
-                </a>
               </nav>
             </div>
           </div>

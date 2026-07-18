@@ -1,11 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  isCosmicLayerBooted,
-  markCosmicLayerBooted,
-} from "@/lib/cosmic-layer-session";
-import { scheduleAfterLcp } from "@/lib/schedule-after-lcp";
+import { useEffect } from "react";
+import { markCosmicLayerBooted } from "@/lib/cosmic-layer-session";
 import HeroCosmicLayer from "./HeroCosmicLayer";
 
 type HeroCosmicLazyProps = {
@@ -13,29 +9,14 @@ type HeroCosmicLazyProps = {
   active?: boolean;
 };
 
+/** Parent (PersistentHeroCosmic) already waits until after load+idle. */
 export default function HeroCosmicLazy({
   align = "right",
   active = true,
 }: HeroCosmicLazyProps) {
-  const [ready, setReady] = useState(() => isCosmicLayerBooted());
-
   useEffect(() => {
-    if (ready) return;
-
-    let cancelled = false;
-
-    scheduleAfterLcp(() => {
-      if (cancelled) return;
-      markCosmicLayerBooted();
-      setReady(true);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [ready]);
-
-  if (!ready) return null;
+    markCosmicLayerBooted();
+  }, []);
 
   return <HeroCosmicLayer align={align} active={active} />;
 }

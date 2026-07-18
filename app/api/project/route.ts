@@ -54,9 +54,17 @@ export async function GET(req: Request) {
   const search = searchParams.get("search") || "";
   const order = searchParams.get("order") || "";
   const type = searchParams.get("type") || "";
+  const industry = searchParams.get("industry") || "";
+  const featured = searchParams.get("featured") || "";
 
   try {
-    const projects = await getAllProjects(search, order, type);
+    const projects = await getAllProjects(
+      search,
+      order,
+      type,
+      industry,
+      featured
+    );
     return NextResponse.json(projects);
   } catch (error) {
     console.error("Error fetching projects:", error);

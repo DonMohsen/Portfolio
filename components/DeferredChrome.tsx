@@ -1,35 +1,65 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType, type ReactNode } from "react";
+import { scheduleAfterLcp } from "@/lib/schedule-after-lcp";
 import {
   CURVE_MENU_PREPARE_EVENT,
   prefetchCurveMenuOverlay,
 } from "@/components/curve-menu/prefetch";
 
-const CurveMenuOverlay = dynamic(
-  () => import("@/components/curve-menu/CurveMenuOverlay"),
-  { ssr: false }
-);
-
-const Toaster = dynamic(
-  () => import("@/components/ui/toaster").then((mod) => mod.Toaster),
-  { ssr: false }
-);
-
-/** After load — keeps framer-motion off the LCP window (~1.5s) on mobile. */
-const MOBILE_MENU_WARMUP_MS = 2800;
 const MOBILE_MQ = "(max-width: 767px)";
 
+type AnyComp = ComponentType<Record<string, never>>;
+
+/**
+ * All chrome loads via imperative import() after LCP — avoids next/dynamic
+ * prefetch of framer-motion bundles during initial hydration.
+ */
 export default function DeferredChrome() {
-  const [menuReady, setMenuReady] = useState(false);
+  const [nodes, setNodes] = useState<ReactNode>(null);
+  const [menu, setMenu] = useState<ReactNode>(null);
 
   useEffect(() => {
+    let cancelled = false;
+
+    scheduleAfterLcp(() => {
+      void Promise.all([
+        import("@/components/navigation/CommandPalette"),
+        import("@/components/conversion/ExitIntentModal"),
+        import("@/components/ui/toaster").then((m) => ({
+          default: m.Toaster as AnyComp,
+        })),
+        import("@/components/contact/DeferredContactWidget"),
+      ]).then(([cmd, exit, toast, contact]) => {
+        if (cancelled) return;
+        setNodes(
+          <>
+            <cmd.default />
+            <exit.default />
+            <toast.default />
+            <contact.default />
+          </>
+        );
+      });
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!nodes) return;
+
     let cancelled = false;
     let timer: number | undefined;
 
     const enableMenu = () => {
-      if (!cancelled) setMenuReady(true);
+      void import("@/components/motion-chrome-bundle").then((mod) => {
+        if (cancelled) return;
+        const Overlay = mod.CurveMenuOverlay;
+        setMenu(<Overlay />);
+      });
     };
 
     const warmup = () => {
@@ -41,15 +71,9 @@ export default function DeferredChrome() {
     window.addEventListener(CURVE_MENU_PREPARE_EVENT, enableMenu);
 
     if (window.matchMedia(MOBILE_MQ).matches) {
-      const scheduleWarmup = () => {
-        timer = window.setTimeout(warmup, MOBILE_MENU_WARMUP_MS);
-      };
-
-      if (document.readyState === "complete") {
-        scheduleWarmup();
-      } else {
-        window.addEventListener("load", scheduleWarmup, { once: true });
-      }
+      timer = window.setTimeout(warmup, 1200);
+    } else {
+      warmup();
     }
 
     return () => {
@@ -58,12 +82,12 @@ export default function DeferredChrome() {
       window.removeEventListener("curve-menu:open", enableMenu);
       window.removeEventListener(CURVE_MENU_PREPARE_EVENT, enableMenu);
     };
-  }, []);
+  }, [nodes]);
 
   return (
     <>
-      {menuReady ? <CurveMenuOverlay /> : null}
-      <Toaster />
+      {nodes}
+      {menu}
     </>
   );
 }

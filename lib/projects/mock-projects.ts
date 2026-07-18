@@ -1,6 +1,26 @@
+import "server-only";
 import { PLACEHOLDER_PROJECTS } from "@/components/Home/ProjectsOverview/placeholder-projects";
+import { CASE_STUDY_SEEDS } from "./case-study-seeds";
 import { parseProjectImages } from "./parse-project-images";
-import { ProjectDetail } from "./types";
+import type { ProjectDetail } from "./types";
+
+function pickBicmFromSeed(slug: string) {
+  const seed = CASE_STUDY_SEEDS.find((item) => item.slug === slug);
+  if (!seed) return {};
+
+  return {
+    role: seed.role,
+    year: seed.year,
+    problemHtml: seed.problemHtml,
+    insightHtml: seed.insightHtml,
+    changeHtml: seed.changeHtml,
+    measurementHtml: seed.measurementHtml,
+    failureHtml: seed.failureHtml,
+    clientQuote: seed.clientQuote,
+    clientName: seed.clientName,
+    metricsJson: seed.metricsJson,
+  };
+}
 
 const MOCK_ENRICHMENTS: Record<
   number,
@@ -10,7 +30,7 @@ const MOCK_ENRICHMENTS: Record<
   >
 > = {
   9001: {
-    slug: "lumina-analytics-console",
+    ...pickBicmFromSeed("lumina-analytics-console"),
     summary:
       "Real-time analytics console with Next.js, custom charts, and serverless integrations for deep server log monitoring.",
     longDescription:
@@ -22,8 +42,6 @@ const MOCK_ENRICHMENTS: Record<
       "Role-based dashboards with persisted filter state",
       "ISR-optimized public status pages sharing the same UI kit",
     ],
-    role: "Lead Front-End Developer",
-    year: 2025,
     seoKeywords: [
       "analytics dashboard",
       "Next.js",
@@ -33,7 +51,7 @@ const MOCK_ENRICHMENTS: Record<
     ],
   },
   9002: {
-    slug: "orbit-commerce-studio",
+    ...pickBicmFromSeed("orbit-commerce-studio"),
     summary:
       "Headless storefront with localized checkout, optimistic cart updates, and a shared modular design system.",
     longDescription:
@@ -45,8 +63,6 @@ const MOCK_ENRICHMENTS: Record<
       "Responsive image pipeline with priority LCP heroes",
       "Composable product modules for rapid merchandising experiments",
     ],
-    role: "Front-End Architect",
-    year: 2024,
     seoKeywords: [
       "headless commerce",
       "e-commerce",
@@ -56,7 +72,7 @@ const MOCK_ENRICHMENTS: Record<
     ],
   },
   9003: {
-    slug: "nebula-docs-platform",
+    ...pickBicmFromSeed("nebula-docs-platform"),
     summary:
       "Developer documentation platform with full-text search, interactive API examples, and MDX publishing workflows.",
     longDescription:
@@ -68,8 +84,6 @@ const MOCK_ENRICHMENTS: Record<
       "Sticky TOC and deep-linkable heading anchors",
       "Dark mode with accessible contrast ratios",
     ],
-    role: "Full-Stack Developer",
-    year: 2024,
     seoKeywords: [
       "developer documentation",
       "MDX",
@@ -79,7 +93,6 @@ const MOCK_ENRICHMENTS: Record<
     ],
   },
   9004: {
-    slug: "pulse-task-orchestrator",
     summary:
       "Workflow dashboard for distributed teams with live status boards, role-based views, and mobile-first motion.",
     longDescription:
@@ -91,8 +104,6 @@ const MOCK_ENRICHMENTS: Record<
       "Motion design respecting prefers-reduced-motion",
       "Webhook integrations for Slack and email digests",
     ],
-    role: "UI Engineer",
-    year: 2023,
     seoKeywords: [
       "task management",
       "kanban dashboard",

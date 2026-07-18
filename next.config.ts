@@ -26,7 +26,8 @@ const productionHeaders = isDev
     ];
 
 const nextConfig: NextConfig = {
-  productionBrowserSourceMaps: true,
+  // Source maps inflate transfer + parse in audits; keep off for production clients.
+  productionBrowserSourceMaps: false,
   images: {
     remotePatterns: [
       {
@@ -38,13 +39,17 @@ const nextConfig: NextConfig = {
     ...(isDev ? { dangerouslyAllowLocalIP: true } : {}),
   },
   experimental: {
+    // Do NOT include framer-motion here — it caused duplicate chunk emission
+    // under Turbopack. Eager framer was fixed by removing it from not-found /
+    // loading.tsx instead.
     optimizePackageImports: [
       "lucide-react",
-      "framer-motion",
       "@radix-ui/react-icons",
       "@heroicons/react",
     ],
     optimizeCss: true,
+    // Remove render-blocking CSS round-trip (Tailwind payload is small).
+    inlineCss: true,
   },
   turbopack: {
     resolveAlias: {
@@ -61,6 +66,30 @@ const nextConfig: NextConfig = {
       };
     }
     return config;
+  },
+  async redirects() {
+    return [
+      {
+        source: "/projects",
+        destination: "/fa/work",
+        permanent: true,
+      },
+      {
+        source: "/projects/:slug",
+        destination: "/fa/work/:slug",
+        permanent: true,
+      },
+      {
+        source: "/:locale(fa|en)/projects",
+        destination: "/:locale/work",
+        permanent: true,
+      },
+      {
+        source: "/:locale(fa|en)/projects/:slug",
+        destination: "/:locale/work/:slug",
+        permanent: true,
+      },
+    ];
   },
   async headers() {
     return [

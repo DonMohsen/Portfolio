@@ -14,6 +14,19 @@ enum ProjectTypes {
   Real
 }
 
+enum ProjectIndustry {
+  Healthcare
+  Fintech
+  Ecommerce
+  AI
+  Automation
+  Education
+  Marketplace
+  Enterprise
+  SaaS
+  Other
+}
+
 enum BlogCategory {
   tech
   personal
@@ -24,6 +37,13 @@ enum BlogStatus {
   published
 }
 
+enum ContactInquiryStatus {
+  new
+  read
+  replied
+  archived
+}
+
 model Technology {
   id       Int                      @id @default(autoincrement())
   name     String
@@ -32,17 +52,34 @@ model Technology {
 }
 
 model Projects {
-  id            Int                      @id @default(autoincrement())
-  createdAt     DateTime                 @default(now())
-  lastUpdatedAt DateTime                 @updatedAt
-  name          String
-  description   String
-  liveLink      String?
-  image         String?
-  competency    Int
-  projectType   ProjectTypes
-  githubLink    String
-  techStack     ProjectsOnTechnologies[]
+  id              Int                      @id @default(autoincrement())
+  createdAt       DateTime                 @default(now())
+  lastUpdatedAt   DateTime                 @updatedAt
+  name            String
+  slug            String                   @unique
+  description     String
+  liveLink        String?
+  image           String?
+  competency      Int
+  projectType     ProjectTypes
+  githubLink      String
+  industry        ProjectIndustry?
+  outcomeMetric   String?
+  featured        Boolean                  @default(false)
+  role            String?
+  year            Int?
+  problemHtml     String?                  @db.Text
+  insightHtml     String?                  @db.Text
+  changeHtml      String?                  @db.Text
+  measurementHtml String?                  @db.Text
+  failureHtml     String?                  @db.Text
+  clientQuote     String?
+  clientName      String?
+  metricsJson     Json?
+  techStack       ProjectsOnTechnologies[]
+
+  @@index([featured])
+  @@index([industry])
 }
 
 model ProjectsOnTechnologies {
@@ -105,4 +142,36 @@ model AdminRefreshToken {
 
   @@index([adminUserId])
   @@index([expiresAt])
+}
+
+model ContactInquiry {
+  id          Int                  @id @default(autoincrement())
+  createdAt   DateTime             @default(now())
+  name        String
+  email       String
+  company     String?
+  projectType String
+  budgetRange String
+  timeline    String
+  message     String               @db.Text
+  locale      String
+  source      String?
+  status      ContactInquiryStatus @default(new)
+
+  @@index([createdAt(sort: Desc)])
+  @@index([status])
+}
+
+model ToolLead {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  toolSlug   String
+  locale     String
+  email      String?
+  inputsJson Json
+  resultJson Json?
+  source     String
+
+  @@index([createdAt(sort: Desc)])
+  @@index([toolSlug])
 }

@@ -19,6 +19,19 @@ import useConfirmModal from "@/store/useConfirmModal";
 import ButtonLoading from "../Loadings/button-loading";
 import toast from "react-hot-toast";
 import { useToast } from "@/hooks/use-toast";
+import ProjectBicmTabs, {
+  type BicmTab,
+} from "@/components/cms/project/ProjectBicmTabs";
+import ProjectMetricsEditor from "@/components/cms/project/ProjectMetricsEditor";
+import { parseMetricsJson } from "@/lib/projects/types";
+import { PROJECT_INDUSTRY_FILTERS } from "@/lib/projects/project-industry-labels";
+
+const metricsRowSchema = z.object({
+  label: z.string(),
+  before: z.string().optional(),
+  after: z.string().optional(),
+  delta: z.string().optional(),
+});
 
 const FormSchema = z.object({
   name: z.string().nonempty("Name is required"),
@@ -44,9 +57,32 @@ const FormSchema = z.object({
       })
     ),
   }),
+  slug: z.string().optional(),
+  industry: z.string().optional(),
+  outcomeMetric: z.string().optional(),
+  featured: z.boolean().optional(),
+  role: z.string().optional(),
+  year: z.union([z.number(), z.nan()]).optional(),
+  clientQuote: z.string().optional(),
+  clientName: z.string().optional(),
+  problemHtml: z.string().optional(),
+  insightHtml: z.string().optional(),
+  changeHtml: z.string().optional(),
+  measurementHtml: z.string().optional(),
+  failureHtml: z.string().optional(),
+  metricsJson: z.array(metricsRowSchema).optional(),
 });
 
 type FormData = z.infer<typeof FormSchema>;
+
+const BICM_FIELD_MAP: Record<BicmTab, keyof FormData> = {
+  problem: "problemHtml",
+  insight: "insightHtml",
+  change: "changeHtml",
+  measurement: "measurementHtml",
+  failure: "failureHtml",
+};
+
 const ProjectForm: React.FC<ProjectFormProps> = ({
   type,
   project,
@@ -68,12 +104,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
   const [recievedTechStack, setRecievedTechStack] = useState<Technology[]>([]);
 
   const [creationLoading, setCreationLoading] = useState(false);
-  useEffect(() => {
-    project && setTechStack(project?.techStack.map((tech) => tech.technology));
-    if (type === "post") {
-      setTechStack([]);
-    }
-  }, [project]);
+  const [metricsRows, setMetricsRows] = useState<
+    z.infer<typeof metricsRowSchema>[]
+  >([]);
 
   const {
     register,
@@ -85,7 +118,61 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      featured: false,
+      industry: "",
+      metricsJson: [],
+      problemHtml: "",
+      insightHtml: "",
+      changeHtml: "",
+      measurementHtml: "",
+      failureHtml: "",
+    },
   });
+
+  useEffect(() => {
+    if (project && type === "put") {
+      setTechStack(project.techStack.map((tech) => tech.technology));
+      setMetricsRows(parseMetricsJson(project.metricsJson) ?? []);
+      reset({
+        name: project.name,
+        description: project.description,
+        liveLink: project.liveLink ?? "",
+        image: project.image ?? "",
+        competency: project.competency,
+        projectType: project.projectType,
+        githubLink: project.githubLink,
+        slug: project.slug,
+        industry: project.industry ?? "",
+        outcomeMetric: project.outcomeMetric ?? "",
+        featured: project.featured ?? false,
+        role: project.role ?? "",
+        year: project.year ?? undefined,
+        clientQuote: project.clientQuote ?? "",
+        clientName: project.clientName ?? "",
+        problemHtml: project.problemHtml ?? "",
+        insightHtml: project.insightHtml ?? "",
+        changeHtml: project.changeHtml ?? "",
+        measurementHtml: project.measurementHtml ?? "",
+        failureHtml: project.failureHtml ?? "",
+        metricsJson: parseMetricsJson(project.metricsJson) ?? [],
+        techStack: {
+          create: project.techStack.map((tech) => ({
+            technologyId: tech.technology.id,
+            addedBy: tech.addedBy,
+          })),
+        },
+      });
+      if (project.image) {
+        setImageURL(project.image);
+      }
+    }
+
+    if (type === "post") {
+      setTechStack([]);
+      setMetricsRows([]);
+    }
+  }, [project, type, reset]);
   // const askFromModal = () => {
   //   setModalState(true);
   // };
@@ -109,22 +196,42 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
   
   const [formData, setFormData] = useState<FormData | null>(null);
 
-  const { toast } = useToast(); // Access the toast function
+  const { toast } = useToast();
+
+  const buildFormPayload = (data: FormData) => ({
+    ...data,
+    metricsJson: metricsRows,
+    techStack: {
+      create: techStack.map((tech) => ({
+        technologyId: tech.id,
+        addedBy: tech.name,
+      })),
+    },
+  });
+
+  const bicmValues: Record<BicmTab, string> = {
+    problem: watch("problemHtml") ?? "",
+    insight: watch("insightHtml") ?? "",
+    change: watch("changeHtml") ?? "",
+    measurement: watch("measurementHtml") ?? "",
+    failure: watch("failureHtml") ?? "",
+  };
+
+  const handleBicmChange = (tab: BicmTab, html: string) => {
+    setValue(BICM_FIELD_MAP[tab], html);
+  };
+
+  const handleMetricsChange = (rows: z.infer<typeof metricsRowSchema>[]) => {
+    setMetricsRows(rows);
+    setValue("metricsJson", rows);
+  };
   //!new code.............................................
   const handleFormSubmission = () => {
     // This function will be called when modal is confirmed
     if (!formData) return; // formData should come from your form state
   
     const submitHandler = () => {
-      const techStackToSubmit = techStack.map((tech) => ({
-        technologyId: tech.id,
-        addedBy: tech.name,
-      }));
-  
-      const formPayload = {
-        ...formData,
-        techStack: { create: techStackToSubmit },
-      };
+      const formPayload = buildFormPayload(formData);
   
       setCreationLoading(true);
   
@@ -183,20 +290,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
   
     if (type === "post") {
       try {
-        const techStackToSubmit = techStack.map((tech) => ({
-          technologyId: tech.id,
-          addedBy: tech.name,
-        }));
-  
-        const formPayload = {
-          ...formData,
-          techStack: {
-            create: techStackToSubmit,
-          },
-        };
-  
+        const formPayload = buildFormPayload(formData);
+
         setCreationLoading(true);
-  
+
         axios
           .post("/api/project/create", formPayload, {
             headers: { Authorization: `Bearer ${accessToken}` },
@@ -235,20 +332,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
       }
     } else if (type === "put") {
       try {
-        const techStackToSubmit = techStack.map((tech) => ({
-          technologyId: tech.id,
-          addedBy: tech.name,
-        }));
-  
-        const formPayload = {
-          ...formData,
-          techStack: {
-            create: techStackToSubmit,
-          },
-        };
-  
+        const formPayload = buildFormPayload(formData);
+
         setCreationLoading(true);
-  
+
         axios
           .put(`/api/project/${project?.id}`, formPayload, {
             headers: { Authorization: `Bearer ${accessToken}` },
@@ -496,6 +583,94 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
       {...register("githubLink")}
     />
   </div>
+
+  {/* Case study metadata */}
+  <div className="w-full space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+    <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">
+      Case study metadata
+    </h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <TextField
+        fullWidth
+        label="URL slug"
+        placeholder="auto-generated from name if empty"
+        helperText="Used in /work/[slug]"
+        sx={textFieldStyles}
+        {...register("slug")}
+      />
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Industry
+        </label>
+        <select
+          {...register("industry")}
+          className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+        >
+          <option value="">— None —</option>
+          {PROJECT_INDUSTRY_FILTERS.map((industry) => (
+            <option key={industry} value={industry}>
+              {industry}
+            </option>
+          ))}
+        </select>
+      </div>
+      <TextField
+        fullWidth
+        label="Outcome headline"
+        placeholder="e.g. 40% faster checkout"
+        sx={textFieldStyles}
+        {...register("outcomeMetric")}
+      />
+      <TextField
+        fullWidth
+        label="Your role"
+        placeholder="e.g. Lead Product Engineer"
+        sx={textFieldStyles}
+        {...register("role")}
+      />
+      <TextField
+        fullWidth
+        label="Year"
+        type="number"
+        inputProps={{ min: 1990, max: 2100 }}
+        sx={textFieldStyles}
+        {...register("year", { valueAsNumber: true })}
+      />
+      <label className="flex items-center gap-3 self-center cursor-pointer">
+        <input
+          type="checkbox"
+          {...register("featured")}
+          className="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+        />
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Featured on homepage
+        </span>
+      </label>
+      <TextField
+        fullWidth
+        label="Client quote"
+        multiline
+        rows={2}
+        sx={textFieldStyles}
+        {...register("clientQuote")}
+      />
+      <TextField
+        fullWidth
+        label="Client name / title"
+        placeholder="e.g. Jane Doe, CTO"
+        sx={textFieldStyles}
+        {...register("clientName")}
+      />
+    </div>
+  </div>
+
+  <ProjectBicmTabs values={bicmValues} onChange={handleBicmChange} />
+
+  <ProjectMetricsEditor
+    rows={metricsRows}
+    onChange={handleMetricsChange}
+    textFieldStyles={textFieldStyles}
+  />
 
   {/* Tech Stack Section */}
   <div className="w-full space-y-4">

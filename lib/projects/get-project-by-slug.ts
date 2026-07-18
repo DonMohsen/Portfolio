@@ -1,16 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
 import { getMockProjectById, getMockProjectBySlug } from "./mock-projects";
-import { parseProjectImages } from "./parse-project-images";
+import { mapDbProjectToDetail } from "./map-project-detail";
 import { normalizeProjectDates } from "./project-dates";
-import { slugify } from "./slugify";
 import { ProjectDetail } from "./types";
 
 async function fetchProjectBySlugFromDb(
   slug: string
 ): Promise<ProjectDetail | null> {
   try {
-    const projects = await prisma.projects.findMany({
+    const project = await prisma.projects.findUnique({
+      where: { slug },
       include: {
         techStack: {
           include: {
@@ -21,36 +21,14 @@ async function fetchProjectBySlugFromDb(
       },
     });
 
-    const match = projects.find((project) => slugify(project.name) === slug);
-    if (!match) return null;
+    if (!project) return null;
 
-    const images = parseProjectImages(match.image);
-
-    return {
-      ...match,
-      slug,
-      summary: match.description.slice(0, 160),
-      longDescription: match.description,
-      highlights: [],
-      role: "Developer",
-      year: new Date(match.createdAt).getFullYear(),
-      images,
-      seoKeywords: match.techStack.map((entry) => entry.technology.name),
-    };
+    return mapDbProjectToDetail(project);
   } catch (error) {
     console.error("Error fetching project by slug:", error);
     return null;
   }
 }
-
-const getCachedDbProjectBySlug = unstable_cache(
-  fetchProjectBySlugFromDb,
-  ["project-by-slug"],
-  {
-    revalidate: 600,
-    tags: ["project"],
-  }
-);
 
 export async function getProjectBySlug(
   slug: string
@@ -58,7 +36,15 @@ export async function getProjectBySlug(
   const mock = getMockProjectBySlug(slug);
   if (mock) return mock;
 
-  const project = await getCachedDbProjectBySlug(slug);
+  const project = await unstable_cache(
+    () => fetchProjectBySlugFromDb(slug),
+    ["project-by-slug", slug],
+    {
+      revalidate: 600,
+      tags: ["project"],
+    }
+  )();
+
   return project ? normalizeProjectDates(project) : null;
 }
 
@@ -71,10 +57,9 @@ export async function getProjectSlugById(
   try {
     const project = await prisma.projects.findUnique({
       where: { id },
-      select: { name: true },
+      select: { slug: true },
     });
-    if (!project) return null;
-    return slugify(project.name);
+    return project?.slug ?? null;
   } catch (error) {
     console.error("Error resolving project slug by id:", error);
     return null;

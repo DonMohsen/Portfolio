@@ -1,14 +1,18 @@
-import { scheduleAfterLoadIdle } from "@/lib/schedule-idle";
-
 type ScheduleLcpOptions = {
-  /** Safety net when LCP is not reported (e.g. bfcache restore). */
+  /** Safety net when load never fires. */
   fallbackMs?: number;
 };
 
-/** Run after LCP is recorded — keeps cosmic work off the LCP critical path. */
+/**
+ * Run after the page has loaded and the main thread is idle.
+ *
+ * Cosmic / decorative work must not mount during the LCP observation window.
+ * Waiting for `load` + idle keeps full-viewport effects off the critical path
+ * without delaying first paint of hero text.
+ */
 export function scheduleAfterLcp(
   callback: () => void,
-  { fallbackMs = 2200 }: ScheduleLcpOptions = {}
+  { fallbackMs = 4000 }: ScheduleLcpOptions = {}
 ) {
   let called = false;
 
@@ -17,36 +21,25 @@ export function scheduleAfterLcp(
     called = true;
 
     if (typeof window.requestIdleCallback === "function") {
-      window.requestIdleCallback(callback, { timeout: 1200 });
+      window.requestIdleCallback(callback, { timeout: 1500 });
       return;
     }
 
-    window.setTimeout(callback, 120);
+    window.setTimeout(callback, 200);
   };
 
   if (typeof window === "undefined") return;
 
-  if (typeof PerformanceObserver === "undefined") {
-    scheduleAfterLoadIdle(run, { minDelayMs: 500 });
-    return;
+  const onLoad = () => {
+    // Small buffer so the final text LCP candidate can settle in lab tools.
+    window.setTimeout(run, 400);
+  };
+
+  if (document.readyState === "complete") {
+    onLoad();
+  } else {
+    window.addEventListener("load", onLoad, { once: true });
   }
 
-  try {
-    const observer = new PerformanceObserver((list) => {
-      if (list.getEntries().length > 0) run();
-    });
-
-    observer.observe({ type: "largest-contentful-paint", buffered: true });
-
-    if (performance.getEntriesByType("largest-contentful-paint").length > 0) {
-      run();
-    }
-
-    window.setTimeout(() => {
-      observer.disconnect();
-      run();
-    }, fallbackMs);
-  } catch {
-    scheduleAfterLoadIdle(run, { minDelayMs: 500 });
-  }
+  window.setTimeout(run, fallbackMs);
 }

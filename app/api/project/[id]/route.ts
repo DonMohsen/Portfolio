@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { revalidateTag } from "next/cache";
 import { requireBearerAdmin, unauthorizedResponse } from "@/lib/auth/admin-auth";
+import { slugify } from "@/lib/projects/slugify";
+import { buildProjectBicmData } from "@/lib/projects/project-admin-payload";
 
 export const runtime = "nodejs";
 
@@ -62,7 +65,6 @@ export async function PUT(
   }
 
   const body = await request.json();
-  console.log("Request Body:", body); // Debugging
 
   try {
     const {
@@ -74,6 +76,7 @@ export async function PUT(
       projectType,
       githubLink,
       techStack,
+      slug: slugInput,
     } = body;
 
     if (!body) {
@@ -81,6 +84,22 @@ export async function PUT(
         { error: "Request body is missing." },
         { status: 400 }
       );
+    }
+
+    const bicm = buildProjectBicmData(body);
+
+    let slug: string | undefined;
+    if (typeof slugInput === "string" && slugInput.trim()) {
+      slug = slugify(slugInput);
+      const conflict = await prisma.projects.findFirst({
+        where: { slug, NOT: { id: numberId } },
+      });
+      if (conflict) {
+        return NextResponse.json(
+          { error: "Slug is already in use." },
+          { status: 409 }
+        );
+      }
     }
 
     await prisma.projectsOnTechnologies.deleteMany({
@@ -97,16 +116,32 @@ export async function PUT(
         competency,
         projectType,
         githubLink,
+        ...(slug ? { slug } : {}),
+        industry: bicm.industry,
+        outcomeMetric: bicm.outcomeMetric,
+        featured: bicm.featured,
+        role: bicm.role,
+        year: bicm.year,
+        problemHtml: bicm.problemHtml,
+        insightHtml: bicm.insightHtml,
+        changeHtml: bicm.changeHtml,
+        measurementHtml: bicm.measurementHtml,
+        failureHtml: bicm.failureHtml,
+        clientQuote: bicm.clientQuote,
+        clientName: bicm.clientName,
+        metricsJson: bicm.metricsJson ?? Prisma.JsonNull,
         techStack: techStack?.create
           ? {
-              create: techStack.create.map((entry: any) => ({
-                technologyId: entry.technologyId,
-                addedBy: entry.addedBy,
-              })),
+              create: techStack.create.map(
+                (entry: { technologyId: number; addedBy: string }) => ({
+                  technologyId: entry.technologyId,
+                  addedBy: entry.addedBy,
+                })
+              ),
             }
-          : undefined, 
+          : undefined,
       },
-      include: { techStack: { include: { technology: true } } }, 
+      include: { techStack: { include: { technology: true } } },
     });
     revalidateTag("project", {});
 

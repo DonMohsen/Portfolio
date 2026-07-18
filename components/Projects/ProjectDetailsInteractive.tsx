@@ -18,6 +18,7 @@ import { LinkPreview } from "../ui/link-preview";
 import { getProjectCompetencyColor } from "@/lib/getProjectCompetencyColor";
 import { useLocale } from "next-intl";
 import { ProjectDetail } from "@/lib/projects/types";
+import CaseStudyBICM from "@/components/CaseStudy/CaseStudyBICM";
 
 const ProjectImageModal = dynamic(() => import("./ProjectImageModal"), {
   ssr: false,
@@ -116,7 +117,7 @@ export default function ProjectDetailsInteractive({
             )}
             onClick={() => scrollToSection(specificationsRef)}
           >
-            {isFa ? "جزئیات" : "Details"}
+            {isFa ? "مطالعه موردی" : "Case study"}
           </Button>
           <Button
             type="button"
@@ -166,30 +167,9 @@ export default function ProjectDetailsInteractive({
         ref={specificationsRef}
         className="my-6 w-full max-w-4xl max-lg:px-4 [content-visibility:auto]"
       >
-        <div
-          className="font-IRANSansXUltraLight whitespace-pre-line leading-relaxed mb-6"
-          dir={isFa ? "rtl" : "ltr"}
-        >
-          {project.longDescription}
-        </div>
+        <CaseStudyBICM project={project} locale={locale} />
 
-        {project.highlights.length > 0 && (
-          <div className="mb-6">
-            <h2 className="text-xl font-IRANSansXBlack mb-3">
-              {isFa ? "ویژگی‌های کلیدی" : "Key highlights"}
-            </h2>
-            <ul
-              className="list-disc ps-5 space-y-2 font-IRANSansXLight"
-              dir={isFa ? "rtl" : "ltr"}
-            >
-              {project.highlights.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <div className="flex flex-wrap gap-2 my-4">
+        <div className="flex flex-wrap gap-2 my-8">
           {project.techStack.map(({ technology }) => {
             const [, color2] = techColors[technology.name] ?? ["#000", "#888"];
 

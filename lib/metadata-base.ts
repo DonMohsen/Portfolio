@@ -1,4 +1,4 @@
-export const DEFAULT_SITE_URL = "https://new-portfo-mohsen.vercel.app";
+export const DEFAULT_SITE_URL = "https://mohsen.info";
 
 export function resolveSiteUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) {

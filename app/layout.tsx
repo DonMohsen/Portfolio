@@ -1,8 +1,10 @@
 import type { Viewport } from "next";
 import "./globals.css";
-import localFont from "next/font/local";
 import ViewportLock from "@/components/ViewportLock";
-import { BROWSER_THEME_COLOR, getBrowserThemeColorScript } from "@/lib/browser-theme-color";
+import {
+  BROWSER_THEME_COLOR,
+  getBrowserThemeColorScript,
+} from "@/lib/browser-theme-color";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -15,27 +17,18 @@ export const viewport: Viewport = {
   ],
 };
 
-const iranYekan = localFont({
-  src: "../public/fonts/iranyekan/iranyekanwebregular.ttf",
-  weight: "400",
-  style: "normal",
-  variable: "--font-iranyekan",
-  display: "swap",
-  preload: false,
-  adjustFontFallback: "Arial",
-  fallback: ["Arial", "Helvetica", "sans-serif"],
-});
-
+/**
+ * Fonts: IRANYekan is declared in globals.css from /public (woff2).
+ * next/font was preloading on every locale — EN paid ~26KB for a font it
+ * never paints. FA preloads explicitly in [locale]/layout.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      suppressHydrationWarning
-      className={`${iranYekan.variable} dark`}
-    >
+    <html suppressHydrationWarning className="dark">
       <head>
         <script
           dangerouslySetInnerHTML={{

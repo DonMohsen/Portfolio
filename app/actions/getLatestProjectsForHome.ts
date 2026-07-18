@@ -6,9 +6,8 @@ export const getLatestProjectsForHome = unstable_cache(
   async (): Promise<ProjectsWithTechsType[]> => {
     try {
       const projects = await prisma.projects.findMany({
-        orderBy: {
-          createdAt: "desc",
-        },
+        where: { projectType: "Real" },
+        orderBy: [{ competency: "desc" }, { createdAt: "desc" }],
         take: 4,
         include: {
           techStack: {

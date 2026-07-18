@@ -19,6 +19,11 @@ const CONNECTION_DISTANCE_MOBILE = 84;
 const MAX_SM = 640;
 const CENTER_EXCLUDE_RX = 0.3;
 const CENTER_EXCLUDE_RY = 0.34;
+// Footer sits off-screen on initial load — an uncapped rAF loop here runs
+// indefinitely for no visual benefit and inflates main-thread work for the
+// whole session. Pause via IntersectionObserver and cap the frame rate.
+const FRAME_INTERVAL_MOBILE_MS = 1000 / 24;
+const FRAME_INTERVAL_DESKTOP_MS = 1000 / 30;
 
 type Star = {
   x: number;
@@ -97,6 +102,9 @@ export default function FooterCosmicLayer() {
     let width = 0;
     let height = 0;
     let disposed = false;
+    let running = false;
+    let visible = false;
+    let lastFrameTime = 0;
 
     const starCount = () =>
       window.innerWidth < MAX_SM ? MOBILE_STARS : DESKTOP_STARS;
@@ -189,18 +197,32 @@ export default function FooterCosmicLayer() {
       drawLinks(mobile, isDark);
     };
 
-    const tick = () => {
-      if (disposed) return;
-      drawFrame(window.innerWidth < MAX_SM);
+    const tick = (timestamp: number) => {
+      if (disposed || !running) return;
+      const minInterval =
+        window.innerWidth < MAX_SM
+          ? FRAME_INTERVAL_MOBILE_MS
+          : FRAME_INTERVAL_DESKTOP_MS;
+      if (timestamp - lastFrameTime >= minInterval) {
+        lastFrameTime = timestamp;
+        drawFrame(window.innerWidth < MAX_SM);
+      }
       frameId = window.requestAnimationFrame(tick);
+    };
+
+    const startLoop = () => {
+      if (disposed || running || reducedMotion) return;
+      running = true;
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    const stopLoop = () => {
+      running = false;
+      window.cancelAnimationFrame(frameId);
     };
 
     resize();
     drawFrame(window.innerWidth < MAX_SM);
-
-    if (!reducedMotion) {
-      frameId = window.requestAnimationFrame(tick);
-    }
 
     const onResize = () => {
       resize();
@@ -223,11 +245,35 @@ export default function FooterCosmicLayer() {
       attributeFilter: ["class"],
     });
 
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        visible = entries[0]?.isIntersecting ?? false;
+        if (visible && !document.hidden) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    intersectionObserver.observe(canvas);
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else if (visible) {
+        startLoop();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       disposed = true;
-      window.cancelAnimationFrame(frameId);
+      stopLoop();
       window.removeEventListener("resize", onResize);
       themeObserver.disconnect();
+      intersectionObserver.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 

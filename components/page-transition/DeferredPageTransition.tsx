@@ -1,7 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 import { getTransitionHrefFromAnchor, isModifiedClick } from "./link-navigation";
 import { queuePendingTransition } from "./pending-navigation";
 import {
@@ -10,22 +9,19 @@ import {
   preparePageTransition,
 } from "./prefetch";
 
-const PageTransitionProvider = dynamic(
-  () => import("./PageTransitionProvider"),
-  { ssr: false }
-);
+type ProviderComponent = ComponentType<Record<string, never>>;
 
-/** After load — keeps framer-motion off the LCP window (~1.5s). */
-const PAGE_TRANSITION_WARMUP_MS = 2600;
+/** After load — keeps framer-motion off the LCP window. */
+const PAGE_TRANSITION_WARMUP_MS = 2800;
 
 export default function DeferredPageTransition() {
-  const [ready, setReady] = useState(false);
+  const [Provider, setProvider] = useState<ProviderComponent | null>(null);
   const readyRef = useRef(false);
   const pathnameRef = useRef("");
 
   useEffect(() => {
-    readyRef.current = ready;
-  }, [ready]);
+    readyRef.current = Boolean(Provider);
+  }, [Provider]);
 
   useEffect(() => {
     pathnameRef.current = window.location.pathname;
@@ -36,7 +32,11 @@ export default function DeferredPageTransition() {
     let timer: number | undefined;
 
     const enable = () => {
-      if (!cancelled) setReady(true);
+      if (cancelled || readyRef.current) return;
+      void import("./PageTransitionProvider").then((mod) => {
+        if (cancelled) return;
+        setProvider(() => mod.default);
+      });
     };
 
     const warmup = () => {
@@ -108,7 +108,6 @@ export default function DeferredPageTransition() {
     };
   }, []);
 
-  if (!ready) return null;
-
-  return <PageTransitionProvider />;
+  if (!Provider) return null;
+  return <Provider />;
 }

@@ -8,6 +8,7 @@ import BlogFAQSection from "@/components/blog/BlogFAQSection";
 import BlogSidebar from "@/components/blog/BlogSidebar";
 import BlogCommentsSection from "@/components/blog/BlogCommentsSection";
 import BlogAddComment from "@/components/blog/BlogAddComment";
+import SoftProjectCta from "@/components/conversion/SoftProjectCta";
 import { BLOG_AUTHOR } from "@/lib/blogs/constants";
 import {
   getAllBlogSlugs,
@@ -242,6 +243,9 @@ export default async function BlogPostPage(props: { params: Params }) {
 
         <BlogCommentsSection locale={locale} />
         <BlogAddComment locale={locale} />
+        <div className="blog-container mt-10">
+          <SoftProjectCta locale={locale} source={`blog:${slug}`} />
+        </div>
         <BlogRelatedArticles articles={related} locale={locale} />
       </div>
     </>

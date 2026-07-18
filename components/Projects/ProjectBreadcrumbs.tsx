@@ -12,7 +12,7 @@ export default function ProjectBreadcrumbs({
 }: ProjectBreadcrumbsProps) {
   const isFa = locale === "fa";
   const homeLabel = isFa ? "خانه" : "Home";
-  const projectsLabel = isFa ? "پروژه‌ها" : "Projects";
+  const projectsLabel = isFa ? "مطالعات موردی" : "Case studies";
   const Separator = isFa ? ChevronLeft : ChevronRight;
 
   return (
@@ -34,7 +34,7 @@ export default function ProjectBreadcrumbs({
         </li>
         <li>
           <Link
-            href={`/${locale}/projects`}
+            href={`/${locale}/work`}
             className="hover:text-foreground transition-colors"
           >
             {projectsLabel}

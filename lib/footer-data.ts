@@ -29,7 +29,7 @@ export async function getFooterData(locale: string) {
     id: project.id,
     title: project.name,
     competency: project.competency,
-    href: `/${locale}/projects/${getProjectSlug(project)}`,
+    href: `/${locale}/work/${getProjectSlug(project)}`,
   }));
 
   return { blogs, projects: topProjects };

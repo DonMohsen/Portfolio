@@ -7,6 +7,7 @@ import { Github, Link as LucideLink } from "lucide-react";
 import TechStackIcon from "@/components/TechStackIcon";
 import Link from "next/link";
 import ProjectCompetencyRing from "./ProjectCompetencyRing";
+import IndustryBadge from "@/components/CaseStudy/IndustryBadge";
 
 type ProjectListingCardProps = {
   project: ProjectsWithTechsType;
@@ -34,7 +35,7 @@ export default function ProjectListingCard({
 
   return (
     <Link
-      href={`/${locale}/projects/${getProjectSlug(project)}`}
+      href={`/${locale}/work/${getProjectSlug(project)}`}
       data-transition-label={project.name}
       className="relative overflow-hidden group border-black/[0.1] dark:border-white/[0.4] border-[0.1px] dark:bg-black text-white flex flex-col rounded-[8px] duration-300"
     >
@@ -50,8 +51,11 @@ export default function ProjectListingCard({
 
       <div className="px-2 pb-2 select-none flex flex-col items-end justify-end">
         <div className="w-full flex flex-row items-center justify-center">
-          <div className="text-[18px] max-md:text-[16px] flex gap-1 items-center justify-start font-bold w-full text-right text-black dark:text-white">
+          <div className="text-[18px] max-md:text-[16px] flex flex-wrap gap-1.5 items-center justify-start font-bold w-full text-right text-black dark:text-white">
             <p className="w-fit">{project.name}</p>
+            {project.industry ? (
+              <IndustryBadge industry={project.industry} locale={locale} />
+            ) : null}
             <p
               className={clsx(
                 "rounded-[4px] p-[4px] max-md:text-[10px] text-[12px] font-IRANSansXDemiBold flex-shrink",
@@ -66,6 +70,15 @@ export default function ProjectListingCard({
             <ProjectCompetencyRing competency={project.competency} />
           </div>
         </div>
+
+        {project.outcomeMetric ? (
+          <p
+            className="mt-2 w-full text-right text-[13px] leading-5 text-emerald-700 dark:text-emerald-300 font-IRANSansXMedium line-clamp-2"
+            dir={isFa ? "rtl" : "ltr"}
+          >
+            {project.outcomeMetric}
+          </p>
+        ) : null}
 
         <div className="flex items-center justify-between mt-2 w-full">
           <div className="flex -space-x-3" dir="ltr">

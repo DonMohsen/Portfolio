@@ -6,13 +6,11 @@ import { mapProjectToOverview } from "./map-project";
 type ProjectsOverviewProps = {
   projects: ProjectsWithTechsType[];
   locale: string;
-  projectCount: number;
 };
 
 export default function ProjectsOverview({
   projects,
   locale,
-  projectCount,
 }: ProjectsOverviewProps) {
   const isFa = locale === "fa";
   const overviewProjects = projects.map((project) =>
@@ -32,28 +30,26 @@ export default function ProjectsOverview({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div className={isFa ? "text-right" : "text-left"}>
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
-              {isFa ? "نمونه کار" : "Selected work"}
+              {isFa ? "اثبات" : "Proof"}
             </p>
             <h2
               id="projects-overview-heading"
               className="mt-2 text-3xl font-semibold tracking-tight text-page-text sm:text-4xl"
             >
-              {isFa ? "پروژه‌های منتخب" : "Projects overview"}
+              {isFa ? "مطالعات موردی" : "Case studies"}
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-page-subtle sm:text-[15px]">
               {isFa
-                ? "چهار پروژه اخیر با تصاویر قابل جابه‌جایی، لینک مستقیم به جزئیات و دسترسی سریع به مخزن یا نسخه لایو."
-                : "Four recent builds with swipeable previews, detail pages, and quick access to live demos or repositories."}
+                ? "پروژه‌های واقعی با معیارهای قبل و بعد — جزئیات کامل BICM در فاز ۲."
+                : "Production builds with before/after metrics — full BICM detail coming in Phase 2."}
             </p>
           </div>
 
           <Link
-            href={`/${locale}/projects`}
+            href={`/${locale}/work`}
             className="inline-flex min-h-11 items-center justify-center rounded-xl border border-tech-card-border bg-tech-card px-4 py-2.5 text-sm font-semibold text-page-text transition-colors duration-300 hover:border-accent-cosmic/40 hover:text-accent-cosmic"
           >
-            {isFa
-              ? `مشاهده همه ${projectCount} پروژه`
-              : `See all ${projectCount} projects`}
+            {isFa ? "همه مطالعات موردی" : "View all case studies"}
           </Link>
         </div>
 

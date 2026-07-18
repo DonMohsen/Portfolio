@@ -36,7 +36,7 @@ const ProjectsDemo = ({
       )}
      
     </div>
-    <Link href={`/${locale}/projects`} className="font-IRANSansXExtraBold mt-5" >
+    <Link href={`/${locale}/work`} className="font-IRANSansXExtraBold mt-5" >
     <MagicButton 
               title={
                 isFa

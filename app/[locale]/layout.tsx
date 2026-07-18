@@ -4,6 +4,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "../providers/theme-provider";
 import BrowserThemeColor from "@/components/BrowserThemeColor";
+import ChromeGate from "@/components/ChromeGate";
 import DeferredHeader from "@/components/DeferredHeader";
 import PersistentHeroCosmic from "@/components/Home/PersistentHeroCosmic";
 import { getDeferredFontScript } from "@/lib/deferred-font-script";
@@ -14,6 +15,11 @@ import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { resolveMetadataBase, resolveSiteUrl } from "@/lib/metadata-base";
 import { buildLocaleAlternates } from "@/lib/site-alternates";
+import {
+  buildEntityGraphJsonLd,
+  PROFILE_IMAGE_PATH,
+  SITE_METADATA,
+} from "@/lib/seo/person-json-ld";
 
 type Params = Promise<{ locale: string }>;
 
@@ -23,28 +29,17 @@ export async function generateMetadata(props: {
   const { locale } = await props.params;
   const siteUrl = resolveSiteUrl();
   const isFa = locale === "fa";
-  const title = isFa
-    ? "محسن خجسته نژاد | برنامه نویس فرانت اند"
-    : "Mohsen Khojasteh Nezhad | Front-End Developer";
-  const description = isFa
-    ? "پرتفولیوی رسمی محسن خجسته نژاد - توسعه دهنده وب و فرانت اند با تمرکز روی Next.js و React."
-    : "Official portfolio of Mohsen Khojasteh Nezhad, web and front-end developer focused on Next.js and React.";
+  const meta = isFa ? SITE_METADATA.fa : SITE_METADATA.en;
+  const title = meta.title;
+  const description = meta.description;
+  const profileImageUrl = `${siteUrl.replace(/\/$/, "")}${PROFILE_IMAGE_PATH}`;
 
   return {
     metadataBase: resolveMetadataBase(),
     title,
     description,
-    applicationName: "Mohsen Khojasteh Nezhad Portfolio",
-    keywords: [
-      "محسن خجسته نژاد",
-      "Mohsen Khojasteh Nezhad",
-      "Mohsen Khojasteh nezhad",
-      "Mohsen khojasteh",
-      "محسن خجسته",
-      "mohsen portfolio",
-      "front-end developer",
-      "nextjs developer",
-    ],
+    applicationName: "Mohsen Khojasteh Nezhad — Software Product Engineering",
+    keywords: [...meta.keywords],
     robots: {
       index: true,
       follow: true,
@@ -60,14 +55,21 @@ export async function generateMetadata(props: {
       title,
       description,
       url: `${siteUrl}/${locale}`,
-      siteName: "Mohsen Khojasteh Nezhad Portfolio",
-      locale: isFa ? "fa_IR" : "en_US",
+      siteName: "Mohsen Khojasteh Nezhad — Software Product Engineering",
+      locale: meta.openGraphLocale,
       type: "website",
+      images: [
+        {
+          url: profileImageUrl,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [profileImageUrl],
     },
     verification: {
       google: "8rnd6SZNcUVTXewASPcTSKtabrKxhaHnfN0hpXnO_nY",
@@ -90,19 +92,7 @@ export default async function LocaleLayout(props: {
   setRequestLocale(locale);
   const messages = await getMessages();
   const siteUrl = resolveSiteUrl();
-
-  const personSchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Mohsen Khojasteh Nezhad",
-    alternateName: "محسن خجسته نژاد",
-    url: siteUrl,
-    jobTitle: "Front-End Developer",
-    sameAs: [
-      "https://github.com/DonMohsen",
-      "https://linkedin.com/in/mohsenkhojastehnezhad",
-    ],
-  };
+  const entityGraphSchema = buildEntityGraphJsonLd(siteUrl);
 
   return (
     <div
@@ -112,11 +102,22 @@ export default async function LocaleLayout(props: {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(entityGraphSchema) }}
       />
-      <script
-        dangerouslySetInnerHTML={{ __html: getDeferredFontScript() }}
-      />
+      {locale === "fa" ? (
+        <>
+          <link
+            rel="preload"
+            href="/fonts/iranyekan/iranyekanwebregularfanum.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+          <script
+            dangerouslySetInnerHTML={{ __html: getDeferredFontScript() }}
+          />
+        </>
+      ) : null}
       <NextIntlClientProvider locale={locale} messages={messages}>
         <ThemeProvider
           attribute="class"
@@ -125,11 +126,19 @@ export default async function LocaleLayout(props: {
           disableTransitionOnChange
         >
           <BrowserThemeColor />
-          <DeferredHeader />
+          <ChromeGate>
+            <DeferredHeader />
+          </ChromeGate>
           <PersistentHeroCosmic />
-          <main className="bg-page">{children}</main>
-          <SiteFooter locale={locale} />
-          <DeferredChrome />
+          <main className="page-main-view">{children}</main>
+          <ChromeGate>
+            <div className="relative z-[1]">
+              <SiteFooter locale={locale} />
+            </div>
+          </ChromeGate>
+          <ChromeGate>
+            <DeferredChrome />
+          </ChromeGate>
           <DeferredPageTransition />
         </ThemeProvider>
       </NextIntlClientProvider>

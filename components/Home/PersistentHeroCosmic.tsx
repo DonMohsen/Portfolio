@@ -1,17 +1,18 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType } from "react";
 import { useLocale } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import {
   isCosmicLayerBooted,
   subscribeCosmicLayerBoot,
 } from "@/lib/cosmic-layer-session";
+import { scheduleAfterLcp } from "@/lib/schedule-after-lcp";
 
-const HeroCosmicLazy = dynamic(() => import("./hero-cosmic-lazy"), {
-  ssr: false,
-});
+type CosmicComponent = ComponentType<{
+  align?: "left" | "right";
+  active?: boolean;
+}>;
 
 function isHomePath(pathname: string) {
   return pathname === "/" || pathname === "";
@@ -21,22 +22,41 @@ export default function PersistentHeroCosmic() {
   const pathname = usePathname();
   const locale = useLocale();
   const isHome = isHomePath(pathname);
-  const [pinned, setPinned] = useState(() => isCosmicLayerBooted());
+  const [booted, setBooted] = useState(() => isCosmicLayerBooted());
+  const [Cosmic, setCosmic] = useState<CosmicComponent | null>(null);
 
   useEffect(() => {
-    void import("./hero-cosmic-lazy");
-  }, []);
+    if (!isHome && !booted) return;
+    if (Cosmic) return;
 
-  useEffect(() => {
-    if (isHome) setPinned(true);
-  }, [isHome]);
+    let cancelled = false;
+    const load = () => {
+      void import("./hero-cosmic-lazy").then((mod) => {
+        if (cancelled) return;
+        setBooted(true);
+        setCosmic(() => mod.default);
+      });
+    };
 
-  useEffect(() => subscribeCosmicLayerBoot(() => setPinned(true)), []);
+    if (isCosmicLayerBooted()) {
+      load();
+      return () => {
+        cancelled = true;
+      };
+    }
 
-  if (!pinned) return null;
+    scheduleAfterLcp(load);
+    return () => {
+      cancelled = true;
+    };
+  }, [isHome, booted, Cosmic]);
+
+  useEffect(() => subscribeCosmicLayerBoot(() => setBooted(true)), []);
+
+  if (!Cosmic || !booted) return null;
 
   return (
-    <HeroCosmicLazy
+    <Cosmic
       align={locale === "fa" ? "left" : "right"}
       active={isHome}
     />

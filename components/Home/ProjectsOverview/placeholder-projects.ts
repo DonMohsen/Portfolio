@@ -2,6 +2,22 @@ import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 
 const PLACEHOLDER_DATE = new Date("2025-01-15T00:00:00.000Z");
 
+const BICM_DEFAULTS = {
+  industry: null,
+  outcomeMetric: null,
+  featured: false,
+  role: null,
+  year: null,
+  problemHtml: null,
+  insightHtml: null,
+  changeHtml: null,
+  measurementHtml: null,
+  failureHtml: null,
+  clientQuote: null,
+  clientName: null,
+  metricsJson: null,
+} as const;
+
 function stack(
   projectId: number,
   technologyId: number,
@@ -28,6 +44,7 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
     createdAt: PLACEHOLDER_DATE,
     lastUpdatedAt: PLACEHOLDER_DATE,
     name: "Lumina Analytics Console",
+    slug: "lumina-analytics-console",
     description:
       "A performance-critical analytical workspace built with Next.js, displaying deep server logs, custom charts, and complex serverless integrations in real time.",
     liveLink: "https://example.com/lumina",
@@ -45,12 +62,19 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
       stack(9001, 6, "Express.js", "/icons/expressjs.svg"),
     ],
     _count: { techStack: 6 },
+    ...BICM_DEFAULTS,
+    industry: "SaaS",
+    outcomeMetric: "40% faster time-to-insight",
+    featured: true,
+    role: "Software Product Engineer",
+    year: 2025,
   },
   {
     id: 9002,
     createdAt: PLACEHOLDER_DATE,
     lastUpdatedAt: PLACEHOLDER_DATE,
     name: "Orbit Commerce Studio",
+    slug: "orbit-commerce-studio",
     description:
       "Headless storefront with localized checkout flows, optimistic cart updates, and a modular design system shared across marketing and product surfaces.",
     liveLink: "https://example.com/orbit",
@@ -65,18 +89,25 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
       stack(9002, 7, "Redux", "/icons/redux.svg"),
     ],
     _count: { techStack: 4 },
+    ...BICM_DEFAULTS,
+    industry: "Ecommerce",
+    outcomeMetric: "28% higher checkout completion",
+    featured: true,
+    role: "Software Product Engineer",
+    year: 2024,
   },
   {
     id: 9003,
     createdAt: PLACEHOLDER_DATE,
     lastUpdatedAt: PLACEHOLDER_DATE,
     name: "Nebula Docs Platform",
+    slug: "nebula-docs-platform",
     description:
       "Developer documentation experience with full-text search, interactive API examples, and MDX-driven content workflows for fast publishing.",
-    liveLink: null,
+    liveLink: "https://example.com/nebula",
     image: "/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.png",
-    competency: 81,
-    projectType: "Practice",
+    competency: 85,
+    projectType: "Real",
     githubLink: "https://github.com/DonMohsen",
     techStack: [
       stack(9003, 1, "Next.js", "/icons/nextjs.svg"),
@@ -85,12 +116,19 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
       stack(9003, 9, "REST API", "/icons/restapi.svg"),
     ],
     _count: { techStack: 4 },
+    ...BICM_DEFAULTS,
+    industry: "Education",
+    outcomeMetric: "52% faster time-to-answer for API questions",
+    featured: true,
+    role: "Software Product Engineer",
+    year: 2024,
   },
   {
     id: 9004,
     createdAt: PLACEHOLDER_DATE,
     lastUpdatedAt: PLACEHOLDER_DATE,
     name: "Pulse Task Orchestrator",
+    slug: "pulse-task-orchestrator",
     description:
       "A workflow dashboard for distributed teams with live status boards, role-based views, and motion-rich micro-interactions tuned for mobile-first usage.",
     liveLink: "https://example.com/pulse",
@@ -106,13 +144,36 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
       stack(9004, 10, "Mongo DB", "/icons/mongodb.svg"),
     ],
     _count: { techStack: 4 },
+    ...BICM_DEFAULTS,
+    role: "UI Engineer",
+    year: 2023,
   },
 ];
 
 export const PLACEHOLDER_PROJECT_COUNT = 12;
 
+const MAX_FEATURED_CASE_STUDIES = 4;
+
+/** Featured on home: Real projects first, then highest competency fallback. */
+export function resolveFeaturedCaseStudies(
+  projects: ProjectsWithTechsType[]
+): ProjectsWithTechsType[] {
+  const source = projects.length > 0 ? projects : PLACEHOLDER_PROJECTS;
+  const realProjects = source
+    .filter((project) => project.projectType === "Real")
+    .sort((a, b) => b.competency - a.competency);
+
+  const ranked =
+    realProjects.length > 0
+      ? realProjects
+      : [...source].sort((a, b) => b.competency - a.competency);
+
+  return ranked.slice(0, MAX_FEATURED_CASE_STUDIES);
+}
+
+/** @deprecated Use resolveFeaturedCaseStudies */
 export function resolveHomeProjects(projects: ProjectsWithTechsType[]) {
-  return projects.length > 0 ? projects : PLACEHOLDER_PROJECTS;
+  return resolveFeaturedCaseStudies(projects);
 }
 
 export function resolveHomeProjectCount(projectCount: number) {

@@ -1,7 +1,10 @@
+"use client";
+
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
 import { getProjectSlug } from "@/lib/projects/get-project-slug";
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import TechStackIcon from "@/components/TechStackIcon";
 import ImageModal from "./Modals/image-modal";
 import { Button } from "@mui/material";
@@ -9,7 +12,8 @@ import { FaGithub } from "react-icons/fa";
 import clsx from "clsx";
 import { CircleChevronRight } from "lucide-react";
 const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
-  
+  const locale = useLocale();
+
   return (
     <>
       {projects.map((project) => (
@@ -107,7 +111,7 @@ const ProjectCard = ({ projects }: { projects: ProjectsWithTechsType[] }) => {
 
     {/* Enhanced Button */}
     <Link
-    href={`/projects/${getProjectSlug(project)}`}
+    href={`/${locale}/work/${getProjectSlug(project)}`}
     className="w-full mt-6 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-4 px-8 transition-all duration-300 shadow-md hover:shadow-lg group/button">
       <div className="flex items-center justify-between w-full">
         <span>View Details</span>

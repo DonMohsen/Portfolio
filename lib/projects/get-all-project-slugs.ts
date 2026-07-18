@@ -1,14 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
 import { getAllMockProjectSlugs } from "./mock-projects";
-import { slugify } from "./slugify";
 
 async function fetchDbProjectSlugs(): Promise<string[]> {
   try {
     const projects = await prisma.projects.findMany({
-      select: { name: true },
+      select: { slug: true },
     });
-    return projects.map((project) => slugify(project.name));
+    return projects.map((project) => project.slug);
   } catch {
     return [];
   }

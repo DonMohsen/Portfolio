@@ -32,7 +32,9 @@
 > ⚡ **برای اجرا:** مستقیم به **🗺️ نقشه اجرای گام‌به‌گام** (پایین همین مقدمه) برو. ۳۰ گام مرتب و وابسته‌به‌هم؛ بخش‌های ۰–۴۰ فقط «مرجع» برای جزئیات هستند.
 
 **تصمیمات تأییدشده (تغییر نمی‌کنند):**
-- Scope Build سایت: **فاز ۰ تا ۳** (پایه) + **فاز ۵** (Growth Engine در سایت) · **فاز ۴** = اکوسیستم بیرونی
+- Scope Build سایت (کد): **فاز ۰ تا ۳** (پایه) + **فاز ۵** (Growth Engine در سایت)
+- Business & Growth ops (خارج از کد): **فاز ۴** Inbound/Ecosystem · **فاز ۶** Outbound Machine (Clay/Instantly/HeyReach) · **فاز ۷** Micro-Agency
+- مدل درآمد: پروژه‌ای (Tier 1–3) **+ بازگشتی** (Tier 4: Fractional CTO retainer $8K–$25K/mo + Subscription از $5K/mo)
 - مسیر پروژه‌ها: **`/work` canonical** + redirect 301 از `/projects`
 - Contact: **Contact Hub چندکاناله** (فرم، رزرو، چت AI، کانال‌های ایرانی/خارجی، ویجت شناور)
 - Positioning: **Software Product Engineer** — نه Web/Mobile/Full Stack Developer
@@ -61,8 +63,12 @@
 فاز ۲ (Case Studies)   ── گام ۱۱–۱۶     [وابسته فاز ۱]
 فاز ۳ (Trust+Contact)  ── گام ۱۷–۲۳     [وابسته فاز ۲]
 فاز ۵ (Lead Engine)    ── گام ۲۴–۳۰     [وابسته فاز ۲+۳]
-فاز ۴ (Ecosystem)      ── خارج از کد، موازی (§۳۱)
+فاز ۴ (Ecosystem/Inbound)  ── خارج از کد، موازی (§۳۱)
+فاز ۶ (Outbound Machine)   ── خارج از کد، business-ops (§۳۱ج)
+فاز ۷ (Micro-Agency Scale) ── خارج از کد، بعد از تثبیت لید (§۳۱د)
 ```
+
+> فازهای ۴/۶/۷ کدِ سایت نیستند (business & growth ops). نقشه‌ی ۳۰ گامیِ کد فقط فازهای ۰–۳ و ۵ را پوشش می‌دهد؛ ولی سایت برای آن‌ها «مهمات» می‌سازد (case study، services، source tracking).
 
 ---
 
@@ -241,15 +247,16 @@
 - **کارها:** First 90 Days timeline + ۵ مرحله (Discovery→Architecture→Build→Demo→Handoff)؛ i18n؛ لینک CTA به contact.
 - **Done:** `/process` در هر دو locale؛ در nav فعال.
 
-### گام ۱۸ — صفحات /services + verticalها
-- **وابستگی:** فاز ۲ · **مرجع:** §۷، §۳۰.۲
-- **هدف:** منوی outcome-based + ۵ landing تخصصی با keyword.
+### گام ۱۸ — صفحات /services + verticalها + Tier 4 (recurring)
+- **وابستگی:** فاز ۲ · **مرجع:** §۷ (شامل ۷.۲ subscription)، §۱۰، §۳۰.۲
+- **هدف:** منوی outcome-based + landingهای تخصصی + مدل درآمد بازگشتی.
 - **فایل‌ها:** `app/[locale]/services/page.tsx` + `[slug]/page.tsx` (جدید)
 - **کارها:**
-  1. صفحه‌ی index: ۳ offer اصلی + Service Ladder.
-  2. verticalها: `saas-mvp`, `nextjs-audit`, `ai-products`, `automation`, `i18n` — هرکدام outcome/ICP/timeline/deliverables/FAQ schema/CTA.
-  3. هر landing ۸۰۰–۱۵۰۰ کلمه؛ پاسخ مستقیم ۴۰–۶۰ کلمه در هر H2 (GEO).
-- **Done:** `/services` + ۵ vertical با FAQPage schema و CTA به contact.
+  1. صفحه‌ی index: ۳ offer اصلی + **Service Ladder کامل با Tier 4** (Fractional CTO retainer + Subscription).
+  2. verticalها: `saas-mvp`, `nextjs-audit`, `ai-products`, `automation`, `i18n`, `fractional-cto`, `subscription` — هرکدام outcome/ICP/timeline/deliverables/FAQ schema/CTA.
+  3. `fractional-cto`: قیمت retainer + keyword «fractional cto for startups». `subscription`: مدل DesignJoy (flat ماهانه، one active request، pause anytime).
+  4. هر landing ۸۰۰–۱۵۰۰ کلمه؛ پاسخ مستقیم ۴۰–۶۰ کلمه در هر H2 (GEO).
+- **Done:** `/services` + ۷ vertical (شامل ۲ تای Tier 4) با FAQPage schema و CTA به contact.
 
 ### گام ۱۹ — صفحه capture /hire/[slug]
 - **وابستگی:** گام ۱۸ · **مرجع:** §۶.۲، §۳۰.۳، §۱.۳
@@ -716,7 +723,7 @@ Education | Marketplace | Enterprise | SaaS
 /[locale]/work                     → Case studies (فیلتر Industry)
 /[locale]/work/[slug]              → BICM کامل + Article schema
 /[locale]/services                 → منوی outcome-based + Service Ladder
-/[locale]/services/[slug]          → Vertical landing (saas-mvp, nextjs-audit, ai-products, automation, i18n)
+/[locale]/services/[slug]          → Vertical (saas-mvp, nextjs-audit, ai-products, automation, i18n, fractional-cto, subscription)
 /[locale]/hire/[slug]              → Capture pages (hire next.js developer) — SEO
 /[locale]/process                  → How we work + First 90 Days
 /[locale]/about                    → Story + E-E-A-T author entity + comparison table
@@ -816,20 +823,27 @@ metricsJson     Json?
 
 ---
 
-## ۷. Service Ladder — از Lead تا Contract
+## ۷. Service Ladder — از Lead تا Contract (+ مدل درآمد بازگشتی)
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│  Tier 0 — FREE: 30-min Discovery Call                    │
+│  Tier 0 — FREE: 30-min Discovery Call / Architecture Audit│
 ├──────────────────────────────────────────────────────────┤
 │  Tier 1 — $2K–$5K: Technical Discovery Sprint / Audit      │
 │  → 1 week, fixed scope, PDF deliverable · 40%+ → Tier 2/3│
 ├──────────────────────────────────────────────────────────┤
 │  Tier 2 — $15K–$50K: MVP Build Sprint (8–12 weeks)       │
 ├──────────────────────────────────────────────────────────┤
-│  Tier 3 — $50K–$200K+: Full Product Build / Fractional   │
+│  Tier 3 — $50K–$200K+: Full Product Build (project)      │
+├──────────────────────────────────────────────────────────┤
+│  Tier 4 — RECURRING (هدف درآمد پایدار):                  │
+│   • Fractional CTO Retainer: $8K–$25K / ماه             │
+│   • Productized Subscription (DesignJoy-style): از $5K/ماه│
+│   → یک درخواست فعال در لحظه · pause/cancel anytime       │
 └──────────────────────────────────────────────────────────┘
 ```
+
+> **چرا Tier 4 بازی را عوض می‌کند:** پروژه‌ی تک‌باره = درآمد قطع‌شونده. Retainer/Subscription = MRR قابل‌پیش‌بینی. هدف بلندمدت: انتقال وزن درآمد از Tier 2/3 به Tier 4.
 
 ### ۷.۱ Productized Offers
 
@@ -839,8 +853,20 @@ metricsJson     Json?
 | Bot Development | Automation System Blueprint |
 | Consulting | Technical Discovery Sprint |
 | Full Stack Project | Zero-to-Production Product Build |
+| Monthly contract | Fractional CTO Retainer |
+| Hourly dev | Product Subscription — one active request at a time |
 
-### ۷.۲ صفحه `/services` — ساختار هر کارت
+### ۷.۲ مدل اشتراکی (Productized Subscription) — الگوی DesignJoy
+
+| عنصر | جزئیات |
+|---|---|
+| قیمت | flat ماهانه (از $5K) — بدون تخمین مبهم |
+| تحویل | یک درخواست فعال در لحظه؛ صف برای بقیه |
+| مزیت مشتری | ظرفیت توسعه مداوم بدون استخدام، pause/cancel anytime |
+| مزیت تو | MRR پایدار، بدون چانه‌زنی scope هر پروژه |
+| صفحه | `/services/subscription` + Tier در `/services` |
+
+### ۷.۳ صفحه `/services` — ساختار هر کارت
 
 - Outcome headline · For whom (ICP) · Timeline · Deliverables · Starting from · CTA
 
@@ -850,6 +876,8 @@ metricsJson     Json?
 3. `ai-products`
 4. `automation`
 5. `i18n` (مزیت نسبی: next-intl + FA/EN)
+6. `fractional-cto` (Tier 4 — retainer · keyword: «fractional cto for startups»)
+7. `subscription` (Tier 4 — productized monthly)
 
 هر landing: ۸۰۰–۱۵۰۰ کلمه، FAQ schema، پاسخ مستقیم ۴۰–۶۰ کلمه در هر H2 (GEO).
 
@@ -922,9 +950,11 @@ Currently accepting: 1 new product build (Q3 2026)
 
 ---
 
-## ۱۰. Fractional CTO Overlap
+## ۱۰. Fractional CTO Overlap (لِین درآمد بالا)
 
 **Positioning nuance:** «Product Engineer who can act as technical co-founder until you hire a CTO» — نه «I am your CTO».
+
+**قیمت بازار جهانی (US/UK):** Fractional CTO معمولاً retainer ماهانه **$8K–$15K** (و گاه تا **$25K**). این بالاترین لِین درآمد بازگشتی توست (Tier 4 §۷).
 
 | سؤال مشتری | پاسخ در سایت |
 |---|---|
@@ -932,6 +962,7 @@ Currently accepting: 1 new product build (Q3 2026)
 | Team? | «Led 3-person team» in case study |
 | Security & scale? | `/stack` |
 | Investor-ready? | Discovery Sprint deliverable |
+| Ongoing leadership? | `/services/fractional-cto` (retainer) |
 
 ---
 
@@ -1247,6 +1278,18 @@ Author = entity در Knowledge Graph. نویسنده‌ای که فقط روی �
 | **Training corpus** | ChatGPT (بدون search) | محتوای قبلاً index و معتبر — انتشار زودهنگام |
 
 **Perplexity = سریع‌ترین مسیر GEO** (مقاله امروز، cite فردا).
+
+### ۱۹.۱ب اهرم‌های اثبات‌شده‌ی citation (Princeton GEO study)
+
+سه تاکتیک با بیشترین اثر روی دیده‌شدن در پاسخ AI — این‌ها را در هر case study و service page **سیستماتیک** اعمال کن:
+
+| تاکتیک | افزایش دیده‌شدن | پیاده‌سازی |
+|---|---|---|
+| **افزودن آمار/درصد دقیق** | تا **+۴۰٪** | metric کمی در هر BICM (نه «بهبود یافت» بلکه «۳۸٪ کاهش») |
+| **استناد به منبع معتبر** | تا **+۱۱۵٪** (مخصوصاً سایت‌های low-authority) | لینک به research/benchmark/داده‌ی خارجی |
+| **نقل‌قول مستقیم** | تا **+۲۸٪** | quote مشتری یا متخصص در صفحه |
+
+> این اعداد دقیقاً همان دلیل تأکید بر «metric واقعی + clientQuote + منبع» در BICM (§۵) هستند. هر سه روی صفحات `/work`, `/services`, `/ask` اجباری شوند.
 
 ### ۱۹.۲ llms.txt
 
@@ -1790,12 +1833,96 @@ FA: Telegram برجسته · EN: LinkedIn + Cal.com
 - [ ] LinkedIn headline = positioning
 - [ ] ۲ Dev.to/Medium (canonical → سایت)
 - [ ] Open source: ۱ repo README به سبک case study
+- [ ] **GitHub profile README به‌عنوان رزومه‌ی زنده** (معرفی + Software Product Engineer + badges + لینک پروژه‌های برتر — سیگنال اعتماد قوی برای AI و entity §۱۶)
 - [ ] Wikidata item · Guest post ۱–۲
 - [ ] YouTube architecture walkthrough (اختیاری)
 - [ ] بهینه Upwork/کارلنسر/پونیشا
 - [ ] رهگیری AI citation ماهانه
 - [ ] ۲ pillar blog + ۸ spoke
 - [ ] PDF case study auto-generated از CMS
+
+> این فاز = **Inbound** (مردم تو را پیدا می‌کنند). فاز ۶ پایین = **Outbound** (تو فعالانه شکار می‌کنی). برای «پروژه در روز» هر دو لازم‌اند.
+
+---
+
+## ۳۱ج. فاز ۶ — Outbound Sales Machine (خارج از repo · موازی)
+
+> **چرا:** صرفِ نشستن پای SEO، پروژه‌ی *روزانه* نمی‌آورد. برای هدف تهاجمی (پروژه چند هزار دلاری در روز) به یک موتور شکار اتوماتیک ۲۴ساعته نیاز است. این فاز business-ops است، نه کد سایت — ولی به اثبات‌های سایت (case study، `/services`، Estimator، Discovery Sprint رایگان) به‌عنوان «مهمات» وصل می‌شود.
+
+### ۳۱ج.۱ Stack ابزارها
+
+```
+Clay.com (مغز)                 → یافتن استارتاپ‌ها + غنی‌سازی داده از ۵۰+ منبع
+        ↓                         + تولید پیام شخصی‌سازی‌شده با AI (خواندن سایت مشتری)
+  ┌─────┴─────┐
+  ▼           ▼
+Instantly.ai   HeyReach.io      → ایمیل سرد حجم‌بالا (anti-spam) | اتوماسیون LinkedIn
+  └─────┬─────┘
+        ▼
+   Make.com / Webhooks          → اتصال هر سه، اجرای ۲۴ساعته
+        ▼
+   mohsen.info (Discovery Sprint رایگان / Estimator / Case study)
+```
+
+| ابزار | نقش | اتصال به سایت |
+|---|---|---|
+| **Clay.com** | پایگاه‌داده + enrichment + AI personalization | لینک case study مرتبط با industry سرنخ |
+| **Instantly.ai** | ایمیل سرد، dial-up volume، dodge spam | CTA → `/contact?source=outbound-email` |
+| **HeyReach.io** | LinkedIn outreach در مقیاس آژانس (fallback اگر ایمیل باز نشد) | لینک `/work` + Discovery offer |
+| **Make.com** | orchestration بین سه ابزار | webhook → `ContactInquiry` با `source` |
+
+### ۳۱ج.۲ هدف‌گیری Trigger Events (نرخ پاسخ چند برابر)
+
+به همه پیام یکسان نده. Clay را برای شناسایی این محرک‌ها تنظیم کن:
+
+| Trigger | چرا داغ است | زاویه‌ی پیام |
+|---|---|---|
+| **جذب سرمایه (Series A/B)** | پول نقد + فشار توسعه سریع | «تبریک round — ظرفیت build مطمئن برای ۶ ماه آینده؟» |
+| **استخدام مدیر جدید (PM/CTO/exec)** | تغییر ابزار/معماری/بودجه | «معمولاً بعد از این انتصاب، معماری بازبینی می‌شود — audit رایگان؟» |
+| **اعلان launch محصول / تغییر سازمانی** | نیاز فوری به ظرفیت توسعه | «برای launch، ظرفیت اضافه‌ی production-ready لازم دارید؟» |
+
+**قالب پیام:** کوتاه + مرتبط با رویداد + پیشنهاد کم‌ریسک (Architecture Audit رایگان یا Discovery Sprint). همان offer Tier 0/1 §۷.
+
+### ۳۱ج.۳ اتصال Outbound → سایت (نقطه‌ی کد)
+
+- همه‌ی CTAهای outbound به landing با `?source=` بروند تا در `ContactInquiry.source` ردیابی شود (مثل `outbound-email`, `outbound-linkedin`).
+- (اختیاری) landing اختصاصی outbound با offer «Free Architecture Audit» = نسخه‌ای از Discovery Sprint.
+
+### ۳۱ج.۴ KPI فاز ۶
+
+| Metric | Target |
+|---|---|
+| سرنخ غنی‌شده / هفته (Clay) | روند صعودی |
+| نرخ پاسخ ایمیل سرد | بالاتر از baseline با trigger targeting |
+| جلسه discovery از outbound / هفته | ≥ inbound در میان‌مدت |
+| سهم outbound از کل پروژه‌ها | قابل‌ردیابی via source |
+
+---
+
+## ۳۱د. فاز ۷ — مقیاس‌پذیری: Micro-Agency (مدل تحویل)
+
+> **چالش موفقیت:** وقتی outbound + inbound به هدف رسیدند، گلوگاه = **زمان تو**. نمی‌توانی همه‌ی کد را تنها بنویسی. برای جلوگیری از فروپاشی، مدل تحویل را ارتقا بده.
+
+### ۳۱د.۱ از Freelancer به Micro-Agency
+
+| مدل قدیم | مدل جدید |
+|---|---|
+| همه‌ی کد را خودت | «نیمکت» (bench) از ۱–۳ پیمانکار قابل‌اعتماد |
+| استخدام تمام‌وقت + HR | subcontract از Unbench / Upwork (بدون ساختار سنگین) |
+| تو = کدنویس روزمره | تو = چهره‌ی برند + معمار سیستم + مدیر ذی‌نفعان |
+
+### ۳۱د.۲ نقش جدید تو
+
+- معماری و تصمیمات کلیدی (ADR) — همان چیزی که در case study می‌فروشی.
+- ارتباط با مشتری اصلی و discovery.
+- بازبینی کیفیت کار پیمانکاران (تو فقط QA + معماری، نه implementation هر ماژول).
+
+### ۳۱د.۳ هم‌راستایی با سایت
+
+- مدل Subscription (Tier 4 §۷.۲) سوخت ایده‌آل micro-agency است: درآمد پایدار + ظرفیت قابل‌توزیع بین bench.
+- صفحه‌ی `/process` (§۳۰.۱) باید «چه کسی کار را انجام می‌دهد» را شفاف کند (تو معمار، تیم منتخب مجری) — بدون آسیب به اعتماد.
+
+> ⚠️ این فاز فقط بعد از تثبیت جریان لید اجرا شود؛ زودهنگام = ریسک کیفیت.
 
 ---
 

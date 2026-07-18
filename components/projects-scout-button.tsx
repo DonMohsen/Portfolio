@@ -11,7 +11,7 @@ const ProjectsScoutButton = () => {
   const locale = useLocale();
 
   const handleClick = () => {
-    router.replace(`/${locale}/projects`); 
+    router.replace(`/${locale}/work`); 
   };
   return (
     <Button
