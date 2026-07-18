@@ -9,19 +9,20 @@ import {
   prefetchThemeToggleTree,
 } from "@/lib/theme-toggle-session";
 
-const ThemeToggleTree = dynamic(
-  () => import("./motion-chrome-bundle").then((mod) => mod.ThemeToggleTree),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
 const SKELETON = (
   <div
     className="h-[28px] w-[65px] shrink-0 rounded-full bg-zinc-200/30 dark:bg-zinc-800/50"
     aria-hidden
   />
+);
+
+const ThemeToggleTree = dynamic(
+  () => import("./motion-chrome-bundle").then((mod) => mod.ThemeToggleTree),
+  {
+    ssr: false,
+    // Must keep the reserved 65×28 slot — `null` collapses the cluster and shifts CLS.
+    loading: () => SKELETON,
+  }
 );
 
 export default function DeferredThemeToggle() {
