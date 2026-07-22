@@ -16,14 +16,11 @@ const SKELETON = (
   />
 );
 
-const ThemeToggleTree = dynamic(
-  () => import("./motion-chrome-bundle").then((mod) => mod.ThemeToggleTree),
-  {
-    ssr: false,
-    // Must keep the reserved 65×28 slot — `null` collapses the cluster and shifts CLS.
-    loading: () => SKELETON,
-  }
-);
+const ThemeToggleTree = dynamic(() => import("./ThemeToggleTree"), {
+  ssr: false,
+  // Must keep the reserved 65×28 slot — `null` collapses the cluster and shifts CLS.
+  loading: () => SKELETON,
+});
 
 export default function DeferredThemeToggle() {
   const [ready, setReady] = useState(() => isThemeToggleBooted());
