@@ -1,12 +1,14 @@
 import Link from "next/link";
 import AskFAQ from "@/components/ask/AskFAQ";
 import TrustStrip from "@/components/Home/TrustStrip";
+import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import {
   ASK_HERO,
   getAskFaqForLocale,
   getAskFaqJsonLdItems,
 } from "@/lib/ask/content";
 import { pick } from "@/lib/services/pick";
+import { twoLevelTrail } from "@/lib/seo/breadcrumb";
 import { buildFaqPageJsonLd } from "@/lib/seo/faq-json-ld";
 
 type AskPageContentProps = {
@@ -30,6 +32,11 @@ export default function AskPageContent({ locale }: AskPageContentProps) {
         <section
           className={`mx-auto max-w-3xl px-5 pb-4 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
         >
+          <SiteBreadcrumbs
+            locale={locale}
+            items={twoLevelTrail(locale, "ask")}
+            className="mb-5"
+          />
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
             {pick(locale, ASK_HERO.eyebrow)}
           </p>

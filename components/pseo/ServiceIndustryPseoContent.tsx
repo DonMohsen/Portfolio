@@ -1,7 +1,12 @@
 import Link from "next/link";
 import BlogFAQSection from "@/components/blog/BlogFAQSection";
 import TrustStrip from "@/components/Home/TrustStrip";
+import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import { pick, pickFaq } from "@/lib/services/pick";
+import {
+  homeTrailItem,
+  sectionTrailItem,
+} from "@/lib/seo/breadcrumb";
 import { buildFaqPageJsonLd } from "@/lib/seo/faq-json-ld";
 import type { getServiceIndustryPage } from "@/lib/tools/pseo-datasets";
 
@@ -42,13 +47,20 @@ export default function ServiceIndustryPseoContent({
         <section
           className={`mx-auto max-w-7xl px-5 pb-6 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
         >
-          <Link
-            href={`/${locale}/services/${page.service.slug}`}
-            className="text-sm font-medium text-accent-cosmic hover:underline"
-          >
-            {isFa ? `← ${serviceTitle}` : `← ${serviceTitle}`}
-          </Link>
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
+          <SiteBreadcrumbs
+            locale={locale}
+            items={[
+              homeTrailItem(locale),
+              sectionTrailItem(locale, "services"),
+              {
+                name: serviceTitle,
+                pathname: `/${locale}/services/${page.service.slug}`,
+              },
+              { name: h1 },
+            ]}
+            className="mb-5"
+          />
+          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
             {isFa ? "خدمات × صنعت" : "Service × industry"}
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-page-text sm:text-4xl lg:text-[2.5rem]">
