@@ -4,19 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Critical FA face — public woff2 so EN never downloads it */
+/* Critical FA face — public woff2 so EN never downloads it.
+   FA locale preloads this file. Use swap (not optional): optional silently
+   drops the face when the ~100ms block window is missed, which left inner
+   FA routes (services, work, …) stuck on system fallbacks. */
 @font-face {
   font-family: "IRANYekanFn";
   src: url("/fonts/iranyekan/iranyekanwebregularfanum.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  /* optional: avoid late font-swap updating LCP after fallback paint */
-  font-display: optional;
+  font-display: swap;
 }
 
 /* Light: warm cream + right peach glow | Dark: navy galaxy */
 :root {
   --font-iranyekan: "IRANYekanFn", Tahoma, Arial, Helvetica, sans-serif;
+  /* EN may use mono; FA remaps this to IRANYekanFn so font-mono never leaks Consolas */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   --page-bg: #f7f5f0;
   --browser-theme-color: #f7f5f0;
   color-scheme: light;
@@ -327,7 +332,8 @@ body {
 /*
   Digits: IRANYekan Fn maps 0-9 → Persian glyphs.
   EN must never inherit that family — keep Western digits.
-  FA keeps Fanum for Persian digits.
+  FA must re-assert the family on [lang="fa"] so a stale html[lang=en]
+  (client nav) cannot poison --font-iranyekan to Arial for FA trees.
 */
 html[lang="en"] body,
 [lang="en"] {
@@ -336,8 +342,11 @@ html[lang="en"] body,
 }
 
 html[lang="fa"] body,
+html[lang="fa"],
 [lang="fa"] {
-  font-family: var(--font-iranyekan), Tahoma, Arial, Helvetica, sans-serif;
+  --font-iranyekan: "IRANYekanFn", Tahoma, Arial, Helvetica, sans-serif;
+  --font-mono: "IRANYekanFn", Tahoma, Arial, Helvetica, sans-serif;
+  font-family: "IRANYekanFn", Tahoma, Arial, Helvetica, sans-serif;
 }
 
 [lang="en"] .font-sans,
@@ -352,6 +361,30 @@ html[lang="fa"] body,
 [lang="en"] .font-IRANSansXUltraLight,
 [lang="en"] .font-IRANSansXThin {
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* FA: every utility / semantic text face resolves to IRANYekanFn only */
+[lang="fa"] .font-sans,
+[lang="fa"] .font-mono,
+[lang="fa"] .font-IRANYekan,
+[lang="fa"] .font-IRANSansXBlack,
+[lang="fa"] .font-IRANSansXExtraBold,
+[lang="fa"] .font-IRANSansXBold,
+[lang="fa"] .font-IRANSansXDemiBold,
+[lang="fa"] .font-IRANSansXMedium,
+[lang="fa"] .font-IRANSansXRegular,
+[lang="fa"] .font-IRANSansXLight,
+[lang="fa"] .font-IRANSansXUltraLight,
+[lang="fa"] .font-IRANSansXThin,
+html[lang="fa"] code,
+html[lang="fa"] kbd,
+html[lang="fa"] pre,
+html[lang="fa"] samp,
+[lang="fa"] code,
+[lang="fa"] kbd,
+[lang="fa"] pre,
+[lang="fa"] samp {
+  font-family: "IRANYekanFn", Tahoma, Arial, Helvetica, sans-serif;
 }
 
 /*
@@ -376,7 +409,7 @@ html[lang="fa"] body,
 }
 
 [lang="fa"] .hero-lcp {
-  font-family: var(--font-iranyekan), Arial, Helvetica, sans-serif;
+  font-family: "IRANYekanFn", Tahoma, Arial, Helvetica, sans-serif;
 }
 
 .hero-lcp-given {

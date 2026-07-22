@@ -1,7 +1,9 @@
 import Link from "next/link";
 import TrustStrip from "@/components/Home/TrustStrip";
+import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import { TOOL_CATALOG } from "@/lib/tools/catalog";
 import { pick } from "@/lib/services/pick";
+import { twoLevelTrail } from "@/lib/seo/breadcrumb";
 
 type ToolsHubContentProps = {
   locale: string;
@@ -16,6 +18,11 @@ export default function ToolsHubContent({ locale }: ToolsHubContentProps) {
       <section
         className={`mx-auto max-w-7xl px-5 pb-6 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
       >
+        <SiteBreadcrumbs
+          locale={locale}
+          items={twoLevelTrail(locale, "tools")}
+          className="mb-5"
+        />
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
           {isFa ? "ابزارهای رایگان" : "Free tools"}
         </p>

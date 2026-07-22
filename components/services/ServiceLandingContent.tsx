@@ -1,8 +1,10 @@
 import Link from "next/link";
 import BlogFAQSection from "@/components/blog/BlogFAQSection";
 import TrustStrip from "@/components/Home/TrustStrip";
+import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import { pick, pickFaq } from "@/lib/services/pick";
 import type { ServiceLanding } from "@/lib/services/types";
+import { threeLevelTrail } from "@/lib/seo/breadcrumb";
 import { buildFaqPageJsonLd } from "@/lib/seo/faq-json-ld";
 
 type ServiceLandingContentProps = {
@@ -16,6 +18,7 @@ export default function ServiceLandingContent({
 }: ServiceLandingContentProps) {
   const isFa = locale === "fa";
   const textAlign = isFa ? "text-right" : "text-left";
+  const title = pick(locale, landing.title);
   const faqItems = pickFaq(locale, landing.faq);
   const deliverables = isFa
     ? landing.deliverables.fa
@@ -33,17 +36,16 @@ export default function ServiceLandingContent({
         <section
           className={`mx-auto max-w-7xl px-5 pb-6 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
         >
-          <Link
-            href={`/${locale}/services`}
-            className="text-sm font-medium text-accent-cosmic hover:underline"
-          >
-            {isFa ? "← همه خدمات" : "← All services"}
-          </Link>
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
+          <SiteBreadcrumbs
+            locale={locale}
+            items={threeLevelTrail(locale, "services", title)}
+            className="mb-5"
+          />
+          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
             Tier {landing.tier} · {pick(locale, landing.startingFrom)}
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-page-text sm:text-4xl lg:text-[2.5rem]">
-            {pick(locale, landing.title)}
+            {title}
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-page-text sm:text-xl">
             {pick(locale, landing.outcome)}

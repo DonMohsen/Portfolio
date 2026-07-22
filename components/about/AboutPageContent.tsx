@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import ComparisonTable from "@/components/about/ComparisonTable";
 import TrustStrip from "@/components/Home/TrustStrip";
+import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import { buildAboutPageJsonLd } from "@/lib/about/about-json-ld";
+import { twoLevelTrail } from "@/lib/seo/breadcrumb";
 import {
   ABOUT_CTA,
   ABOUT_EDUCATION,
@@ -45,6 +47,11 @@ export default function AboutPageContent({ locale }: AboutPageContentProps) {
         <section
           className={`mx-auto max-w-7xl px-5 pb-6 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
         >
+          <SiteBreadcrumbs
+            locale={locale}
+            items={twoLevelTrail(locale, "about")}
+            className="mb-5"
+          />
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
             {pick(locale, ABOUT_HERO.eyebrow)}
           </p>

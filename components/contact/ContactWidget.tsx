@@ -30,25 +30,23 @@ export default function ContactWidget() {
         />
       ) : null}
 
+      {/*
+        Shell stays dir=ltr so flex `items-end` + `right-4` stay physically
+        bottom-right in FA RTL pages (otherwise items-end flips to the left).
+      */}
       <div
-        className={clsx(
-          "fixed z-[20000] flex flex-col gap-3",
-          isFa ? "bottom-4 left-4 items-start" : "bottom-4 right-4 items-end"
-        )}
+        dir="ltr"
+        className="fixed bottom-4 right-4 z-[20000] flex flex-col items-end gap-3"
       >
         {open ? (
           <div
+            dir={isFa ? "rtl" : "ltr"}
             className={clsx(
               "w-[min(calc(100vw-2rem),380px)] overflow-hidden rounded-2xl border border-tech-card-border bg-page shadow-2xl",
               !reduceMotion && "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-300"
             )}
           >
-            <div
-              className={clsx(
-                "flex items-center justify-between border-b border-tech-card-border px-4 py-3",
-                isFa && "flex-row-reverse"
-              )}
-            >
+            <div className="flex items-center justify-between border-b border-tech-card-border px-4 py-3">
               <div className={isFa ? "text-right" : "text-left"}>
                 <p className="text-sm font-semibold text-page-text">
                   {isFa ? "مشاور پروژه AI" : "AI Project Advisor"}
@@ -89,7 +87,7 @@ export default function ContactWidget() {
           aria-expanded={open}
           aria-label={isFa ? "باز کردن مشاور پروژه" : "Open project advisor"}
           className={clsx(
-            "flex h-14 w-14 items-center justify-center rounded-full bg-accent-cosmic text-accent-cosmic-fg shadow-lg transition-transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-cosmic focus-visible:ring-offset-2 focus-visible:ring-offset-page",
+            "flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent-cosmic text-accent-cosmic-fg shadow-lg transition-transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-cosmic focus-visible:ring-offset-2 focus-visible:ring-offset-page",
             !reduceMotion && !open && "motion-safe:animate-pulse"
           )}
         >
