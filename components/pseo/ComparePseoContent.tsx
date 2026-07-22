@@ -1,11 +1,6 @@
 import Link from "next/link";
 import TrustStrip from "@/components/Home/TrustStrip";
-import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import { pick } from "@/lib/services/pick";
-import {
-  homeTrailItem,
-  sectionTrailItem,
-} from "@/lib/seo/breadcrumb";
 import type { ComparePageData } from "@/lib/tools/pseo-datasets";
 
 type ComparePseoContentProps = {
@@ -19,27 +14,23 @@ export default function ComparePseoContent({
 }: ComparePseoContentProps) {
   const isFa = locale === "fa";
   const textAlign = isFa ? "text-right" : "text-left";
-  const title = pick(locale, page.title);
 
   return (
     <div className="w-full bg-page transition-colors duration-500">
       <section
         className={`mx-auto max-w-7xl px-5 pb-6 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
       >
-        <SiteBreadcrumbs
-          locale={locale}
-          items={[
-            homeTrailItem(locale),
-            sectionTrailItem(locale, "services"),
-            { name: title },
-          ]}
-          className="mb-5"
-        />
-        <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
+        <Link
+          href={`/${locale}/services`}
+          className="text-sm font-medium text-accent-cosmic hover:underline"
+        >
+          {isFa ? "← خدمات" : "← Services"}
+        </Link>
+        <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
           {isFa ? "مقایسه" : "Compare"}
         </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-page-text sm:text-4xl">
-          {title}
+          {pick(locale, page.title)}
         </h1>
         <p className="mt-4 max-w-3xl text-[15px] leading-7 text-page-subtle">
           {pick(locale, page.audience)}

@@ -1,7 +1,6 @@
 import SoftProjectCta from "@/components/conversion/SoftProjectCta";
+import Link from "next/link";
 import TrustStrip from "@/components/Home/TrustStrip";
-import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
-import { threeLevelTrail } from "@/lib/seo/breadcrumb";
 
 type ToolPageChromeProps = {
   locale: string;
@@ -30,12 +29,13 @@ export default function ToolPageChrome({
       <section
         className={`mx-auto max-w-3xl px-5 pb-4 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
       >
-        <SiteBreadcrumbs
-          locale={locale}
-          items={threeLevelTrail(locale, "tools", title)}
-          className="mb-5"
-        />
-        <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
+        <Link
+          href={`/${locale}/tools`}
+          className="text-sm font-medium text-accent-cosmic hover:underline"
+        >
+          {isFa ? "← همه ابزارها" : "← All tools"}
+        </Link>
+        <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
           {eyebrow}
         </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-page-text sm:text-4xl">

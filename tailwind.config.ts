@@ -20,7 +20,6 @@ export default {
   	extend: {
 		fontFamily: {
 			sans: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
-			mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
 			IRANYekan: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
 			IRANSansXBlack: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],
 			IRANSansXExtraBold: ['var(--font-iranyekan)', 'Arial', 'Helvetica', 'sans-serif'],

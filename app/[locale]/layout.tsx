@@ -6,7 +6,6 @@ import { ThemeProvider } from "../providers/theme-provider";
 import BrowserThemeColor from "@/components/BrowserThemeColor";
 import ChromeGate from "@/components/ChromeGate";
 import DeferredHeader from "@/components/DeferredHeader";
-import HtmlLangSync from "@/components/HtmlLangSync";
 import PersistentHeroCosmic from "@/components/Home/PersistentHeroCosmic";
 import { getDeferredFontScript } from "@/lib/deferred-font-script";
 import DeferredChrome from "@/components/DeferredChrome";
@@ -119,7 +118,6 @@ export default async function LocaleLayout(props: {
           />
         </>
       ) : null}
-      <HtmlLangSync locale={locale} />
       <NextIntlClientProvider locale={locale} messages={messages}>
         <ThemeProvider
           attribute="class"

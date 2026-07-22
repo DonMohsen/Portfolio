@@ -25,15 +25,17 @@ export default function DeferredChrome() {
     scheduleAfterLcp(() => {
       void Promise.all([
         import("@/components/navigation/CommandPalette"),
+        import("@/components/conversion/ExitIntentModal"),
         import("@/components/ui/toaster").then((m) => ({
           default: m.Toaster as AnyComp,
         })),
         import("@/components/contact/DeferredContactWidget"),
-      ]).then(([cmd, toast, contact]) => {
+      ]).then(([cmd, exit, toast, contact]) => {
         if (cancelled) return;
         setNodes(
           <>
             <cmd.default />
+            <exit.default />
             <toast.default />
             <contact.default />
           </>

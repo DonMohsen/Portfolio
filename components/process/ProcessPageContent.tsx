@@ -7,7 +7,6 @@ import {
   PackageCheck,
 } from "lucide-react";
 import TrustStrip from "@/components/Home/TrustStrip";
-import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import {
   FIRST_90_DAYS,
   OWNERSHIP_BLOCK,
@@ -15,7 +14,6 @@ import {
   PROCESS_HERO,
   PROCESS_STEPS,
 } from "@/lib/process/content";
-import { twoLevelTrail } from "@/lib/seo/breadcrumb";
 
 const STEP_ICONS = [
   Compass,
@@ -42,11 +40,6 @@ export default function ProcessPageContent({ locale }: ProcessPageContentProps) 
       <section
         className={`mx-auto max-w-7xl px-5 pb-6 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
       >
-        <SiteBreadcrumbs
-          locale={locale}
-          items={twoLevelTrail(locale, "process")}
-          className="mb-5"
-        />
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
           {pick(locale, PROCESS_HERO.eyebrow)}
         </p>

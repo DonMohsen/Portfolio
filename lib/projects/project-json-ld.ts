@@ -1,9 +1,5 @@
 import { ProjectDetail } from "./types";
 import { resolveSiteUrl } from "@/lib/metadata-base";
-import {
-  buildBreadcrumbListJsonLd,
-  threeLevelTrail,
-} from "@/lib/seo/breadcrumb";
 import { getPersonSchemaId } from "@/lib/seo/person-json-ld";
 import { toProjectIsoDate } from "./project-dates";
 
@@ -13,9 +9,30 @@ export function buildBreadcrumbJsonLd(
   locale: string,
   project: ProjectDetail
 ) {
-  return buildBreadcrumbListJsonLd(
-    threeLevelTrail(locale, "work", project.name)
-  );
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: locale === "fa" ? "خانه" : "Home",
+        item: `${SITE_URL}/${locale}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: locale === "fa" ? "مطالعات موردی" : "Case studies",
+        item: `${SITE_URL}/${locale}/work`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.name,
+        item: `${SITE_URL}/${locale}/work/${project.slug}`,
+      },
+    ],
+  };
 }
 
 export function buildSoftwareApplicationJsonLd(

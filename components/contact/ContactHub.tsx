@@ -7,14 +7,12 @@ import { useCallback, useState } from "react";
 import BriefInquiryForm from "@/components/contact/BriefInquiryForm";
 import ContactChatPanel from "@/components/contact/ContactChatPanel";
 import TrustStrip from "@/components/Home/TrustStrip";
-import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import {
   CONTACT_TABS,
   parseContactTab,
   type ContactTab,
 } from "@/lib/contact/contact-tabs";
 import { buildCalEmbedUrl } from "@/lib/contact/cal-prefill";
-import { twoLevelTrail } from "@/lib/seo/breadcrumb";
 import {
   SITE_AVAILABILITY_EN,
   SITE_AVAILABILITY_FA,
@@ -82,11 +80,6 @@ export default function ContactHub({
       <section
         className={`mx-auto max-w-3xl px-5 pb-4 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
       >
-        <SiteBreadcrumbs
-          locale={locale}
-          items={twoLevelTrail(locale, "contact")}
-          className="mb-5"
-        />
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
           {isFa ? "هاب تماس" : "Contact hub"}
         </p>

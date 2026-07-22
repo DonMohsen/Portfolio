@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import TechStackScroller from "@/components/Home/TechStackScroller";
-import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
-import { twoLevelTrail } from "@/lib/seo/breadcrumb";
 import { buildLocaleAlternates } from "@/lib/site-alternates";
 
 type Params = Promise<{ locale: string }>;
@@ -34,11 +32,6 @@ export default async function StackPage(props: { params: Params }) {
           isFa ? "text-right" : "text-left"
         }`}
       >
-        <SiteBreadcrumbs
-          locale={locale}
-          items={twoLevelTrail(locale, "stack")}
-          className="mb-5"
-        />
         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
           {isFa ? "برای ارزیابان فنی" : "For technical evaluators"}
         </p>

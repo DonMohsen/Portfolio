@@ -1,5 +1,4 @@
 import Link from "next/link";
-import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import {
   CITEABLE_STATS,
   STATS_HERO,
@@ -7,7 +6,6 @@ import {
 } from "@/lib/stats/content";
 import { pick } from "@/lib/services/pick";
 import { resolveSiteUrl } from "@/lib/metadata-base";
-import { twoLevelTrail } from "@/lib/seo/breadcrumb";
 
 type StatsPageContentProps = {
   locale: string;
@@ -51,11 +49,6 @@ export default function StatsPageContent({ locale }: StatsPageContentProps) {
         <section
           className={`mx-auto max-w-3xl px-5 pb-4 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
         >
-          <SiteBreadcrumbs
-            locale={locale}
-            items={twoLevelTrail(locale, "stats")}
-            className="mb-5"
-          />
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
             {pick(locale, STATS_HERO.eyebrow)}
           </p>

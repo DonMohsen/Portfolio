@@ -228,13 +228,13 @@ export default function Galaxy({
           }
         >
           <span
-            className="block text-[10px] font-medium uppercase tracking-[0.12em]"
+            className="block font-mono text-[10px] uppercase tracking-[0.12em]"
             style={{ color: "var(--galaxy-card-label)" }}
           >
             {c.label}
           </span>
           <span
-            className="mt-0.5 block text-[13px] font-medium"
+            className="mt-0.5 block font-sans text-[13px]"
             style={{ color: "var(--galaxy-card-value)" }}
           >
             {c.value}

@@ -1,10 +1,8 @@
 import Link from "next/link";
 import BlogFAQSection from "@/components/blog/BlogFAQSection";
 import TrustStrip from "@/components/Home/TrustStrip";
-import SiteBreadcrumbs from "@/components/seo/SiteBreadcrumbs";
 import type { HireCapturePage } from "@/lib/hire/types";
 import { pick, pickFaq } from "@/lib/services/pick";
-import { homeTrailItem, sectionTrailItem } from "@/lib/seo/breadcrumb";
 import { buildFaqPageJsonLd } from "@/lib/seo/faq-json-ld";
 
 type HireCaptureContentProps = {
@@ -18,7 +16,6 @@ export default function HireCaptureContent({
 }: HireCaptureContentProps) {
   const isFa = locale === "fa";
   const textAlign = isFa ? "text-right" : "text-left";
-  const title = pick(locale, page.title);
   const faqItems = pickFaq(locale, page.faq);
   const stack = isFa ? page.stackHighlights.fa : page.stackHighlights.en;
   const faqJsonLd = buildFaqPageJsonLd(faqItems);
@@ -35,20 +32,11 @@ export default function HireCaptureContent({
         <section
           className={`mx-auto max-w-7xl px-5 pb-6 pt-[72px] sm:px-6 md:px-10 lg:px-12 ${textAlign}`}
         >
-          <SiteBreadcrumbs
-            locale={locale}
-            items={[
-              homeTrailItem(locale),
-              sectionTrailItem(locale, "services"),
-              { name: title },
-            ]}
-            className="mb-5"
-          />
-          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-page-subtle">
             {pick(locale, page.keyword)}
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-page-text sm:text-4xl lg:text-[2.75rem]">
-            {title}
+            {pick(locale, page.title)}
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-page-subtle sm:text-xl sm:leading-9">
             {pick(locale, page.subtitle)}

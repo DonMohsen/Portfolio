@@ -11,6 +11,7 @@ import ProjectHero from "@/components/Projects/ProjectHero";
 import ProjectDetailsInteractive from "@/components/Projects/ProjectDetailsInteractive";
 import {
   buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
   buildSoftwareApplicationJsonLd,
 } from "@/lib/projects/project-json-ld";
 
@@ -115,11 +116,18 @@ export default async function WorkSlugPage({ params }: Props) {
 
   const project = await getProjectBySlug(slug);
   if (!project) return notFound();
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, project);
   const softwareJsonLd = buildSoftwareApplicationJsonLd(locale, project);
   const articleJsonLd = buildArticleJsonLd(locale, project);
 
   return (
     <div className="w-full flex flex-col items-center mt-[70px] pb-16 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
