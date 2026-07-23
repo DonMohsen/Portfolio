@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState, type ComponentType } from "react";
-import { useLocale } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
 import {
   isCosmicLayerBooted,
   subscribeCosmicLayerBoot,
@@ -14,23 +12,26 @@ type CosmicComponent = ComponentType<{
   active?: boolean;
 }>;
 
-function isHomePath(pathname: string) {
-  return pathname === "/" || pathname === "";
-}
+const MOBILE_MQ = "(max-width: 767px)";
 
-export default function PersistentHeroCosmic() {
-  const pathname = usePathname();
-  const locale = useLocale();
-  const isHome = isHomePath(pathname);
+type PersistentHeroCosmicProps = {
+  locale: string;
+};
+
+export default function PersistentHeroCosmic({ locale }: PersistentHeroCosmicProps) {
   const [booted, setBooted] = useState(() => isCosmicLayerBooted());
   const [Cosmic, setCosmic] = useState<CosmicComponent | null>(null);
 
   useEffect(() => {
-    if (!isHome && !booted) return;
     if (Cosmic) return;
 
     let cancelled = false;
     const load = () => {
+      if (window.matchMedia(MOBILE_MQ).matches) {
+        setBooted(true);
+        return;
+      }
+
       void import("./hero-cosmic-lazy").then((mod) => {
         if (cancelled) return;
         setBooted(true);
@@ -49,7 +50,7 @@ export default function PersistentHeroCosmic() {
     return () => {
       cancelled = true;
     };
-  }, [isHome, booted, Cosmic]);
+  }, [booted, Cosmic]);
 
   useEffect(() => subscribeCosmicLayerBoot(() => setBooted(true)), []);
 
@@ -58,7 +59,7 @@ export default function PersistentHeroCosmic() {
   return (
     <Cosmic
       align={locale === "fa" ? "left" : "right"}
-      active={isHome}
+      active
     />
   );
 }

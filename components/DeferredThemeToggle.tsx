@@ -6,19 +6,18 @@ import { scheduleAfterLcp } from "@/lib/schedule-after-lcp";
 import {
   isThemeToggleBooted,
   markThemeToggleBooted,
-  prefetchThemeToggleTree,
+  prefetchThemeToggle,
 } from "@/lib/theme-toggle-session";
 
 const SKELETON = (
   <div
-    className="h-[28px] w-[65px] shrink-0 rounded-full bg-zinc-200/30 dark:bg-zinc-800/50"
+    className="h-9 w-9 shrink-0 rounded-lg bg-zinc-200/30 dark:bg-zinc-800/50"
     aria-hidden
   />
 );
 
-const ThemeToggleTree = dynamic(() => import("./ThemeToggleTree"), {
+const ThemeToggle = dynamic(() => import("./ThemeToggle"), {
   ssr: false,
-  // Must keep the reserved 65×28 slot — `null` collapses the cluster and shifts CLS.
   loading: () => SKELETON,
 });
 
@@ -26,7 +25,7 @@ export default function DeferredThemeToggle() {
   const [ready, setReady] = useState(() => isThemeToggleBooted());
 
   useEffect(() => {
-    prefetchThemeToggleTree();
+    prefetchThemeToggle();
   }, []);
 
   useEffect(() => {
@@ -47,5 +46,5 @@ export default function DeferredThemeToggle() {
 
   if (!ready) return SKELETON;
 
-  return <ThemeToggleTree />;
+  return <ThemeToggle />;
 }

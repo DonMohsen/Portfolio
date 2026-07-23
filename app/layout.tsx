@@ -1,10 +1,8 @@
 import type { Viewport } from "next";
 import "./globals.css";
-import ViewportLock from "@/components/ViewportLock";
-import {
-  BROWSER_THEME_COLOR,
-  getBrowserThemeColorScript,
-} from "@/lib/browser-theme-color";
+import DeferredViewportLock from "@/components/DeferredViewportLock";
+import { BROWSER_THEME_COLOR } from "@/lib/browser-theme-color";
+import { getSiteThemeInitScript } from "@/lib/site-theme";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -31,6 +29,15 @@ export default function RootLayout({
     <html suppressHydrationWarning className="dark">
       <head>
         <script
+          dangerouslySetInnerHTML={{ __html: getSiteThemeInitScript() }}
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html:
+              '@font-face{font-family:"IRANYekanFn Fallback";src:local("Tahoma");size-adjust:93%;ascent-override:92%;descent-override:25%;line-gap-override:0%}html.dark{--page-text:#dce3ff;--accent:#f8b78c;--page-bg:#171a36}[lang="en"] .hero-lcp{font-family:Arial,Helvetica,sans-serif}[lang="fa"] .hero-lcp{font-family:"IRANYekanFn Fallback",Tahoma,Arial,Helvetica,sans-serif}.hero-lcp{width:100%;min-height:7.25rem}.hero-lcp-given{font-size:clamp(2.75rem,12vw,3.25rem);line-height:1.05;color:#dce3ff}.hero-lcp-surname{font-size:clamp(2.25rem,8.5vw,4.5rem);line-height:1.05;white-space:nowrap;color:#f8b78c}',
+          }}
+        />
+        <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var p=location.pathname;var l=p.indexOf('/en')===0?'en':'fa';document.documentElement.lang=l;document.documentElement.dir=l==='fa'?'rtl':'ltr'}catch(e){}})();`,
           }}
@@ -40,14 +47,9 @@ export default function RootLayout({
             __html: `(function(){try{var u=window.innerHeight*0.01;document.documentElement.style.setProperty("--dvh",u+"px")}catch(e){}})();`,
           }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: getBrowserThemeColorScript(),
-          }}
-        />
       </head>
       <body className="antialiased">
-        <ViewportLock />
+        <DeferredViewportLock />
         {children}
       </body>
     </html>

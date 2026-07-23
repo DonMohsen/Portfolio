@@ -7,8 +7,8 @@ type ScheduleLcpOptions = {
  * Run after the page has loaded and the main thread is idle.
  *
  * Cosmic / decorative work must not mount during the LCP observation window.
- * Waiting for `load` + idle keeps full-viewport effects off the critical path
- * without delaying first paint of hero text.
+ * No extra post-load delay — the old 400ms buffer correlated with late LCP
+ * in throttled mobile lab runs.
  */
 export function scheduleAfterLcp(
   callback: () => void,
@@ -30,15 +30,10 @@ export function scheduleAfterLcp(
 
   if (typeof window === "undefined") return;
 
-  const onLoad = () => {
-    // Small buffer so the final text LCP candidate can settle in lab tools.
-    window.setTimeout(run, 400);
-  };
-
   if (document.readyState === "complete") {
-    onLoad();
+    run();
   } else {
-    window.addEventListener("load", onLoad, { once: true });
+    window.addEventListener("load", run, { once: true });
   }
 
   window.setTimeout(run, fallbackMs);

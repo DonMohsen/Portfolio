@@ -49,7 +49,7 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
       "A performance-critical analytical workspace built with Next.js, displaying deep server logs, custom charts, and complex serverless integrations in real time.",
     liveLink: "https://example.com/lumina",
     image:
-      "/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.png,/Gemini_Generated_Image_7wp2nr7wp2nr7wp2.png",
+      "/projects/listing/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.webp,/projects/listing/Gemini_Generated_Image_7wp2nr7wp2nr7wp2.webp",
     competency: 92,
     projectType: "Real",
     githubLink: "https://github.com/DonMohsen",
@@ -78,7 +78,7 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
     description:
       "Headless storefront with localized checkout flows, optimistic cart updates, and a modular design system shared across marketing and product surfaces.",
     liveLink: "https://example.com/orbit",
-    image: "/Gemini_Generated_Image_7wp2nr7wp2nr7wp2.png",
+    image: "/projects/listing/Gemini_Generated_Image_7wp2nr7wp2nr7wp2.webp",
     competency: 88,
     projectType: "Real",
     githubLink: "https://github.com/DonMohsen",
@@ -105,7 +105,7 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
     description:
       "Developer documentation experience with full-text search, interactive API examples, and MDX-driven content workflows for fast publishing.",
     liveLink: "https://example.com/nebula",
-    image: "/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.png",
+    image: "/projects/listing/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.webp",
     competency: 85,
     projectType: "Real",
     githubLink: "https://github.com/DonMohsen",
@@ -133,7 +133,7 @@ export const PLACEHOLDER_PROJECTS: ProjectsWithTechsType[] = [
       "A workflow dashboard for distributed teams with live status boards, role-based views, and motion-rich micro-interactions tuned for mobile-first usage.",
     liveLink: "https://example.com/pulse",
     image:
-      "/Gemini_Generated_Image_7wp2nr7wp2nr7wp2.png,/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.png",
+      "/projects/listing/Gemini_Generated_Image_7wp2nr7wp2nr7wp2.webp,/projects/listing/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.webp",
     competency: 76,
     projectType: "Forked",
     githubLink: "https://github.com/DonMohsen",

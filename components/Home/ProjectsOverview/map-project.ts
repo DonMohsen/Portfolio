@@ -1,4 +1,5 @@
 import { ProjectsWithTechsType } from "@/app/Types/AllTechstackTypes";
+import { resolveListingCoverSrc } from "@/lib/projects/listing-card-image";
 import { getProjectSlug } from "@/lib/projects/get-project-slug";
 import { PROJECT_INDUSTRY_LABELS } from "@/lib/projects/project-industry-labels";
 import { parseProjectImages } from "@/lib/projects/parse-project-images";
@@ -32,7 +33,9 @@ export function mapProjectToOverview(
     title: project.name,
     subtitle: isFa ? typeLabels.fa : typeLabels.en,
     description: project.description,
-    images: parseProjectImages(project.image),
+    images: parseProjectImages(project.image).map(
+      (src) => resolveListingCoverSrc(src) ?? src
+    ),
     projectTypeLabel: (isFa ? typeLabels.fa : typeLabels.en).toUpperCase(),
     isLive: Boolean(project.liveLink),
     isOpenSource: Boolean(project.githubLink),

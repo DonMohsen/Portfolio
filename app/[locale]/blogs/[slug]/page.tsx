@@ -21,6 +21,7 @@ import {
 import { Suspense } from "react";
 import { Calendar } from "lucide-react";
 import { buildLocaleAlternates } from "@/lib/site-alternates";
+import "@/components/blog/blog-content.css";
 
 const BlogScrollProgressBar = dynamic(
   () => import("@/components/blog/BlogScrollProgressBar"),

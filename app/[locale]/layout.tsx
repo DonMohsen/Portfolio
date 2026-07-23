@@ -2,16 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import { ThemeProvider } from "../providers/theme-provider";
-import BrowserThemeColor from "@/components/BrowserThemeColor";
-import ChromeGate from "@/components/ChromeGate";
-import DeferredHeader from "@/components/DeferredHeader";
+import ClientLocaleChrome from "@/components/ClientLocaleChrome";
 import HtmlLangSync from "@/components/HtmlLangSync";
-import PersistentHeroCosmic from "@/components/Home/PersistentHeroCosmic";
+import ChromeGate from "@/components/ChromeGate";
 import { getDeferredFontScript } from "@/lib/deferred-font-script";
-import DeferredChrome from "@/components/DeferredChrome";
 import SiteFooter from "@/components/footer/SiteFooter";
-import DeferredPageTransition from "@/components/page-transition/DeferredPageTransition";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { resolveMetadataBase, resolveSiteUrl } from "@/lib/metadata-base";
@@ -101,10 +96,6 @@ export default async function LocaleLayout(props: {
       dir={locale === "fa" ? "rtl" : "ltr"}
       className="min-h-svh bg-page"
     >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(entityGraphSchema) }}
-      />
       {locale === "fa" ? (
         <>
           <link
@@ -121,29 +112,20 @@ export default async function LocaleLayout(props: {
       ) : null}
       <HtmlLangSync locale={locale} />
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <BrowserThemeColor />
-          <ChromeGate>
-            <DeferredHeader />
-          </ChromeGate>
-          <PersistentHeroCosmic />
-          <main className="page-main-view">{children}</main>
-          <ChromeGate>
-            <div className="relative z-[1]">
-              <SiteFooter locale={locale} />
-            </div>
-          </ChromeGate>
-          <ChromeGate>
-            <DeferredChrome />
-          </ChromeGate>
-          <DeferredPageTransition />
-        </ThemeProvider>
+        <main className="page-main-view">{children}</main>
+        <ChromeGate>
+          <ClientLocaleChrome />
+        </ChromeGate>
+        <ChromeGate>
+          <div className="relative z-[1]">
+            <SiteFooter locale={locale} />
+          </div>
+        </ChromeGate>
       </NextIntlClientProvider>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(entityGraphSchema) }}
+      />
     </div>
   );
 }

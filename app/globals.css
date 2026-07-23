@@ -1,8 +1,17 @@
-@import "../components/blog/blog-content.css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "IRANYekanFn Fallback";
+  src: local("Tahoma");
+  font-weight: 400;
+  font-style: normal;
+  size-adjust: 93%;
+  ascent-override: 92%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
 
 /* Critical FA face — public woff2 so EN never downloads it.
    FA locale preloads this file. Use swap (not optional): optional silently
@@ -108,7 +117,6 @@ body {
   background-image: var(--page-glow);
   background-attachment: scroll;
   color: var(--page-text);
-  transition: background-color 0.45s ease, color 0.45s ease;
 }
 
 body {
@@ -409,7 +417,7 @@ html[lang="fa"] samp,
 }
 
 [lang="fa"] .hero-lcp {
-  font-family: "IRANYekanFn", Tahoma, Arial, Helvetica, sans-serif;
+  font-family: "IRANYekanFn Fallback", Tahoma, Arial, Helvetica, sans-serif;
 }
 
 .hero-lcp-given {

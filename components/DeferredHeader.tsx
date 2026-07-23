@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ComponentType } from "react";
 import { scheduleAfterLcp } from "@/lib/schedule-after-lcp";
-import { prefetchThemeToggleTree } from "@/lib/theme-toggle-session";
+import { prefetchThemeToggle } from "@/lib/theme-toggle-session";
 import MobileHeaderPlaceholder from "@/components/MobileHeaderPlaceholder";
 
 type HeaderComponent = ComponentType<Record<string, never>>;
@@ -21,7 +21,7 @@ export default function DeferredHeader() {
     scheduleAfterLcp(() => {
       void import("@/components/header").then((mod) => {
         if (cancelled) return;
-        prefetchThemeToggleTree();
+        prefetchThemeToggle();
         setHeader(() => mod.Header);
       });
     });

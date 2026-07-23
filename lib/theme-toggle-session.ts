@@ -18,6 +18,6 @@ export function subscribeThemeToggleBoot(listener: () => void) {
   };
 }
 
-export function prefetchThemeToggleTree() {
-  void import("@/components/ThemeToggleTree");
+export function prefetchThemeToggle() {
+  void import("@/components/ThemeToggle");
 }

@@ -11,9 +11,6 @@ import {
 
 type ProviderComponent = ComponentType<Record<string, never>>;
 
-/** After load — keeps framer-motion off the LCP window. */
-const PAGE_TRANSITION_WARMUP_MS = 2800;
-
 export default function DeferredPageTransition() {
   const [Provider, setProvider] = useState<ProviderComponent | null>(null);
   const readyRef = useRef(false);
@@ -29,7 +26,6 @@ export default function DeferredPageTransition() {
 
   useEffect(() => {
     let cancelled = false;
-    let timer: number | undefined;
 
     const enable = () => {
       if (cancelled || readyRef.current) return;
@@ -39,23 +35,8 @@ export default function DeferredPageTransition() {
       });
     };
 
-    const warmup = () => {
-      void prefetchPageTransition();
-      enable();
-    };
-
     const onPrepare = () => enable();
     window.addEventListener(PAGE_TRANSITION_PREPARE_EVENT, onPrepare);
-
-    const scheduleWarmup = () => {
-      timer = window.setTimeout(warmup, PAGE_TRANSITION_WARMUP_MS);
-    };
-
-    if (document.readyState === "complete") {
-      scheduleWarmup();
-    } else {
-      window.addEventListener("load", scheduleWarmup, { once: true });
-    }
 
     const onPointerDown = (event: PointerEvent) => {
       const anchor = (event.target as Element | null)?.closest("a");
@@ -99,7 +80,6 @@ export default function DeferredPageTransition() {
 
     return () => {
       cancelled = true;
-      if (timer) window.clearTimeout(timer);
       window.removeEventListener(PAGE_TRANSITION_PREPARE_EVENT, onPrepare);
       document.removeEventListener("pointerdown", onPointerDown, {
         capture: true,

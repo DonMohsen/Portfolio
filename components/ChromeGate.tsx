@@ -1,6 +1,4 @@
-"use client";
-
-import { usePathname } from "next/navigation";
+import { headers } from "next/headers";
 
 type ChromeGateProps = {
   children: React.ReactNode;
@@ -8,13 +6,16 @@ type ChromeGateProps = {
   hideOnPdf?: boolean;
 };
 
-export default function ChromeGate({
+export default async function ChromeGate({
   children,
   hideOnPdf = true,
 }: ChromeGateProps) {
-  const pathname = usePathname() ?? "";
-  if (hideOnPdf && /\/work\/[^/]+\/pdf\/?$/.test(pathname)) {
-    return null;
+  if (hideOnPdf) {
+    const pathname = (await headers()).get("x-pathname") ?? "";
+    if (/\/work\/[^/]+\/pdf\/?$/.test(pathname)) {
+      return null;
+    }
   }
+
   return <>{children}</>;
 }

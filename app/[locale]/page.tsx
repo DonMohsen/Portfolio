@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import HeroGalaxyCards, {
-  type HeroInfoCard,
-} from "@/components/Home/HeroGalaxyCards";
+import HeroGalaxyCards from "@/components/Home/HeroGalaxyCards";
+import type { HeroInfoCard } from "@/components/Home/hero-info-card";
+import PersistentHeroCosmic from "@/components/Home/PersistentHeroCosmic";
 import TrustStrip from "@/components/Home/TrustStrip";
 import First90DaysSection from "@/components/Home/First90DaysSection";
 import ServiceTeaser from "@/components/Home/ServiceTeaser";
@@ -106,20 +106,28 @@ export default async function HomePage(props: { params: Params }) {
 
   return (
     <div className="w-full">
-      <section className="relative z-10 flex min-h-svh flex-col overflow-hidden lg:grid lg:grid-cols-2">
+      <PersistentHeroCosmic locale={locale} />
+      <section className="relative z-10 flex min-h-svh flex-col overflow-hidden [contain:layout] lg:grid lg:grid-cols-2">
         <div className="relative flex w-full min-w-0 flex-col items-center px-5 pb-4 pt-[52px] text-center sm:px-6 lg:items-start lg:justify-center lg:px-12 lg:py-12 lg:pt-12 lg:text-start xl:px-16">
           <h1 className="hero-lcp flex w-full min-w-0 max-w-full flex-col items-center gap-1.5 sm:gap-2 lg:items-start">
-            <span className="hero-lcp-given block text-page-text">
+            <span
+              className="hero-lcp-given block text-page-text"
+              style={{ color: "#dce3ff" }}
+            >
               {isFa ? "محسن" : "Mohsen"}
             </span>
             {/*
-              Keep surname as the intentional LCP text node. Avoid ancestor
-              color transitions — they delayed paint in mobile lab audits.
+              Keep surname as the intentional LCP text node. Literal color keeps
+              LCP paint off the full Tailwind payload in throttled mobile audits.
             */}
-            <span className="hero-lcp-surname block max-w-full font-normal italic text-accent-cosmic">
+            <span
+              className="hero-lcp-surname block max-w-full font-normal"
+              style={{ color: "#f8b78c" }}
+            >
               {isFa ? "خجسته نژاد" : "Khojasteh Nezhad"}
             </span>
           </h1>
+          <div className="[content-visibility:auto] [contain-intrinsic-size:auto_520px]">
           <p className="mt-5 text-xl italic text-page-muted sm:text-2xl">
             {isFa ? "مهندس محصول نرم‌افزار" : "Software Product Engineer"}
           </p>
@@ -132,20 +140,21 @@ export default async function HomePage(props: { params: Params }) {
           <div className="mt-7 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:items-center lg:mt-8 lg:max-w-none">
             <Link
               href={`/${locale}/contact?tab=schedule`}
-              className="inline-flex w-full items-center justify-center rounded-lg bg-accent-cosmic px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.22em] text-accent-cosmic-fg transition-colors duration-500 sm:w-auto"
+              className="inline-flex w-full items-center justify-center rounded-lg bg-accent-cosmic px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.22em] text-accent-cosmic-fg sm:w-auto"
             >
               {isFa ? "رزرو تماس" : "Book a discovery call"}
             </Link>
             <Link
               href={`/${locale}/work`}
-              className="hero-cta-glass inline-flex w-full items-center justify-center rounded-lg border border-tech-card-border px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.22em] text-page-text transition-colors duration-500 hover:border-accent-cosmic/40 hover:text-accent-cosmic sm:w-auto"
+              className="hero-cta-glass inline-flex w-full items-center justify-center rounded-lg border border-tech-card-border px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.22em] text-page-text hover:border-accent-cosmic/40 hover:text-accent-cosmic sm:w-auto"
             >
               {isFa ? "مطالعات موردی" : "View case studies"}
             </Link>
           </div>
+          </div>
         </div>
 
-        <div className="relative mt-2 flex flex-1 items-end px-4 pb-7 [content-visibility:auto] [contain-intrinsic-size:auto_280px] sm:px-5 lg:mt-0 lg:h-full lg:min-h-0 lg:items-center lg:px-0 lg:pb-0 lg:[content-visibility:visible]">
+        <div className="relative mt-2 flex flex-1 items-end px-4 pb-7 sm:px-5 lg:mt-0 lg:h-full lg:min-h-0 lg:items-center lg:px-0 lg:pb-0 [content-visibility:auto] [contain-intrinsic-size:auto_280px] lg:[content-visibility:visible]">
           <HeroGalaxyCards cards={heroCards} />
         </div>
       </section>

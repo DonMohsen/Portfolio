@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { getFooterData } from "@/lib/footer-data";
 import { resolveSiteUrl } from "@/lib/metadata-base";
@@ -15,9 +16,16 @@ import {
 } from "@/lib/site";
 import FooterCosmicDefer from "./FooterCosmicDefer";
 import FooterSocialIcon from "./FooterSocialIcon";
-import LiveProofBar from "@/components/proof/LiveProofBar";
-import LighthouseBadge from "@/components/proof/LighthouseBadge";
 import styles from "./footer.module.css";
+
+const LiveProofBar = dynamic(() => import("@/components/proof/LiveProofBar"), {
+  loading: () => null,
+});
+
+const LighthouseBadge = dynamic(
+  () => import("@/components/proof/LighthouseBadge"),
+  { loading: () => null }
+);
 
 type SiteFooterProps = {
   locale: string;

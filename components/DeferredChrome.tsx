@@ -2,12 +2,7 @@
 
 import { useEffect, useState, type ComponentType, type ReactNode } from "react";
 import { scheduleAfterLcp } from "@/lib/schedule-after-lcp";
-import {
-  CURVE_MENU_PREPARE_EVENT,
-  prefetchCurveMenuOverlay,
-} from "@/components/curve-menu/prefetch";
-
-const MOBILE_MQ = "(max-width: 767px)";
+import { CURVE_MENU_PREPARE_EVENT } from "@/components/curve-menu/prefetch";
 
 type AnyComp = ComponentType<Record<string, never>>;
 
@@ -50,7 +45,6 @@ export default function DeferredChrome() {
     if (!nodes) return;
 
     let cancelled = false;
-    let timer: number | undefined;
 
     const enableMenu = () => {
       void import("@/components/motion-chrome-bundle").then((mod) => {
@@ -60,23 +54,11 @@ export default function DeferredChrome() {
       });
     };
 
-    const warmup = () => {
-      prefetchCurveMenuOverlay();
-      enableMenu();
-    };
-
     window.addEventListener("curve-menu:open", enableMenu);
     window.addEventListener(CURVE_MENU_PREPARE_EVENT, enableMenu);
 
-    if (window.matchMedia(MOBILE_MQ).matches) {
-      timer = window.setTimeout(warmup, 1200);
-    } else {
-      warmup();
-    }
-
     return () => {
       cancelled = true;
-      if (timer) window.clearTimeout(timer);
       window.removeEventListener("curve-menu:open", enableMenu);
       window.removeEventListener(CURVE_MENU_PREPARE_EVENT, enableMenu);
     };

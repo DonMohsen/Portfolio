@@ -23,7 +23,7 @@ export function applyBrowserThemeColor(isDark: boolean): void {
   meta.setAttribute("content", color);
 }
 
-/** Runs before paint — reads next-themes storage + html class. */
+/** Runs before paint — reads theme storage + html class. */
 export function getBrowserThemeColorScript(): string {
   const { light, dark } = BROWSER_THEME_COLOR;
 

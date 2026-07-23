@@ -2,7 +2,8 @@ import { SITE_EMAIL, SITE_NAME, SITE_NAME_FA, SOCIAL_LINKS } from "@/lib/site";
 import { resolveSiteUrl } from "@/lib/metadata-base";
 
 /** Public profile image — replace with /mohsen.jpg when a dedicated headshot is added. */
-export const PROFILE_IMAGE_PATH = "/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.png";
+export const PROFILE_IMAGE_PATH =
+  "/projects/listing/Gemini_Generated_Image_q0eg6yq0eg6yq0eg.webp";
 
 export const JOB_TITLE_EN = "Software Product Engineer";
 export const JOB_TITLE_FA = "مهندس محصول نرم‌افزار";

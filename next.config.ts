@@ -48,8 +48,7 @@ const nextConfig: NextConfig = {
       "@heroicons/react",
     ],
     optimizeCss: true,
-    // Remove render-blocking CSS round-trip (Tailwind payload is small).
-    inlineCss: true,
+    inlineCss: false,
   },
   turbopack: {
     resolveAlias: {
